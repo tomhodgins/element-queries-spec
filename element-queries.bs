@@ -1,0 +1,712 @@
+<link href=https://drafts.csswg.org/default.css rel=stylesheet>
+
+<h1 id=element-queries>Element Queries</h1>
+
+<pre class=metadata>
+Shortname: element-queries
+Status: DREAM
+Editor: Tommy Hodgins, tomhodgins@gmail.com
+Abstract: To provide a syntax for scoped styles and container query styled element queries
+</pre>
+
+<h2 id=eqcss-syntax>EQCSS Syntax</h2>
+
+  <code>element_query</code> = @element <code>selector_list</code> <code>[ condition_list ]</code> { <code>css_code</code> }
+
+  <code>selector_list</code> = " <code>css_selector</code> [ "," <code>css_selector</code> ]* "
+
+  <code>condition_list</code> = and ( <code>query_condition</code> : <code>value</code> ) [ "and (" <code>query_condition</code> ":" <code>value</code> ")" ]*
+
+  <code>value</code> = number [ <code>css_unit</code> ]
+
+  <code>query_condition</code> = min-height | max-height | min-width| max-width | min-characters | max-characters | min-lines | max-lines | min-children | max-children | min-scroll-y | max-scroll-y | min-scroll-x | max-scroll-x | orientation | min-aspect-ratio | max-aspect-ratio
+
+  <code>css_unit</code> = % | px | pt | em | cm | mm | in | rem | ex | ch | pc | vw | vh | vmin | vmax | square | portrait | landscape | width/height
+
+<h2 id=style-scoping>Style Scoping</h2>
+
+  <h3 id=scoped-styles>Scoped Styles</h3>
+
+  By default all CSS is written from the global scope (<code>:root</code>, or the HTML element), and <code>@media</code> queries apply based on the conditions of the browser and media.
+
+  The idea of style scoping is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as thought it was <code>:root</code>
+
+  Just like CSS has <code>@media</code> queries which help us define styles for different media, this document describes functionality for an <code>@element</code> query syntax to allow us to write styles that target elements more specifically based on their own properties.
+  
+  To write a scoped style, write <code>@element</code>, followed by any amount of whitespace. Wrap one or more comma-separated CSS selectors in single (<code>'</code>) or double (<code>"</code>) quotes, followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).
+
+  <div class=example>
+    Example Scoped Style</strong>
+    <pre class=language-css>
+      @element 'html' {
+        
+      }
+    </pre>
+  </div>
+
+  <h4 id=multiple-selectors>Multiple Selectors</h4>
+
+  You can include multiple CSS selectors in your scoped style by separating them with a comma and any amount of whitespace.
+
+  <div class=example>
+    Comma-separated Selector List
+    <pre class=language-css>
+      @element 'ul, ol' {
+        
+      }
+    </pre>
+  </div>
+
+  <h3 id=element-query>Element Query</h3>
+
+  The following global CSS and element query are equivalent.
+
+  <div class=example>
+    Example of Global CSS
+    <pre class=language-css>
+      body {
+        background: lime;
+      }
+    </pre>
+  </div>
+
+  <div class=example>
+    Example Scoped Style
+    <pre class=language-css>
+      @element 'html' {
+        body {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In both cases, as long as there is a <code>body</code> element inside of our <code>html</code>, it will have a lime background.
+  
+  We can also add a responsive conditions to our scoped styles. To do this, write <code>and </code> followed by a responsive condition and value, separated by a colon (<code>:</code>) and wrapped in brackets (<code>(</code>,<code>)</code>).
+
+  <div class=example>
+    Example Element Query with Responsive Condition
+    <pre class=language-css>
+      @element 'html' and (min-width: 500px) {
+        body {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case, our element query is equivalent to the following media query, but not every element query will be able to be expressed as a media query.
+
+  <div class=example>
+    Example Media Query with Responsive Condition
+    <pre class=language-css>
+      @media (min-width: 500px) {
+        body {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  <h4 id=multiple-conditions>Multiple Conditions</h4>
+
+  You can add more than one responsive conditions to your element query. For this, include another <code>and</code>, followed by another responsive condition as before.
+
+  <div class=example>
+    Element Query with Multiple Responsive Conditions
+    <pre class=language-css>
+      @element 'html' and (min-width: 500px) and (max-width: 1000px) {
+        body {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  Which in this case is equivalent to the following media query.
+
+  <div class=example>
+    Media Query with Multiple Responsive Conditions
+    <pre class=language-css>
+      @media (min-width: 500px) and (max-width: 1000px) {
+        body {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In both cases when our <code>html</code> is between the sizes of <code>500px</code> and <code>1000px</code>, our <code>body</code> will have a lime background.
+
+  <h4 id=combining-element-and-media-queries>Combining <code>@element</code> and <code>@media</code> queries</h4>
+
+  It's possible to combine the use of scoped styles or element queries with media queries. Most of the time we combine them we want to include the media query on the inside of the element query. This will mean any time the element query is true, that media query will be visible to the browser and apply.
+
+  <div class=example>
+    Nesting a Media Query inside an Element Query
+    <pre class=language-css>
+      @element '#headline' and (min-characters: 20) {
+        @media print {
+          #headline {
+            border: 1px solid black;
+          }
+        }
+      }
+    </pre>
+  </div>
+
+  In this example, if the element with an ID of <code>#headline</code> has over 20 characters, it will display in print media with a thin black border.
+
+<h2 id=meta-selectors>Meta-Selectors</h2>
+
+  With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined.
+
+  <h3 id=this-selector><code>$this</code> selector</h3>
+
+  The first of these meta-selectors is <code>$this</code>, which refers each  element at the root of our scoped style when it matches the responsive condition.
+
+  <div class=example>
+    Example of <code>$this</code> meta-selector
+    <pre class=language-css>
+      @element '.widget' and (min-width: 200px) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case, any element with a class of <code>.widget</code> that is 200 or more pixels wide will have a green background.
+
+  <h3 id=parent-selector><code>$parent</code> selector</h3>
+
+  The <code>$parent</code> meta-selector refers to the element containing the element(s) in the scope of our scoped style or element query.
+
+  <div class=example>
+    Example of <code>$this</code> meta-selector
+    <pre class=language-css>
+      @element '.widget' and (min-width: 200px) {
+        $parent {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case, any element containing an element with a class of <code>.widget</code> that is equal or wider than <code>200px</code> will have a green background.
+
+  <h3 id=prev-selector><code>$prev</code> selector</h3>
+
+  The <code>$prev</code> meta-selector refers to the sibling directly above the element at the root of our scoped style or element query.
+
+  <div class=example>
+    Example of <code>$this</code> meta-selector
+    <pre class=language-css>
+      @element '.widget' {
+        $prev {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case, any sibling coming directly before any element with a class of <code>.widget</code> will have a green background.
+
+<h2 id=responsive-conditions>Responsive Conditions</h2>
+
+  <h3 id=min-width>Min-width</h3>
+
+  The <code>min-width</code> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) width to the specified value.
+
+  <div class=example>
+    Example <code>min-width</code> Element Query
+    <pre class=language-css>
+      @element '.widget' and (min-width: 200px) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any element with a class of <code>.widget</code> that is at least <code>200px</code> or wider will have a green background.
+
+  <h3 id=max-width>Max-width</h3>
+
+  The <code>max-width</code> responsive condition applies to any scoped element that has less than or equal (<code><=</code>) width to the specified value.
+
+  <div class=example>
+    Example <code>min-width</code> Element Query
+    <pre class=language-css>
+      @element '.widget' and (max-width: 200) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any element with a class of <code>.widget</code> that <code>200px</code> or narrower will have a green background.
+
+  <h3 id=min-height>Min-height</h3>
+
+  The <code>min-height</code> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) height to the specified value.
+
+  <div class=example>
+    Example <code>min-height</code> Element Query
+    <pre class=language-css>
+      @element '.widget' and (min-height: 50px) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any element with a class of <code>.widget</code> that is at least <code>50px</code> or taller will have a green background.
+
+  <h3 id=max-height>Max-height</h3>
+
+  The <code>max-height</code> responsive condition applies to any scoped element that has less than or equal (<code><=</code>) height to the specified value.
+
+  <div class=example>
+    Example <code>max-height</code> Element Query
+    <pre class=language-css>
+      @element '.widget' and (min-height: 50px) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any element with a class of <code>.widget</code> that is at least <code>50px</code> or shorter will have a green background.
+
+  <h3 id=min-characters>Min-characters</h3>
+
+  The <code>min-characters</code> responsive condition applies to any scoped element that contains a greater or equal (<code>>=</code>) number of characters.
+
+  <div class=example>
+    Example <code>min-characters</code> Element Query
+    <pre class=language-css>
+      @element 'input' and (min-characters: 5) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any input with 5 or more characters will have a green background.
+
+  <h3 id=max-characters>Max-characters</h3>
+
+  The <code>max-characters</code> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of characters specified.
+
+  <div class=example>
+    Example <code>max-characters</code> Element Query
+    <pre class=language-css>
+      @element 'input' and (max-characters: 5) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any input with 5 or fewer characters will have a green background.
+
+  <h3 id=min-lines>Min-lines</h3>
+
+  The <code>min-lines</code> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) to the number of specified lines of text.
+
+  <div class=example>
+    Example <code>min-lines</code> Element Query
+    <pre class=language-css>
+      @element 'textarea' and (min-lines: 3) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any textarea with 3 or more lines will have a green background.
+
+  <h3 id=max-lines>Max-lines</h3>
+
+  The <code>max-lines</code> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of specified lines of text.
+
+  <div class=example>
+    Example <code>max-lines</code> Element Query
+    <pre class=language-css>
+      @element 'textarea' and (max-lines: 3) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any textarea with 3 or fewer lines will have a green background.
+
+  <h3 id=min-children>Min-children</h3>
+
+  The <code>min-children</code> responsive condition applies to any scoped element that contains greater than or equal (<code>>=</code>) to the number of child elements specified.
+
+  <div class=example>
+    Example <code>min-children</code> Element Query
+    <pre class=language-css>
+      @element '.social-icons' and (min-children: 5) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any element with a class of <code>.social-icons</code> that contains more 5 or more direct descendants will have a green background.
+
+  <h3 id=max-children>Max-children</h3>
+
+  The <code>max-children</code> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of child elements specified.
+
+  <div class=example>
+    Example <code>max-children</code> Element Query
+    <pre class=language-css>
+      @element '.social-icons' and (max-children: 5) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any element with a class of <code>.social-icons</code> that contains more 5 or fewer direct descendants will have a green background.
+
+  <h3 id=min-scroll-y>Min-scroll-y</h3>
+
+  The <code>min-scroll-y</code> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code>>=</code>) amount to the value specified in a vertical direction.
+
+  <div class=example>
+    Example <code>min-scroll-y</code> Element Query
+    <pre class=language-css>
+      @element '.feed' and (min-scroll-y: 100px) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any element with a class of <code>.feed</code> that has scrolled  <code>100px</code> or more vertical will have a green background.
+
+  <h3 id=max-scroll-y>Max-scroll-y</h3>
+
+  The <code>max-scroll-y</code> responsive condition applies to any scoped element that has scrolled a less than or equal (<code><=</code>) amount to the value specified in a vertical direction.
+
+  <div class=example>
+    Example <code>max-scroll-y</code> Element Query
+    <pre class=language-css>
+      @element '.feed' and (max-scroll-y: 100px) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any element with a class of <code>.feed</code> that has scrolled  <code>100px</code> or less vertically will have a green background.
+
+  <h3 id=min-scroll-x>Min-scroll-x</h3>
+
+  The <code>min-scroll-x</code> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code>>=</code>) amount to the value specified in a horizontal direction.
+
+  <div class=example>
+    Example <code>min-scroll-y</code> Element Query
+    <pre class=language-css>
+      @element '.feed' and (min-scroll-x: 100px) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any element with a class of <code>.feed</code> that has scrolled  <code>100px</code> or more horizontally will have a green background.
+
+
+  <h3 id=max-scroll-x>Max-scroll-x</h3>
+
+  The <code>max-scroll-x</code> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code><=</code>) amount to the value specified in a horizontal direction.
+
+  <div class=example>
+    Example <code>max-scroll-y</code> Element Query
+    <pre class=language-css>
+      @element '.feed' and (max-scroll-x: 100px) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any element with a class of <code>.feed</code> that has scrolled  <code>100px</code> or less horizontally will have a green background.
+
+  <h3 id=orientation>Orientation</h3>
+
+  The <code>orientation</code> responsive condition applies to any scoped element that matches the orientation specified. The following orientations are included: <code>landscape</code>, <code>square</code>, <code>portrait</code>
+  
+    <h4 id=landscape-orientation>Landscape Orientation</h4>
+
+    The <code>landscape</code> orientation applies when any scoped element has a greater width that height.
+
+    <div class=example>
+      Element Query for <code>landscape</code> Orientation</strong>
+      <pre class=language-css>
+        @element '.widget' and (orientation: landscape) {
+          $this {
+            background: lime;
+          }
+        }
+      </pre>
+    </div>
+
+    In this case any element with a class of <code>.widget</code> that is wider than it is tall will have a green background.
+
+    <h4 id=square-orientation>Square Orientation</h4>
+
+    The <code>square</code> orientation applies when any scoped element has an equal width and height.
+
+    <div class=example>
+      Element Query for <code>square</code> Orientation</strong>
+      <pre class=language-css>
+        @element '.widget' and (orientation: square) {
+          $this {
+            background: lime;
+          }
+        }
+      </pre>
+    </div>
+
+    In this case any element with a class of <code>.widget</code> that has an equal width and height will have a green background.
+
+    <h4 id=portrait-orientation>Portrait Orientation</h4>
+
+    The <code>portrait</code> orientation applies when any scoped element has a lesser width than height.
+
+    <div class=example>
+      Element Query for <code>landscape</code> Orientation</strong>
+      <pre class=language-css>
+        @element '.widget' and (orientation: portrait) {
+          $this {
+            background: lime;
+          }
+        }
+      </pre>
+    </div>
+
+    In this case any element with a class of <code>.widget</code> that is narrower than it is tall will have a green background.
+
+  <h3 id=min-aspect-ratio>Min-aspect-ratio</h3>
+
+  The <code>min-aspect-ratio</code> responsive condition applies to any scoped element with a greater or equal (<code>>=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
+
+  <div class=example>
+    Example <code>min-aspect-ratio</code>Element Query
+    <pre class=language-css>
+      @element '.widget' and (min-aspect-ratio: 16/9) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any element that had an aspect ratio of <code>16/9</code> or greater would have a green background.
+
+  <h3 id=max-aspect-ratio>Max-aspect-ratio</h3>
+
+  The <code>max-aspect-ratio</code> responsive condition applies to any scoped element with a less than or equal (<code><=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
+
+  <div class=example>
+    Example <code>max-aspect-ratio</code>Element Query
+    <pre class=language-css>
+      @element '.widget' and (max-aspect-ratio: 16/9) {
+        $this {
+          background: lime;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case any element that had an aspect ratio of <code>16/9</code> or lesser would have a green background.
+
+<h2 id=css-functions>CSS Functions</h2>
+
+  <h3 id=eval>eval("")</h3>
+
+  The <code>eval("")</code> function can be used anywhere inside a scope style or element query. It shares a scope with the element in the root of the scoped style.
+
+  When using <code>eval("")</code> you can write <code>eval</code>, followed by a pair of brackets (<code>(</code>,<code>)</code>) which contain JavaScript code, wrapped in either single (<code>'</code>) or double (<code>"</code>) quotes.
+  
+  This JavaScript can do something simple like reference the value of a variable, perform a simple calculation inline, or it can use the value return by a function.
+
+  <div class=example>
+    Accessing a JavaScript Variable with <code>eval("")</code></strong>
+    <pre class=language-html>
+      &lt;script>
+        var brandColor = 'lime'
+      &lt;/script>
+
+      &lt;style>
+        @element '.widget' {
+          $this {
+            background: eval("brandColor");
+          }
+        }
+      &lt;/style>
+    </pre>
+  </div>
+
+  In this case any element with a class of <code>.widget</code> will have a green background.
+
+  <div class=example>
+    Evaluating JavaScript Inline with <code>eval("")</code>
+    <pre class=language-css>
+      @element '.widget' {
+        font-size: eval("10 * 2")px;
+      }
+    </pre>
+  </div>
+
+  In this case our inline JavaScript (<code>10 * 2</code>) evaluates in place, leaving us with a font size of <code>20px</code>.
+
+  <div class=example>
+    Using Values Returned from Functions with <code>eval("")</code></strong>
+    <pre class=language-html>
+      &lt;script>
+        function addTen(number){
+          var number = parseInt(number) || 0
+          return number + 10
+        }
+      &lt;/script>
+
+      &lt;style>
+        @element '.widget' {
+          font-size: eval("addTen(15)")px;
+        }
+      &lt;/style>
+    </pre>
+  </div>
+
+  In this case any element with a class of <code>.widget</code> will have a font size of <code>25px</code>.
+
+  <h4 id=it-selector><code>$it</code> selector</h4>
+
+  By default, the inline evaluation of <code>eval("")</code> shares the same scope in JavaScript as the scoped element. This means for a scoped style like <code>@element '.icon' {}</code>, the following code will select the parent element of the scoped element.
+
+  <div class=example>
+    Example of <code>eval("")</code> with Implicit Context
+    <pre class=language-css>
+      @element '.widget' {
+        $this:before {
+          content: 'eval("parentNode.children.length")';
+        }
+      }
+    </pre>
+  </div>
+
+  In this case the pseudo-element <code>:before</code> the content of any element with a class of <code>.widget</code> will contain text of the number of child elements inside the parent element of our <code>.widget</code> element.
+
+  The meta-selector <code>$it</code> works inside <code>eval("")</code> as a placeholder for the scoped style. The following example is functionally equivalent to the last example.
+
+  <div class=example>
+    Example of <code>eval("")</code> with the <code>$it</code> Selector
+    <pre class=language-css>
+      @element '.widget' {
+        $this:before {
+          content: 'eval("$it.parentNode.children.length")';
+        }
+      }
+    </pre>
+  </div>
+
+<h2 id=element-based-units>Element-based Units</h2>
+
+  <h3 id=eq-units>EW units</h3>
+
+  The <code>EW</code> unit is equal to 1/100th of the width of any scoped element and is able to be used anywhere inside a scoped style.
+
+  <div class=example>
+    Example of <code>EW</code> Units Inside a Scoped Style
+    <pre class=language-css>
+      @element '.widget' {
+        $this {
+          font-size: 10ew;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 (or 1/10th) of the scoped element's width.
+
+  Note: This unit is similar to the <code>vw</code> viewport unit, but based on an element's dimensions.
+
+  <h3 id=eh-units>EH units</h3>
+
+  The <code>EH</code> unit is equal to 1/100th of the height of any scoped element and is able to be used anywhere inside a scoped style.
+
+  <div class=example>
+    Example of <code>EH</code> Units Inside a Scoped Style
+    <pre class=language-css>
+      @element '.widget' {
+        $this {
+          font-size: 10eh;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 (or 1/10th) of the scoped element's height.
+
+  Note: This unit is similar to the <code>vh</code> viewport unit, but based on an element's dimensions.
+
+  <h3 id=emin-units>EMIN units</h3>
+
+  The <code>EMIN</code> unit is equal to 1/100th of the smallest dimension (width or height) of any scoped element and is able to be used anywhere inside a scoped style.
+
+  <div class=example>
+    Example of <code>EMIN</code> Units Inside a Scoped Style
+    <pre class=language-css>
+      @element '.widget' {
+        $this {
+          font-size: 10emin;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 (or 1/10th) of the scoped element's shortest edge.
+
+  Note: This unit is similar to the <code>vmin</code> viewport unit, but based on an element's dimensions.
+
+  <h3 id=emax-units>EMAX units</h3>
+
+  The <code>EMAX</code> unit is equal to 1/100th of the largest dimension (width or height) of any scoped element and is able to be used anywhere inside a scoped style.
+
+  <div class=example>
+    Example of <code>EMAX</code> Units Inside a Scoped Style
+    <pre class=language-css>
+      @element '.widget' {
+        $this {
+          font-size: 10emax;
+        }
+      }
+    </pre>
+  </div>
+
+  In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 (or 1/10th) of the scoped element's longest edge.
+
+  Note: This unit is similar to the <code>vmax</code> viewport unit, but based on an element's dimensions.

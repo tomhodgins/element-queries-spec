@@ -1,0 +1,37 @@
+/* Element Queries External Script */
+
+/* Scoped Style */
+@element '#demo-1' {
+  html {
+    color: #333;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+}
+
+/* Element Query */
+@element '#demo-2' and (min-width: 500px) {
+  $this {
+    background: lime;
+  }
+}
+
+/* Container Query */
+@element '#demo-3' and (min-width: 500px) {
+  #demo-3 {
+    background: lime;
+  }
+}
+
+/* Multiple Selectors */
+@element '#demo-4, #demo-5' {
+  $this {
+    background: lime;
+  }
+}
+
+/* Multiple Conditions */
+@element '#demo-6' and (min-width: 500px) and (min-characters: 5) {
+  $this {
+    background: lime
+  }
+}
