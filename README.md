@@ -2,6 +2,10 @@
 
 A spec for a Container-Style Element Query Syntax
 
+**View online:** [element-queries.html](https://tomhodgins.github.io/element-queries-spec/element-queries.html)
+
+**View demo:** [demo.html](https://tomhodgins.github.io/element-queries-spec/demo.html)
+
 ## What is this about?
 
 This spec aims to define a container query-style syntax for scoped styles and element queries, as well a number of related concepts: new selectors, CSS functions, and new units that make them more usable & useful.
