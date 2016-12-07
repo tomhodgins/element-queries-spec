@@ -175,7 +175,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   <pre class=descdef>
     Name: $this
     For: meta-selectors
-    Value: $this
+    Value: $this | eq_this
     Type: selector
   </pre>
 
@@ -198,7 +198,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   <pre class=descdef>
     Name: $parent
     For: meta-selectors
-    Value: $parent
+    Value: $parent | eq_parent
     Type: selector
   </pre>
 
@@ -221,7 +221,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   <pre class=descdef>
     Name: $prev
     For: meta-selectors
-    Value: $prev
+    Value: $prev | eq-prev
     Type: selector
   </pre>
 
@@ -253,7 +253,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="min-width" for=@element>min-width</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) width to the specified value.
 
   <div class=example>
-    Example <code>min-width</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="min-width" for=@element>min-width</a> Element Query
     <pre class=language-css>
       @element '.widget' and (min-width: 200px) {
         $this {
@@ -276,7 +276,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="max-width" for=@element>max-width</a> responsive condition applies to any scoped element that has less than or equal (<code><=</code>) width to the specified value.
 
   <div class=example>
-    Example <code>min-width</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="max-width" for=@element>max-width</a> Element Query
     <pre class=language-css>
       @element '.widget' and (max-width: 200) {
         $this {
@@ -299,7 +299,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="min-height" for=@element>min-height</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) height to the specified value.
 
   <div class=example>
-    Example <code>min-height</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="min-height" for=@element>min-height</a> Element Query
     <pre class=language-css>
       @element '.widget' and (min-height: 50px) {
         $this {
@@ -322,7 +322,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="max-height" for=@element>max-height</a> responsive condition applies to any scoped element that has less than or equal (<code><=</code>) height to the specified value.
 
   <div class=example>
-    Example <code>max-height</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="max-height" for=@element>max-height</a> Element Query
     <pre class=language-css>
       @element '.widget' and (min-height: 50px) {
         $this {
@@ -345,7 +345,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="min-characters" for=@element>min-characters</a> responsive condition applies to any scoped element that contains a greater or equal (<code>>=</code>) number of characters.
 
   <div class=example>
-    Example <code>min-characters</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="min-characters" for=@element>min-characters</a> Element Query
     <pre class=language-css>
       @element 'input' and (min-characters: 5) {
         $this {
@@ -368,7 +368,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="max-characters" for=@element>max-characters</a> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of characters specified.
 
   <div class=example>
-    Example <code>max-characters</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="max-characters" for=@element>max-characters</a> Element Query
     <pre class=language-css>
       @element 'input' and (max-characters: 5) {
         $this {
@@ -391,7 +391,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="min-lines" for=@element>min-lines</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) to the number of specified lines of text.
 
   <div class=example>
-    Example <code>min-lines</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="min-lines" for=@element>min-lines</a> Element Query
     <pre class=language-css>
       @element 'textarea' and (min-lines: 3) {
         $this {
@@ -414,7 +414,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="max-lines" for=@element>max-lines</a> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of specified lines of text.
 
   <div class=example>
-    Example <code>max-lines</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="max-lines" for=@element>max-lines</a> Element Query
     <pre class=language-css>
       @element 'textarea' and (max-lines: 3) {
         $this {
@@ -437,7 +437,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="min-children" for=@element>min-children</a> responsive condition applies to any scoped element that contains greater than or equal (<code>>=</code>) to the number of child elements specified.
 
   <div class=example>
-    Example <code>min-children</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="min-children" for=@element>min-children</a> Element Query
     <pre class=language-css>
       @element '.social-icons' and (min-children: 5) {
         $this {
@@ -460,7 +460,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="max-children" for=@element>max-children</a> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of child elements specified.
 
   <div class=example>
-    Example <code>max-children</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="max-children" for=@element>max-children</a> Element Query
     <pre class=language-css>
       @element '.social-icons' and (max-children: 5) {
         $this {
@@ -483,7 +483,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="min-scroll-y" for=@element>min-scroll-y</a> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code>>=</code>) amount to the value specified in a vertical direction.
 
   <div class=example>
-    Example <code>min-scroll-y</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="min-scroll-y" for=@element>min-scroll-y</a> Element Query
     <pre class=language-css>
       @element '.feed' and (min-scroll-y: 100px) {
         $this {
@@ -506,7 +506,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="max-scroll-y" for=@element>max-scroll-y</a> responsive condition applies to any scoped element that has scrolled a less than or equal (<code><=</code>) amount to the value specified in a vertical direction.
 
   <div class=example>
-    Example <code>max-scroll-y</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="max-scroll-y" for=@element>max-scroll-y</a> Element Query
     <pre class=language-css>
       @element '.feed' and (max-scroll-y: 100px) {
         $this {
@@ -529,7 +529,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="min-scroll-x" for=@element>min-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code>>=</code>) amount to the value specified in a horizontal direction.
 
   <div class=example>
-    Example <code>min-scroll-y</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="min-scroll-x" for=@element>min-scroll-x</a> Element Query
     <pre class=language-css>
       @element '.feed' and (min-scroll-x: 100px) {
         $this {
@@ -552,7 +552,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="max-scroll-x" for=@element>max-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code><=</code>) amount to the value specified in a horizontal direction.
 
   <div class=example>
-    Example <code>max-scroll-y</code> Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="max-scroll-x" for=@element>max-scroll-x</a> Element Query
     <pre class=language-css>
       @element '.feed' and (max-scroll-x: 100px) {
         $this {
@@ -582,7 +582,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     </dl>
 
     <div class=example>
-      Element Query for <code>landscape</code> Orientation</strong>
+      Element Query for ''landscape'' Orientation</strong>
       <pre class=language-css>
         @element '.widget' and (orientation: landscape) {
           $this {
@@ -602,7 +602,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     </dl>
 
     <div class=example>
-      Element Query for <code>square</code> Orientation</strong>
+      Element Query for <a class="css" data-link-type="maybe" data-lt="square" for=@element/orientation>square</a> Orientation</strong>
       <pre class=language-css>
         @element '.widget' and (orientation: square) {
           $this {
@@ -622,7 +622,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     </dl>
 
     <div class=example>
-      Element Query for <code>landscape</code> Orientation</strong>
+      Element Query for ''portrait'' Orientation</strong>
       <pre class=language-css>
         @element '.widget' and (orientation: portrait) {
           $this {
@@ -645,7 +645,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="min-aspect-ratio" for=@element>min-aspect-ratio</a> responsive condition applies to any scoped element with a greater or equal (<code>>=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
 
   <div class=example>
-    Example <code>min-aspect-ratio</code>Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="min-aspect-ratio" for=@element>min-aspect-ratio</a> Element Query
     <pre class=language-css>
       @element '.widget' and (min-aspect-ratio: 16/9) {
         $this {
@@ -668,7 +668,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   The <a class="property" data-link-type="propdesc" data-lt="max-aspect-ratio" for=@element>max-aspect-ratio</a> responsive condition applies to any scoped element with a less than or equal (<code><=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
 
   <div class=example>
-    Example <code>max-aspect-ratio</code>Element Query
+    Example <a class="property" data-link-type="propdesc" data-lt="max-aspect-ratio" for=@element>max-aspect-ratio</a> Element Query
     <pre class=language-css>
       @element '.widget' and (max-aspect-ratio: 16/9) {
         $this {
@@ -746,7 +746,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
   <pre class=descdef>
     Name: $it
     For: meta-selectors
-    Value: $it
+    Value: $it | eq_it
     Type: selector
   </pre>
 
