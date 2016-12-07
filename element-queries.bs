@@ -166,6 +166,44 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
 
     In this example, if the element with an ID of <code>#headline</code> has over 20 characters, it will display in print media with a thin black border.
 
+    <h4 id=self-referential-element-queries>Self-Referential ''@element'' queries</h4>
+
+    With element queries comes the new possibility that the rules you are applying when your responsive conditions are met will conflict with the responsive condition in your element query. In this situation we should not attempt to detect or handle these cases by ignoring certain styles, or checking whether any of the rules affect the validity of the responsive condition. It is best to apply the rule naïvely and allow the conflict to occur.
+    
+    Note, The responsibility lies with the author to write ''@element'' queries which can be interpreted logically.
+
+    <div class=example>
+      <pre class=language-css>
+        @element '.widget' and (min‐width: 300px) {
+          $this {
+            width: 200px;
+          }
+        }
+      </pre>
+    </div>
+
+    In this example the query will only apply to elements with a class of <code>.widget</code> that are equal or wider than <code>300px</code>, and the rule sets a width on the same element which would make the rule no longer apply. Rather than trying to detect or intercept this behaviour and prevent it from happening, when the ''@element'' query applies to the document it will set the width to <code>200px</code>.
+
+    <h4 id=circular-referential-element-queries>Circular Referential ''@element'' queries</h4>
+
+    Another new possibility with element queries is having two or more queries that apply styles that match each others responsive condition. Just as with a self-referential ''@element'' query, we should not try to detect or ignore styles in this situation, and instead should compute the ''@element'' queries in the order they appear and apply the rules using normal CSS specificity.
+
+    <div class=example>
+      <pre class=language-css>
+        @element '.widget' and (min‐width: 400px) {
+          $this {
+            width: 200px;
+          }
+        }
+        @element '.widget' and (max‐width: 300px) {
+          $this {
+            width: 500px;
+          }
+        }
+      </pre>
+    </div>
+
+    In this example any element with a class of <code>.widget</code> that is equal to <code>400px</code> or wider will apply a rule setting the width of the same element to <code>200px</code>, which makes the following ''@element'' query valid. The second query sets a width of <code>500px</code> on the same element. In this case, even though the element now matches the responsive condition of the first query again, rather than get stuck in an infinite loop, we consider evaluation complete.
 
 <h2 id=meta-selectors>Meta-Selectors</h2>
 
