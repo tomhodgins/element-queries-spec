@@ -67,7 +67,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
 
   <h3 id=element-queries>Element Queries</h3>
 
-  The following global CSS and element query are equivalent.
+  The following global CSS and scoped style are equivalent.
 
   <div class=example>
     Example of Global CSS
@@ -132,7 +132,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
       </pre>
     </div>
 
-    Which in this case is equivalent to the following media query.
+    Which in this case can be compared to the equivalent media query.
 
     <div class=example>
       Media Query with Multiple Responsive Conditions
@@ -169,7 +169,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
 
 <h2 id=meta-selectors>Meta-Selectors</h2>
 
-  With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined.
+  With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined. These new selectors only work inside a scoped style or element query and are called ''meta-selectors''.
 
   <h3 id=this-selector><code>$this</code> selector</h3>
   <pre class=descdef>
@@ -179,7 +179,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: selector
   </pre>
 
-  The first of these meta-selectors is <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a>, which refers each  element at the root of our scoped style when it matches the responsive condition.
+  The <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a> meta-selector refers each element at the root of our scoped style when it matches the responsive condition.
 
   <div class=example>
     Example of <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a> meta-selector
@@ -192,7 +192,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     </pre>
   </div>
 
-  In this case, any element with a class of <code>.widget</code> that is 200 or more pixels wide will have a green background.
+  In this case, any element with a class of <code>.widget</code> that is <code>200px</code> or wider will have a green background.
 
   <h3 id=parent-selector><code>$parent</code> selector</h3>
   <pre class=descdef>
@@ -273,7 +273,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: range
   </pre>
 
-  The <a class="property" data-link-type="propdesc" data-lt="max-width" for=@element>max-width</a> responsive condition applies to any scoped element that has less than or equal (<code><=</code>) width to the specified value.
+  The <a class="property" data-link-type="propdesc" data-lt="max-width" for=@element>max-width</a> responsive condition applies to any scoped element that has lesser or equal (<code><=</code>) width to the specified value.
 
   <div class=example>
     Example <a class="property" data-link-type="propdesc" data-lt="max-width" for=@element>max-width</a> Element Query
@@ -319,7 +319,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: range
   </pre>
 
-  The <a class="property" data-link-type="propdesc" data-lt="max-height" for=@element>max-height</a> responsive condition applies to any scoped element that has less than or equal (<code><=</code>) height to the specified value.
+  The <a class="property" data-link-type="propdesc" data-lt="max-height" for=@element>max-height</a> responsive condition applies to any scoped element that has lesser or equal (<code><=</code>) height to the specified value.
 
   <div class=example>
     Example <a class="property" data-link-type="propdesc" data-lt="max-height" for=@element>max-height</a> Element Query
@@ -365,7 +365,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: range
   </pre>
 
-  The <a class="property" data-link-type="propdesc" data-lt="max-characters" for=@element>max-characters</a> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of characters specified.
+  The <a class="property" data-link-type="propdesc" data-lt="max-characters" for=@element>max-characters</a> responsive condition applies to any scoped element that contains lesser or equal (<code><=</code>) number of characters specified.
 
   <div class=example>
     Example <a class="property" data-link-type="propdesc" data-lt="max-characters" for=@element>max-characters</a> Element Query
@@ -388,7 +388,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: range
   </pre>
 
-  The <a class="property" data-link-type="propdesc" data-lt="min-lines" for=@element>min-lines</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) to the number of specified lines of text.
+  The <a class="property" data-link-type="propdesc" data-lt="min-lines" for=@element>min-lines</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of specified lines of text.
 
   <div class=example>
     Example <a class="property" data-link-type="propdesc" data-lt="min-lines" for=@element>min-lines</a> Element Query
@@ -411,7 +411,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: range
   </pre>
 
-  The <a class="property" data-link-type="propdesc" data-lt="max-lines" for=@element>max-lines</a> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of specified lines of text.
+  The <a class="property" data-link-type="propdesc" data-lt="max-lines" for=@element>max-lines</a> responsive condition applies to any scoped element that contains lesser or equal (<code><=</code>) number of specified lines of text.
 
   <div class=example>
     Example <a class="property" data-link-type="propdesc" data-lt="max-lines" for=@element>max-lines</a> Element Query
@@ -434,7 +434,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: range
   </pre>
 
-  The <a class="property" data-link-type="propdesc" data-lt="min-children" for=@element>min-children</a> responsive condition applies to any scoped element that contains greater than or equal (<code>>=</code>) to the number of child elements specified.
+  The <a class="property" data-link-type="propdesc" data-lt="min-children" for=@element>min-children</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of child elements specified.
 
   <div class=example>
     Example <a class="property" data-link-type="propdesc" data-lt="min-children" for=@element>min-children</a> Element Query
@@ -457,7 +457,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: range
   </pre>
 
-  The <a class="property" data-link-type="propdesc" data-lt="max-children" for=@element>max-children</a> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of child elements specified.
+  The <a class="property" data-link-type="propdesc" data-lt="max-children" for=@element>max-children</a> responsive condition applies to any scoped element that contains lesser or equal (<code><=</code>) number of child elements specified.
 
   <div class=example>
     Example <a class="property" data-link-type="propdesc" data-lt="max-children" for=@element>max-children</a> Element Query
@@ -480,7 +480,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: range
   </pre>
 
-  The <a class="property" data-link-type="propdesc" data-lt="min-scroll-y" for=@element>min-scroll-y</a> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code>>=</code>) amount to the value specified in a vertical direction.
+  The <a class="property" data-link-type="propdesc" data-lt="min-scroll-y" for=@element>min-scroll-y</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a vertical direction.
 
   <div class=example>
     Example <a class="property" data-link-type="propdesc" data-lt="min-scroll-y" for=@element>min-scroll-y</a> Element Query
@@ -503,7 +503,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: range
   </pre>
 
-  The <a class="property" data-link-type="propdesc" data-lt="max-scroll-y" for=@element>max-scroll-y</a> responsive condition applies to any scoped element that has scrolled a less than or equal (<code><=</code>) amount to the value specified in a vertical direction.
+  The <a class="property" data-link-type="propdesc" data-lt="max-scroll-y" for=@element>max-scroll-y</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code><=</code>) amount to the value specified in a vertical direction.
 
   <div class=example>
     Example <a class="property" data-link-type="propdesc" data-lt="max-scroll-y" for=@element>max-scroll-y</a> Element Query
@@ -526,7 +526,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: range
   </pre>
 
-  The <a class="property" data-link-type="propdesc" data-lt="min-scroll-x" for=@element>min-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code>>=</code>) amount to the value specified in a horizontal direction.
+  The <a class="property" data-link-type="propdesc" data-lt="min-scroll-x" for=@element>min-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a horizontal direction.
 
   <div class=example>
     Example <a class="property" data-link-type="propdesc" data-lt="min-scroll-x" for=@element>min-scroll-x</a> Element Query
@@ -549,7 +549,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: range
   </pre>
 
-  The <a class="property" data-link-type="propdesc" data-lt="max-scroll-x" for=@element>max-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code><=</code>) amount to the value specified in a horizontal direction.
+  The <a class="property" data-link-type="propdesc" data-lt="max-scroll-x" for=@element>max-scroll-x</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code><=</code>) amount to the value specified in a horizontal direction.
 
   <div class=example>
     Example <a class="property" data-link-type="propdesc" data-lt="max-scroll-x" for=@element>max-scroll-x</a> Element Query
@@ -574,6 +574,46 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
 
   The 'orientation' responsive condition applies to any scoped element that matches the orientation specified. The following orientations are included: ''landscape'', <a class="css" data-link-type="maybe" data-lt="square" for=@element/orientation>square</a>, ''portrait''
 
+<h4 id=portrait-orientation>Portrait Orientation</h4>
+
+    <dl dfn-type=value dfn-for=@element/orientation>
+      <dt><dfn>portrait</dfn>
+      <dd>The 'orientation' is ''portrait'' if the scoped element has a greater (<code>></code>) height than width
+    </dl>
+
+    <div class=example>
+      Element Query for ''portrait'' Orientation</strong>
+      <pre class=language-css>
+        @element '.widget' and (orientation: portrait) {
+          $this {
+            background: lime;
+          }
+        }
+      </pre>
+    </div>
+
+    In this case any element with a class of <code>.widget</code> that is narrower than it is tall will have a green background.
+
+    <h4 id=square-orientation>Square Orientation</h4>
+
+    <dl dfn-type=value dfn-for=@element/orientation>
+      <dt><dfn>square</dfn>
+      <dd>The 'orientation' is <a class="css" data-link-type="maybe" data-lt="square" for=@element/orientation>square</a> if the scoped element has an equal (<code>=</code>) height and width
+    </dl>
+
+    <div class=example>
+      Element Query for <a class="css" data-link-type="maybe" data-lt="square" for=@element/orientation>square</a> Orientation</strong>
+      <pre class=language-css>
+        @element '.widget' and (orientation: square) {
+          $this {
+            background: lime;
+          }
+        }
+      </pre>
+    </div>
+
+    In this case any element with a class of <code>.widget</code> that has an equal width and height will have a green background.
+
     <h4 id=landscape-orientation>Landscape Orientation</h4>
 
     <dl dfn-type=value dfn-for=@element/orientation>
@@ -593,46 +633,6 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     </div>
 
     In this case any element with a class of <code>.widget</code> that is wider than it is tall will have a green background.
-
-    <h4 id=square-orientation>Square Orientation</h4>
-
-    <dl dfn-type=value dfn-for=@element/orientation>
-      <dt><dfn>square</dfn>
-      <dd>The 'orientation' is <a class="css" data-link-type="maybe" data-lt="square" for=@element/orientation>square</a> if the scoped element has an equal (<code>=</code>) height than width
-    </dl>
-
-    <div class=example>
-      Element Query for <a class="css" data-link-type="maybe" data-lt="square" for=@element/orientation>square</a> Orientation</strong>
-      <pre class=language-css>
-        @element '.widget' and (orientation: square) {
-          $this {
-            background: lime;
-          }
-        }
-      </pre>
-    </div>
-
-    In this case any element with a class of <code>.widget</code> that has an equal width and height will have a green background.
-
-    <h4 id=portrait-orientation>Portrait Orientation</h4>
-
-    <dl dfn-type=value dfn-for=@element/orientation>
-      <dt><dfn>portrait</dfn>
-      <dd>The 'orientation' is ''portrait'' if the scoped element has a greater (<code>></code>) height than width
-    </dl>
-
-    <div class=example>
-      Element Query for ''portrait'' Orientation</strong>
-      <pre class=language-css>
-        @element '.widget' and (orientation: portrait) {
-          $this {
-            background: lime;
-          }
-        }
-      </pre>
-    </div>
-
-    In this case any element with a class of <code>.widget</code> that is narrower than it is tall will have a green background.
 
   <h3 id=min-aspect-ratio>Min-aspect-ratio</h3>
   <pre class=descdef>
@@ -665,7 +665,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     Type: range
   </pre>
 
-  The <a class="property" data-link-type="propdesc" data-lt="max-aspect-ratio" for=@element>max-aspect-ratio</a> responsive condition applies to any scoped element with a less than or equal (<code><=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
+  The <a class="property" data-link-type="propdesc" data-lt="max-aspect-ratio" for=@element>max-aspect-ratio</a> responsive condition applies to any scoped element with a lesser or equal (<code><=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
 
   <div class=example>
     Example <a class="property" data-link-type="propdesc" data-lt="max-aspect-ratio" for=@element>max-aspect-ratio</a> Element Query
@@ -780,6 +780,8 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
 
 <h2 id=element-based-units>Element-based Units</h2>
 
+  Just as CSS has viewport-based units: ''vw'', ''vh'', ''vmin'', and ''vmax'' which represent a distance equal to 1/100th of the viewport width, height, shortest edge, and longest edge. In a similar way the following element-based units 'ew', 'eh', 'emin', and 'emax' represent a distance equal to 1/100th of the element's own width, height, shortest edge, and longest edge.
+
   <h3 id=eq-units>EW units</h3>
   <pre class=descdef>
     Name: ew
@@ -801,7 +803,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     </pre>
   </div>
 
-  In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 (or 1/10th) of the scoped element's width.
+  In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 of the scoped element's width.
 
   Note, This unit is similar to the ''vw'' viewport unit, but based on an element's dimensions.
 
@@ -826,7 +828,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     </pre>
   </div>
 
-  In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 (or 1/10th) of the scoped element's height.
+  In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 of the scoped element's height.
 
   Note, This unit is similar to the ''vh'' viewport unit, but based on an element's dimensions.
 
@@ -851,7 +853,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     </pre>
   </div>
 
-  In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 (or 1/10th) of the scoped element's shortest edge.
+  In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 of the scoped element's shortest edge.
 
   Note, This unit is similar to the ''vmin'' viewport unit, but based on an element's dimensions.
 
@@ -876,6 +878,6 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     </pre>
   </div>
 
-  In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 (or 1/10th) of the scoped element's longest edge.
+  In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 of the scoped element's longest edge.
 
   Note, This unit is similar to the ''vmax'' viewport unit, but based on an element's dimensions.
