@@ -1,39 +1,47 @@
-<link href=https://drafts.csswg.org/default.css rel=stylesheet>
-
-<h1 id=element-queries>Element Queries</h1>
-
 <pre class=metadata>
+Title: Element Queries
 Shortname: element-queries
+Level: 1
 Status: DREAM
+URL: https://github.com/tomhodgins/element-queries-spec
+Repository: tomhodgins/element-query-spec
 Editor: Tommy Hodgins, tomhodgins@gmail.com
-Abstract: To provide a syntax for scoped styles and container query styled element queries
+Abstract: The goal of this document is to specify a syntax for scoped styles and element queries in a container query style, as well as the related selectors, functions, and units that make scoped styles and element queries versatile and powerful way to write layout-independent responsive conditions for elements in CSS.
 </pre>
 
 <h2 id=eqcss-syntax>EQCSS Syntax</h2>
 
-  <code>element_query</code> = @element <code>selector_list</code> <code>[ condition_list ]</code> { <code>css_code</code> }
+  <pre>
 
-  <code>selector_list</code> = " <code>css_selector</code> [ "," <code>css_selector</code> ]* "
+    <dfn data-dfn-type=at-rule id=at-ruledef-element>@element</dfn> = <<scoped-style>>
 
-  <code>condition_list</code> = and ( <code>query_condition</code> : <code>value</code> ) [ "and (" <code>query_condition</code> ":" <code>value</code> ")" ]*
+    <dfn data-dfn-type=type>&lt;scoped-style></dfn> = @element " <<selector-list>> " [ <<condition-list>> ] { <<rule-list>> }
 
-  <code>value</code> = number [ <code>css_unit</code> ]
+    <dfn data-dfn-type=type>&lt;condition-list></dfn> = [ and ( <<eq-condition>> )* ]
 
-  <code>query_condition</code> = min-height | max-height | min-width| max-width | min-characters | max-characters | min-lines | max-lines | min-children | max-children | min-scroll-y | max-scroll-y | min-scroll-x | max-scroll-x | orientation | min-aspect-ratio | max-aspect-ratio
+    <dfn data-dfn-type=type>&lt;eq-condition></dfn> = <<eq-name>> : <<eq-value>>
 
-  <code>css_unit</code> = % | px | pt | em | cm | mm | in | rem | ex | ch | pc | vw | vh | vmin | vmax | square | portrait | landscape | width/height
+    <dfn data-dfn-type=type>&lt;eq-name></dfn> = <<ident>>
 
-<h2 id=style-scoping>Style Scoping</h2>
+    <dfn data-dfn-type=type>&lt;eq-value></dfn> = <<number>> | <<dimension>> | <<ratio>> | <<ident>>
+
+    <dfn data-dfn-type=at-rule id=at-ruledef-meta-selectors>meta-selectors</dfn> = $this | $parent | $prev | $it
+
+    <dfn data-dfn-type=at-rule id=at-ruledef-units>element-based-units</dfn> = ew | eh | emin | emax
+
+  </pre>
+
+  <h2 id=style-scoping>Style Scoping</h2>
 
   <h3 id=scoped-styles>Scoped Styles</h3>
 
-  By default all CSS is written from the global scope (<code>:root</code>, or the HTML element), and <code>@media</code> queries apply based on the conditions of the browser and media.
+  By default all CSS is written from the global scope ('':root'', or the HTML element), and ''@media'' queries apply based on the conditions of the browser and media.
 
-  The idea of style scoping is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as thought it was <code>:root</code>
+  The idea of style scoping is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as thought it was '':root''
 
-  Just like CSS has <code>@media</code> queries which help us define styles for different media, this document describes functionality for an <code>@element</code> query syntax to allow us to write styles that target elements more specifically based on their own properties.
-  
-  To write a scoped style, write <code>@element</code>, followed by any amount of whitespace. Wrap one or more comma-separated CSS selectors in single (<code>'</code>) or double (<code>"</code>) quotes, followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).
+  Just like CSS has ''@media'' queries which help us define styles for different media, this document describes functionality for an ''@element'' query syntax to allow us to write styles that target elements more specifically based on their own properties.
+
+  To write a scoped style, write ''@element'', followed by any amount of whitespace. Wrap one or more comma-separated CSS <<selector>> in single (<code>'</code>) or double (<code>"</code>) quotes, followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).
 
   <div class=example>
     Example Scoped Style</strong>
@@ -57,7 +65,7 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
     </pre>
   </div>
 
-  <h3 id=element-query>Element Query</h3>
+  <h3 id=element-queries>Element Queries</h3>
 
   The following global CSS and element query are equivalent.
 
@@ -82,7 +90,7 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   </div>
 
   In both cases, as long as there is a <code>body</code> element inside of our <code>html</code>, it will have a lime background.
-  
+
   We can also add a responsive conditions to our scoped styles. To do this, write <code>and </code> followed by a responsive condition and value, separated by a colon (<code>:</code>) and wrapped in brackets (<code>(</code>,<code>)</code>).
 
   <div class=example>
@@ -109,65 +117,72 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
     </pre>
   </div>
 
-  <h4 id=multiple-conditions>Multiple Conditions</h4>
+    <h4 id=multiple-conditions>Multiple Conditions</h4>
 
-  You can add more than one responsive conditions to your element query. For this, include another <code>and</code>, followed by another responsive condition as before.
+    You can add more than one responsive conditions to your element query. For this, include another <code>and</code>, followed by another responsive condition as before.
 
-  <div class=example>
-    Element Query with Multiple Responsive Conditions
-    <pre class=language-css>
-      @element 'html' and (min-width: 500px) and (max-width: 1000px) {
-        body {
-          background: lime;
-        }
-      }
-    </pre>
-  </div>
-
-  Which in this case is equivalent to the following media query.
-
-  <div class=example>
-    Media Query with Multiple Responsive Conditions
-    <pre class=language-css>
-      @media (min-width: 500px) and (max-width: 1000px) {
-        body {
-          background: lime;
-        }
-      }
-    </pre>
-  </div>
-
-  In both cases when our <code>html</code> is between the sizes of <code>500px</code> and <code>1000px</code>, our <code>body</code> will have a lime background.
-
-  <h4 id=combining-element-and-media-queries>Combining <code>@element</code> and <code>@media</code> queries</h4>
-
-  It's possible to combine the use of scoped styles or element queries with media queries. Most of the time we combine them we want to include the media query on the inside of the element query. This will mean any time the element query is true, that media query will be visible to the browser and apply.
-
-  <div class=example>
-    Nesting a Media Query inside an Element Query
-    <pre class=language-css>
-      @element '#headline' and (min-characters: 20) {
-        @media print {
-          #headline {
-            border: 1px solid black;
+    <div class=example>
+      Element Query with Multiple Responsive Conditions
+      <pre class=language-css>
+        @element 'html' and (min-width: 500px) and (max-width: 1000px) {
+          body {
+            background: lime;
           }
         }
-      }
-    </pre>
-  </div>
+      </pre>
+    </div>
 
-  In this example, if the element with an ID of <code>#headline</code> has over 20 characters, it will display in print media with a thin black border.
+    Which in this case is equivalent to the following media query.
+
+    <div class=example>
+      Media Query with Multiple Responsive Conditions
+      <pre class=language-css>
+        @media (min-width: 500px) and (max-width: 1000px) {
+          body {
+            background: lime;
+          }
+        }
+      </pre>
+    </div>
+
+    In both cases when our <code>html</code> is between the sizes of <code>500px</code> and <code>1000px</code>, our <code>body</code> will have a lime background.
+
+    <h4 id=combining-element-and-media-queries>Combining ''@element'' and ''@media'' queries</h4>
+
+    It's possible to combine the use of scoped styles or element queries with media queries. Most of the time we combine them we want to include the media query on the inside of the element query. This will mean any time the element query is true, that media query will be visible to the browser and apply.
+
+    <div class=example>
+      Nesting a Media Query inside an Element Query
+      <pre class=language-css>
+        @element '#headline' and (min-characters: 20) {
+          @media print {
+            #headline {
+              border: 1px solid black;
+            }
+          }
+        }
+      </pre>
+    </div>
+
+    In this example, if the element with an ID of <code>#headline</code> has over 20 characters, it will display in print media with a thin black border.
+
 
 <h2 id=meta-selectors>Meta-Selectors</h2>
 
   With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined.
 
   <h3 id=this-selector><code>$this</code> selector</h3>
+  <pre class=descdef>
+    Name: $this
+    For: meta-selectors
+    Value: $this
+    Type: selector
+  </pre>
 
-  The first of these meta-selectors is <code>$this</code>, which refers each  element at the root of our scoped style when it matches the responsive condition.
+  The first of these meta-selectors is <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a>, which refers each  element at the root of our scoped style when it matches the responsive condition.
 
   <div class=example>
-    Example of <code>$this</code> meta-selector
+    Example of <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a> meta-selector
     <pre class=language-css>
       @element '.widget' and (min-width: 200px) {
         $this {
@@ -180,11 +195,17 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case, any element with a class of <code>.widget</code> that is 200 or more pixels wide will have a green background.
 
   <h3 id=parent-selector><code>$parent</code> selector</h3>
+  <pre class=descdef>
+    Name: $parent
+    For: meta-selectors
+    Value: $parent
+    Type: selector
+  </pre>
 
-  The <code>$parent</code> meta-selector refers to the element containing the element(s) in the scope of our scoped style or element query.
+  The <a class="property" data-link-type="propdesc" data-lt="$parent" for=meta-selectors>$parent</a> meta-selector refers to the element containing the element(s) in the scope of our scoped style or element query.
 
   <div class=example>
-    Example of <code>$this</code> meta-selector
+    Example of <a class="property" data-link-type="propdesc" data-lt="$parent" for=meta-selectors>$parent</a> meta-selector
     <pre class=language-css>
       @element '.widget' and (min-width: 200px) {
         $parent {
@@ -197,11 +218,17 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case, any element containing an element with a class of <code>.widget</code> that is equal or wider than <code>200px</code> will have a green background.
 
   <h3 id=prev-selector><code>$prev</code> selector</h3>
+  <pre class=descdef>
+    Name: $prev
+    For: meta-selectors
+    Value: $prev
+    Type: selector
+  </pre>
 
-  The <code>$prev</code> meta-selector refers to the sibling directly above the element at the root of our scoped style or element query.
+  The <a class="property" data-link-type="propdesc" data-lt="$prev" for=meta-selectors>$prev</a> meta-selector refers to the sibling directly above the element at the root of our scoped style or element query.
 
   <div class=example>
-    Example of <code>$this</code> meta-selector
+    Example of <a class="property" data-link-type="propdesc" data-lt="$prev" for=meta-selectors>$prev</a> meta-selector
     <pre class=language-css>
       @element '.widget' {
         $prev {
@@ -216,8 +243,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
 <h2 id=responsive-conditions>Responsive Conditions</h2>
 
   <h3 id=min-width>Min-width</h3>
+  <pre class=descdef>
+    Name: min-width
+    Value: <<dimension>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>min-width</code> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) width to the specified value.
+  The <a class="property" data-link-type="propdesc" data-lt="min-width" for=@element>min-width</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) width to the specified value.
 
   <div class=example>
     Example <code>min-width</code> Element Query
@@ -233,8 +266,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any element with a class of <code>.widget</code> that is at least <code>200px</code> or wider will have a green background.
 
   <h3 id=max-width>Max-width</h3>
+  <pre class=descdef>
+    Name: max-width
+    Value: <<dimension>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>max-width</code> responsive condition applies to any scoped element that has less than or equal (<code><=</code>) width to the specified value.
+  The <a class="property" data-link-type="propdesc" data-lt="max-width" for=@element>max-width</a> responsive condition applies to any scoped element that has less than or equal (<code><=</code>) width to the specified value.
 
   <div class=example>
     Example <code>min-width</code> Element Query
@@ -250,8 +289,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any element with a class of <code>.widget</code> that <code>200px</code> or narrower will have a green background.
 
   <h3 id=min-height>Min-height</h3>
+  <pre class=descdef>
+    Name: min-height
+    Value: <<dimension>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>min-height</code> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) height to the specified value.
+  The <a class="property" data-link-type="propdesc" data-lt="min-height" for=@element>min-height</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) height to the specified value.
 
   <div class=example>
     Example <code>min-height</code> Element Query
@@ -267,8 +312,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any element with a class of <code>.widget</code> that is at least <code>50px</code> or taller will have a green background.
 
   <h3 id=max-height>Max-height</h3>
+  <pre class=descdef>
+    Name: max-height
+    Value: <<dimension>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>max-height</code> responsive condition applies to any scoped element that has less than or equal (<code><=</code>) height to the specified value.
+  The <a class="property" data-link-type="propdesc" data-lt="max-height" for=@element>max-height</a> responsive condition applies to any scoped element that has less than or equal (<code><=</code>) height to the specified value.
 
   <div class=example>
     Example <code>max-height</code> Element Query
@@ -284,8 +335,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any element with a class of <code>.widget</code> that is at least <code>50px</code> or shorter will have a green background.
 
   <h3 id=min-characters>Min-characters</h3>
+  <pre class=descdef>
+    Name: min-characters
+    Value: <<number>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>min-characters</code> responsive condition applies to any scoped element that contains a greater or equal (<code>>=</code>) number of characters.
+  The <a class="property" data-link-type="propdesc" data-lt="min-characters" for=@element>min-characters</a> responsive condition applies to any scoped element that contains a greater or equal (<code>>=</code>) number of characters.
 
   <div class=example>
     Example <code>min-characters</code> Element Query
@@ -301,8 +358,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any input with 5 or more characters will have a green background.
 
   <h3 id=max-characters>Max-characters</h3>
+  <pre class=descdef>
+    Name: max-characters
+    Value: <<number>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>max-characters</code> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of characters specified.
+  The <a class="property" data-link-type="propdesc" data-lt="max-characters" for=@element>max-characters</a> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of characters specified.
 
   <div class=example>
     Example <code>max-characters</code> Element Query
@@ -318,8 +381,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any input with 5 or fewer characters will have a green background.
 
   <h3 id=min-lines>Min-lines</h3>
+  <pre class=descdef>
+    Name: min-lines
+    Value: <<number>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>min-lines</code> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) to the number of specified lines of text.
+  The <a class="property" data-link-type="propdesc" data-lt="min-lines" for=@element>min-lines</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) to the number of specified lines of text.
 
   <div class=example>
     Example <code>min-lines</code> Element Query
@@ -335,8 +404,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any textarea with 3 or more lines will have a green background.
 
   <h3 id=max-lines>Max-lines</h3>
+  <pre class=descdef>
+    Name: max-lines
+    Value: <<number>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>max-lines</code> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of specified lines of text.
+  The <a class="property" data-link-type="propdesc" data-lt="max-lines" for=@element>max-lines</a> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of specified lines of text.
 
   <div class=example>
     Example <code>max-lines</code> Element Query
@@ -352,8 +427,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any textarea with 3 or fewer lines will have a green background.
 
   <h3 id=min-children>Min-children</h3>
+  <pre class=descdef>
+    Name: min-children
+    Value: <<number>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>min-children</code> responsive condition applies to any scoped element that contains greater than or equal (<code>>=</code>) to the number of child elements specified.
+  The <a class="property" data-link-type="propdesc" data-lt="min-children" for=@element>min-children</a> responsive condition applies to any scoped element that contains greater than or equal (<code>>=</code>) to the number of child elements specified.
 
   <div class=example>
     Example <code>min-children</code> Element Query
@@ -369,8 +450,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any element with a class of <code>.social-icons</code> that contains more 5 or more direct descendants will have a green background.
 
   <h3 id=max-children>Max-children</h3>
+  <pre class=descdef>
+    Name: max-children
+    Value: <<number>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>max-children</code> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of child elements specified.
+  The <a class="property" data-link-type="propdesc" data-lt="max-children" for=@element>max-children</a> responsive condition applies to any scoped element that contains less than or equal (<code><=</code>) to the number of child elements specified.
 
   <div class=example>
     Example <code>max-children</code> Element Query
@@ -386,8 +473,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any element with a class of <code>.social-icons</code> that contains more 5 or fewer direct descendants will have a green background.
 
   <h3 id=min-scroll-y>Min-scroll-y</h3>
+  <pre class=descdef>
+    Name: min-scroll-y
+    Value: <<dimension>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>min-scroll-y</code> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code>>=</code>) amount to the value specified in a vertical direction.
+  The <a class="property" data-link-type="propdesc" data-lt="min-scroll-y" for=@element>min-scroll-y</a> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code>>=</code>) amount to the value specified in a vertical direction.
 
   <div class=example>
     Example <code>min-scroll-y</code> Element Query
@@ -403,8 +496,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any element with a class of <code>.feed</code> that has scrolled  <code>100px</code> or more vertical will have a green background.
 
   <h3 id=max-scroll-y>Max-scroll-y</h3>
+  <pre class=descdef>
+    Name: max-scroll-y
+    Value: <<dimension>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>max-scroll-y</code> responsive condition applies to any scoped element that has scrolled a less than or equal (<code><=</code>) amount to the value specified in a vertical direction.
+  The <a class="property" data-link-type="propdesc" data-lt="max-scroll-y" for=@element>max-scroll-y</a> responsive condition applies to any scoped element that has scrolled a less than or equal (<code><=</code>) amount to the value specified in a vertical direction.
 
   <div class=example>
     Example <code>max-scroll-y</code> Element Query
@@ -420,8 +519,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any element with a class of <code>.feed</code> that has scrolled  <code>100px</code> or less vertically will have a green background.
 
   <h3 id=min-scroll-x>Min-scroll-x</h3>
+  <pre class=descdef>
+    Name: min-scroll-x
+    Value: <<dimension>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>min-scroll-x</code> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code>>=</code>) amount to the value specified in a horizontal direction.
+  The <a class="property" data-link-type="propdesc" data-lt="min-scroll-x" for=@element>min-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code>>=</code>) amount to the value specified in a horizontal direction.
 
   <div class=example>
     Example <code>min-scroll-y</code> Element Query
@@ -436,10 +541,15 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
 
   In this case any element with a class of <code>.feed</code> that has scrolled  <code>100px</code> or more horizontally will have a green background.
 
-
   <h3 id=max-scroll-x>Max-scroll-x</h3>
+  <pre class=descdef>
+    Name: max-scroll-x
+    Value: <<dimension>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>max-scroll-x</code> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code><=</code>) amount to the value specified in a horizontal direction.
+  The <a class="property" data-link-type="propdesc" data-lt="max-scroll-x" for=@element>max-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater than or equal (<code><=</code>) amount to the value specified in a horizontal direction.
 
   <div class=example>
     Example <code>max-scroll-y</code> Element Query
@@ -455,12 +565,21 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any element with a class of <code>.feed</code> that has scrolled  <code>100px</code> or less horizontally will have a green background.
 
   <h3 id=orientation>Orientation</h3>
+  <pre class=descdef>
+    Name: orientation
+    Value: portrait | square | landscape
+    For: @element
+    Type: discrete
+  </pre>
 
-  The <code>orientation</code> responsive condition applies to any scoped element that matches the orientation specified. The following orientations are included: <code>landscape</code>, <code>square</code>, <code>portrait</code>
-  
+  The 'orientation' responsive condition applies to any scoped element that matches the orientation specified. The following orientations are included: ''landscape'', <a class="css" data-link-type="maybe" data-lt="square" for=@element/orientation>square</a>, ''portrait''
+
     <h4 id=landscape-orientation>Landscape Orientation</h4>
 
-    The <code>landscape</code> orientation applies when any scoped element has a greater width that height.
+    <dl dfn-type=value dfn-for=@element/orientation>
+      <dt><dfn>landscape</dfn>
+      <dd>The 'orientation' is ''landscape'' if the scoped element has a greater (<code>></code>) width than height
+    </dl>
 
     <div class=example>
       Element Query for <code>landscape</code> Orientation</strong>
@@ -477,7 +596,10 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
 
     <h4 id=square-orientation>Square Orientation</h4>
 
-    The <code>square</code> orientation applies when any scoped element has an equal width and height.
+    <dl dfn-type=value dfn-for=@element/orientation>
+      <dt><dfn>square</dfn>
+      <dd>The 'orientation' is <a class="css" data-link-type="maybe" data-lt="square" for=@element/orientation>square</a> if the scoped element has an equal (<code>=</code>) height than width
+    </dl>
 
     <div class=example>
       Element Query for <code>square</code> Orientation</strong>
@@ -494,7 +616,10 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
 
     <h4 id=portrait-orientation>Portrait Orientation</h4>
 
-    The <code>portrait</code> orientation applies when any scoped element has a lesser width than height.
+    <dl dfn-type=value dfn-for=@element/orientation>
+      <dt><dfn>portrait</dfn>
+      <dd>The 'orientation' is ''portrait'' if the scoped element has a greater (<code>></code>) height than width
+    </dl>
 
     <div class=example>
       Element Query for <code>landscape</code> Orientation</strong>
@@ -510,8 +635,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
     In this case any element with a class of <code>.widget</code> that is narrower than it is tall will have a green background.
 
   <h3 id=min-aspect-ratio>Min-aspect-ratio</h3>
+  <pre class=descdef>
+    Name: min-aspect-ratio
+    Value: <<ratio>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>min-aspect-ratio</code> responsive condition applies to any scoped element with a greater or equal (<code>>=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
+  The <a class="property" data-link-type="propdesc" data-lt="min-aspect-ratio" for=@element>min-aspect-ratio</a> responsive condition applies to any scoped element with a greater or equal (<code>>=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
 
   <div class=example>
     Example <code>min-aspect-ratio</code>Element Query
@@ -527,8 +658,14 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any element that had an aspect ratio of <code>16/9</code> or greater would have a green background.
 
   <h3 id=max-aspect-ratio>Max-aspect-ratio</h3>
+  <pre class=descdef>
+    Name: max-aspect-ratio
+    Value: <<ratio>>
+    For: @element
+    Type: range
+  </pre>
 
-  The <code>max-aspect-ratio</code> responsive condition applies to any scoped element with a less than or equal (<code><=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
+  The <a class="property" data-link-type="propdesc" data-lt="max-aspect-ratio" for=@element>max-aspect-ratio</a> responsive condition applies to any scoped element with a less than or equal (<code><=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
 
   <div class=example>
     Example <code>max-aspect-ratio</code>Element Query
@@ -547,10 +684,12 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
 
   <h3 id=eval>eval("")</h3>
 
-  The <code>eval("")</code> function can be used anywhere inside a scope style or element query. It shares a scope with the element in the root of the scoped style.
+  Note, Much of the functionality of this feature is similar to CSS variables, however being able to execute JavaScript from the vantage point of the element in the scope could perhaps be a way that CSS variables could be used a little different inside scoped styles or element queries.
+
+  The <code>eval("")</code> function can be used anywhere inside a scoped style or element query. It shares a scope with the element in the root of the scoped style.
 
   When using <code>eval("")</code> you can write <code>eval</code>, followed by a pair of brackets (<code>(</code>,<code>)</code>) which contain JavaScript code, wrapped in either single (<code>'</code>) or double (<code>"</code>) quotes.
-  
+
   This JavaScript can do something simple like reference the value of a variable, perform a simple calculation inline, or it can use the value return by a function.
 
   <div class=example>
@@ -604,6 +743,12 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
   In this case any element with a class of <code>.widget</code> will have a font size of <code>25px</code>.
 
   <h4 id=it-selector><code>$it</code> selector</h4>
+  <pre class=descdef>
+    Name: $it
+    For: meta-selectors
+    Value: $it
+    Type: selector
+  </pre>
 
   By default, the inline evaluation of <code>eval("")</code> shares the same scope in JavaScript as the scoped element. This means for a scoped style like <code>@element '.icon' {}</code>, the following code will select the parent element of the scoped element.
 
@@ -620,10 +765,10 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
 
   In this case the pseudo-element <code>:before</code> the content of any element with a class of <code>.widget</code> will contain text of the number of child elements inside the parent element of our <code>.widget</code> element.
 
-  The meta-selector <code>$it</code> works inside <code>eval("")</code> as a placeholder for the scoped style. The following example is functionally equivalent to the last example.
+  The meta-selector <a class="property" data-link-type="propdesc" data-lt="$it" for=meta-selectors>$it</a> works inside <code>eval("")</code> as a placeholder for the scoped style. The following example is functionally equivalent to the last example.
 
   <div class=example>
-    Example of <code>eval("")</code> with the <code>$it</code> Selector
+    Example of <code>eval("")</code> with the <a class="property" data-link-type="propdesc" data-lt="$it" for=meta-selectors>$it</a> Selector
     <pre class=language-css>
       @element '.widget' {
         $this:before {
@@ -636,11 +781,17 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
 <h2 id=element-based-units>Element-based Units</h2>
 
   <h3 id=eq-units>EW units</h3>
+  <pre class=descdef>
+    Name: ew
+    Value: <<number>> ew
+    For: element-based-units
+    Type: unit
+  </pre>
 
-  The <code>EW</code> unit is equal to 1/100th of the width of any scoped element and is able to be used anywhere inside a scoped style.
+  The 'ew' unit is equal to 1/100th of the width of any scoped element and is able to be used anywhere inside a scoped style.
 
   <div class=example>
-    Example of <code>EW</code> Units Inside a Scoped Style
+    Example of 'ew' Units Inside a Scoped Style
     <pre class=language-css>
       @element '.widget' {
         $this {
@@ -652,14 +803,20 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
 
   In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 (or 1/10th) of the scoped element's width.
 
-  Note: This unit is similar to the <code>vw</code> viewport unit, but based on an element's dimensions.
+  Note, This unit is similar to the ''vw'' viewport unit, but based on an element's dimensions.
 
   <h3 id=eh-units>EH units</h3>
+  <pre class=descdef>
+    Name: eh
+    Value: <<number>> eh
+    For: element-based-units
+    Type: unit
+  </pre>
 
-  The <code>EH</code> unit is equal to 1/100th of the height of any scoped element and is able to be used anywhere inside a scoped style.
+  The 'eh' unit is equal to 1/100th of the height of any scoped element and is able to be used anywhere inside a scoped style.
 
   <div class=example>
-    Example of <code>EH</code> Units Inside a Scoped Style
+    Example of 'eh' Units Inside a Scoped Style
     <pre class=language-css>
       @element '.widget' {
         $this {
@@ -671,14 +828,20 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
 
   In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 (or 1/10th) of the scoped element's height.
 
-  Note: This unit is similar to the <code>vh</code> viewport unit, but based on an element's dimensions.
+  Note, This unit is similar to the ''vh'' viewport unit, but based on an element's dimensions.
 
   <h3 id=emin-units>EMIN units</h3>
+  <pre class=descdef>
+    Name: emin
+    Value: <<number>> emin
+    For: element-based-units
+    Type: unit
+  </pre>
 
-  The <code>EMIN</code> unit is equal to 1/100th of the smallest dimension (width or height) of any scoped element and is able to be used anywhere inside a scoped style.
+  The 'emin' unit is equal to 1/100th of the smallest dimension (width or height) of any scoped element and is able to be used anywhere inside a scoped style.
 
   <div class=example>
-    Example of <code>EMIN</code> Units Inside a Scoped Style
+    Example of 'emin' Units Inside a Scoped Style
     <pre class=language-css>
       @element '.widget' {
         $this {
@@ -690,14 +853,20 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
 
   In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 (or 1/10th) of the scoped element's shortest edge.
 
-  Note: This unit is similar to the <code>vmin</code> viewport unit, but based on an element's dimensions.
+  Note, This unit is similar to the ''vmin'' viewport unit, but based on an element's dimensions.
 
   <h3 id=emax-units>EMAX units</h3>
+  <pre class=descdef>
+    Name: emax
+    Value: <<number>> emax
+    For: element-based-units
+    Type: unit
+  </pre>
 
-  The <code>EMAX</code> unit is equal to 1/100th of the largest dimension (width or height) of any scoped element and is able to be used anywhere inside a scoped style.
+  The 'emax' unit is equal to 1/100th of the largest dimension (width or height) of any scoped element and is able to be used anywhere inside a scoped style.
 
   <div class=example>
-    Example of <code>EMAX</code> Units Inside a Scoped Style
+    Example of 'emax' Units Inside a Scoped Style
     <pre class=language-css>
       @element '.widget' {
         $this {
@@ -709,4 +878,4 @@ Abstract: To provide a syntax for scoped styles and container query styled eleme
 
   In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 (or 1/10th) of the scoped element's longest edge.
 
-  Note: This unit is similar to the <code>vmax</code> viewport unit, but based on an element's dimensions.
+  Note, This unit is similar to the ''vmax'' viewport unit, but based on an element's dimensions.
