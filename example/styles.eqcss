@@ -1,37 +1,39 @@
 /* Element Queries External Script */
 
 /* Scoped Style */
-@element '#demo-1' {
+@element 'div' {
   html {
-    color: #333;
-    font-family: 'Source Sans Pro', sans-serif;
+    background: lime;
   }
 }
 
 /* Element Query */
-@element '#demo-2' and (min-width: 500px) {
+@element 'div' and (min-width: 500px) {
   $this {
     background: lime;
   }
 }
 
 /* Container Query */
-@element '#demo-3' and (min-width: 500px) {
-  #demo-3 {
+@element 'div' and (min-width: 500px) {
+  $this {
     background: lime;
+  }
+  html {
+    background: red;
   }
 }
 
 /* Multiple Selectors */
-@element '#demo-4, #demo-5' {
+@element '#example-1, #example-2' {
   $this {
     background: lime;
   }
 }
 
 /* Multiple Conditions */
-@element '#demo-6' and (min-width: 500px) and (min-characters: 5) {
+@element 'div' and (min-width: 500px) and (min-characters: 5) {
   $this {
-    background: lime
+    background: lime;
   }
 }

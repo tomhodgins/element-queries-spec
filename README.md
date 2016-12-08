@@ -1,6 +1,6 @@
 # element-queries-spec
 
-A spec for a Container-Style Element Query Syntax
+A spec for a Container-Style Element Query syntax
 
 **View online:** [element-queries.html](https://tomhodgins.github.io/element-queries-spec/element-queries.html)
 
@@ -8,11 +8,63 @@ A spec for a Container-Style Element Query Syntax
 
 ## What is this about?
 
-This spec aims to define a container query-style syntax for scoped styles and element queries, as well a number of related concepts: new selectors, CSS functions, and new units that make them more usable & useful.
+This spec aims to define a syntax for scoped styles and element queries in a container query style, as well as the related selectors, functions, and units that make scoped styles and element queries versatile and powerful way to write layout-independent responsive conditions for elements in CSS.
+
+## Proposed Syntax
+
+```css
+/* Scoped Style */
+@element 'div' {
+  $this {
+    background: lime;
+  }
+}
+
+/* Element Query */
+@element 'div' and (min-width: 500px) {
+  $this {
+    background: lime;
+  }
+}
+
+/* Container Query */
+@element 'div' and (min-width: 500px) {
+  $this {
+    background: lime;
+  }
+  html {
+    background: red;
+  }
+}
+
+/* Multiple Selectors */
+@element '#example-1, #example-2' {
+  $this {
+    background: lime;
+  }
+}
+
+/* Multiple Conditions */
+@element 'div' and (min-width: 500px) and (min-characters: 5) {
+  $this {
+    background: lime;
+  }
+}
+```
+
+**View Syntax Example:** [styles.css](example/styles.css)
+
+## Plugin & Demo
+
+As a reference for the syntax described in the spec, I have included a JavaScript plugin that reads the proposed syntax and displays the desired behaviour of the proposed functionality.
+
+**View Plugin:** [element-queries.js](plugin/element-queries.js)
+
+**View Demo:** [demo.html](demo.html)
 
 ## Who am I?
 
-I'm an independent web developer, not affiliated with any major company. The research & development contained in this spec is my own.
+I'm an independent web developer, not affiliated with any major companies. The research & development contained in this spec is my own.
 
 ## How you can help
 
