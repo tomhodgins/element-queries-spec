@@ -7,6 +7,7 @@ URL: https://github.com/tomhodgins/element-queries-spec
 Repository: tomhodgins/element-query-spec
 Editor: Tommy Hodgins, tomhodgins@gmail.com
 Abstract: The goal of this document is to specify a syntax for scoped styles and element queries in a container query style, as well as the related selectors, functions, and units that make scoped styles and element queries versatile and powerful way to write layout-independent responsive conditions for elements in CSS.
+Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 </pre>
 
 <h2 id=eqcss-syntax>EQCSS Syntax</h2>
@@ -18,7 +19,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     <dfn data-dfn-type=type>&lt;eq-condition></dfn> = <<eq-name>> : <<eq-value>>
     <dfn data-dfn-type=type>&lt;eq-name></dfn> = <<ident>>
     <dfn data-dfn-type=type>&lt;eq-value></dfn> = <<number>> | <<dimension>> | <<ratio>> | <<ident>>
-    <dfn data-dfn-type=at-rule id=at-ruledef-meta-selectors>meta-selectors</dfn> = $this | $parent | $prev | $it
+    <dfn data-dfn-type=at-rule id=at-ruledef-meta-selectors>meta-selectors</dfn> = $this | $parent | $prev | $next | $it
     <dfn data-dfn-type=at-rule id=at-ruledef-units>element-based-units</dfn> = ew | eh | emin | emax
   </pre>
 
@@ -200,6 +201,16 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
 
   With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined. These new selectors only work inside a scoped style or element query and are called ''meta-selectors''.
 
+  <h3 id=diagram-of-meta-selectors>Diagram of ''meta-selectors''</h4>
+
+  Here is a diagram showing the relationship between the meta-selectors. The <a class="property" data-link-type="propdesc" data-lt="$parent" for=meta-selectors>$parent</a> is the parent element of <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a>, and <a class="property" data-link-type="propdesc" data-lt="$prev" for=meta-selectors>$prev</a> and <a class="property" data-link-type="propdesc" data-lt="$next" for=meta-selectors>$next</a> represent the adjacent siblings to <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a>.
+
+  <pre style=text-align:center;>
+    <a class="property" data-link-type="propdesc" data-lt="$parent" for=meta-selectors>$parent</a>
+    ↑
+    <a class="property" data-link-type="propdesc" data-lt="$prev" for=meta-selectors>$prev</a> ← <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a> → <a class="property" data-link-type="propdesc" data-lt="$next" for=meta-selectors>$next</a>
+  </pre>
+
   <h3 id=this-selector><code>$this</code> selector</h3>
 
     <pre class=descdef>
@@ -253,7 +264,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     <pre class=descdef>
       Name: $prev
       For: meta-selectors
-      Value: $prev | eq-prev
+      Value: $prev | eq_prev
       Type: selector
     </pre>
 
@@ -271,6 +282,32 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     </div>
 
     In this case, any sibling coming directly before any element with a class of <code>.widget</code> will have a green background.
+
+  <h3 id=next-selector><code>$next</code> selector</h3>
+
+    <pre class=descdef>
+      Name: $next
+      For: meta-selectors
+      Value: $next | eq_next
+      Type: selector
+    </pre>
+
+    The <a class="property" data-link-type="propdesc" data-lt="$next" for=meta-selectors>$next</a> meta-selector refers to the sibling directly below the element at the root of our scoped style or element query.
+
+    <div class=example>
+      Example of <a class="property" data-link-type="propdesc" data-lt="$next" for=meta-selectors>$next</a> meta-selector
+      <pre class=language-css>
+        @element '.widget' {
+          $next {
+            background: lime;
+          }
+        }
+      </pre>
+    </div>
+
+    In this case, any sibling coming directly after any element with a class of <code>.widget</code> will have a green background.
+    
+    Note, the <a class="property" data-link-type="propdesc" data-lt="$next" for=meta-selectors>$next</a> is similar to the selector: <code>$this + *</code>
 
 <h2 id=responsive-conditions>Responsive Conditions</h2>
 
@@ -732,17 +769,22 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
 <h2 id=css-functions>CSS Functions</h2>
 
   <h3 id=eval>eval("")</h3>
+  <pre class=descdef>
+    Name: eval("")
+    For: @element
+    Value: javascript
+  </pre>
 
     Note, Much of the functionality of this feature is similar to CSS variables, however being able to execute JavaScript from the vantage point of the element in the scope could perhaps be a way that CSS variables could be used a little different inside scoped styles or element queries.
 
-    The <code>eval("")</code> function can be used anywhere inside a scoped style or element query. It shares a scope with the element in the root of the scoped style.
+    The <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> function can be used anywhere inside a scoped style or element query. It shares a scope with the element in the root of the scoped style.
 
-    When using <code>eval("")</code> you can write <code>eval</code>, followed by a pair of brackets (<code>(</code>,<code>)</code>) which contain JavaScript code, wrapped in either single (<code>'</code>) or double (<code>"</code>) quotes.
+    When using <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> you can write <code>eval</code>, followed by a pair of brackets (<code>(</code>,<code>)</code>) which contain JavaScript code, wrapped in either single (<code>'</code>) or double (<code>"</code>) quotes.
 
     This JavaScript can do something simple like reference the value of a variable, perform a simple calculation inline, or it can use the value return by a function.
 
     <div class=example>
-      Accessing a JavaScript Variable with <code>eval("")</code></strong>
+      Accessing a JavaScript Variable with <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a></strong>
       <pre class=language-html>
         &lt;script>
           var brandColor = 'lime'
@@ -761,7 +803,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     In this case any element with a class of <code>.widget</code> will have a green background.
 
     <div class=example>
-      Evaluating JavaScript Inline with <code>eval("")</code>
+      Evaluating JavaScript Inline with <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a>
       <pre class=language-css>
         @element '.widget' {
           font-size: eval("10 * 2")px;
@@ -772,7 +814,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     In this case our inline JavaScript (<code>10 * 2</code>) evaluates in place, leaving us with a font size of <code>20px</code>.
 
     <div class=example>
-      Using Values Returned from Functions with <code>eval("")</code></strong>
+      Using Values Returned from Functions with <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a></strong>
       <pre class=language-html>
         &lt;script>
           function addTen(number){
@@ -800,10 +842,10 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
         Type: selector
       </pre>
 
-      By default, the inline evaluation of <code>eval("")</code> shares the same scope in JavaScript as the scoped element. This means for a scoped style like <code>@element '.icon' {}</code>, the following code will select the parent element of the scoped element.
+      By default the inline evaluation of <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> shares the same scope in JavaScript as the scoped element. This means for a scoped style like <code>@element '.icon' {}</code>, the following code will select the parent element of the scoped element.
 
       <div class=example>
-        Example of <code>eval("")</code> with Implicit Context
+        Example of ''eval("")'' with Implicit Context
         <pre class=language-css>
           @element '.widget' {
             $this:before {
@@ -815,10 +857,10 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
 
       In this case the pseudo-element <code>:before</code> the content of any element with a class of <code>.widget</code> will contain text of the number of child elements inside the parent element of our <code>.widget</code> element.
 
-      The meta-selector <a class="property" data-link-type="propdesc" data-lt="$it" for=meta-selectors>$it</a> works inside <code>eval("")</code> as a placeholder for the scoped style. The following example is functionally equivalent to the last example.
+      The meta-selector <a class="property" data-link-type="propdesc" data-lt="$it" for=meta-selectors>$it</a> works inside <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> as a placeholder for the scoped style. The following example is functionally equivalent to the last example.
 
       <div class=example>
-        Example of <code>eval("")</code> with the <a class="property" data-link-type="propdesc" data-lt="$it" for=meta-selectors>$it</a> Selector
+        Example of <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> with the <a class="property" data-link-type="propdesc" data-lt="$it" for=meta-selectors>$it</a> Selector
         <pre class=language-css>
           @element '.widget' {
             $this:before {
@@ -832,7 +874,7 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
 
   Just as CSS has viewport-based units: ''vw'', ''vh'', ''vmin'', and ''vmax'' which represent a distance equal to 1/100th of the viewport width, height, shortest edge, and longest edge. In a similar way the following element-based units 'ew', 'eh', 'emin', and 'emax' represent a distance equal to 1/100th of the element's own width, height, shortest edge, and longest edge.
 
-  <h3 id=eq-units>EW units</h3>
+  <h3 id=ew-units>EW units</h3>
 
     <pre class=descdef>
       Name: ew
@@ -935,3 +977,237 @@ Abstract: The goal of this document is to specify a syntax for scoped styles and
     In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 of the scoped element's longest edge.
 
     Note, This unit is similar to the ''vmax'' viewport unit, but based on an element's dimensions.
+
+<h2 id=examples-of-element-queries>Examples of Scoped Styles & Element Queries</h2>
+
+<h3 id=wrapper-free-responsive-iframe>Wrapper-free responsive iframe resize</h3>
+
+  <div class=example>
+    <pre class=language-html>
+      &lt;iframe width="640" height="360">&lt;/iframe>
+      &lt;style>
+        @element 'iframe' {
+          $this {
+            width: 100%;
+            height: eval('offsetWidth / (width / height)')px;
+          }
+        }
+      &lt;/style>
+    </pre>
+  </div>
+
+  In this example the <code>iframe</code> element has a <code>width=""</code> and <code>height=""</code> attribute supplied in HTML which is being accessed from CSS using <code>$it.width</code> and <code>$it.height</code> inside our <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> function. Because we are able to compute the HTML attributes directly, this one rule will make multiple <code>iframe</code> elements with <em>different</em> attribute values on the same page responsive, as it computes each iframe separately as <code>$this</code>.
+  
+<h3 id=faking-input-empty>Faking <code>input:empty</code></h3>
+
+  <div class=example>
+    <pre class=language-html>
+      &lt;input>
+      &lt;style>
+        /* input:empty */
+        @element 'input' and (max-characters: 0) {
+          $this { 
+            background: red;
+          }
+        }
+        /* input:not(:empty) */
+        @element 'input' and (min-characters: 1) {
+          $this { 
+            background: lime;
+          }
+        }
+      &lt;/style>
+    </pre>
+  </div>
+
+  In this example we are able to apply styles based on whether there are zero or at least one characters inside any <code>input</code> element. CSS has the pseudo-class '':empty'', however it doesn't apply to all elements (like <code>input</code> elements) so by using 'max-characters' and 'min-characters' with element queries we are able to express and style a similar idea.
+
+<h3 id=auto-expanding-textarea>Auto-expanding <code>textarea</code></h3>
+
+  <div class=example>
+    <pre class=language-html>
+      &lt;textarea>&lt;/textarea>
+      &lt;style>
+        @element 'textarea' {
+          $this {
+            height: eval("style.height='inherit';style.height=scrollHeight+'px'");
+          }
+        }
+      &lt;/style>
+    </pre>
+  </div>
+
+  In this example we are using <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> to reset the 'height' value of our element and immediately set it to the scrollHeight of the element, ensuring that no matter how many lines of text it contains, it will always expand & contract to contain all of them.
+
+<h3 id=display-browser-dimensions>Display Browser Dimensions</h3>
+
+  <div class=example>
+    <pre class=language-html>
+      &lt;style>
+        @element ':root' {
+          $this:before {
+            content: 'eval("window.innerWidth") × eval("window.innerHeight")';
+            position: fixed;
+            top: .5em;
+            left: .5em;
+          }
+        }
+      &lt;/style>
+    </pre>
+  </div>
+
+  This example will create a new pseudo-element on our ':root' element (the HTML element) and uses <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> to display the <code>innerWidth</code> and <code>innerHeight</code> values of our <code>window</code>.
+
+<h3 id=self-responsive-grid>Self-responsive Grid</h3>
+
+  <div class=example>
+    <pre class=language-html>
+      &lt;h2>Responsive Grid&lt;/h2>
+      &lt;p>Small = full width, Medium = thirds, Large = sixths.&lt;/p>
+      &lt;section data-grid>
+        &lt;div class="col-10 medium-split-3 large-split-6">&lt;/div>
+        &lt;div class="col-10 medium-split-3 large-split-6">&lt;/div>
+        &lt;div class="col-10 medium-split-3 large-split-6">&lt;/div>
+        &lt;div class="col-10 medium-split-3 large-split-6">&lt;/div>
+        &lt;div class="col-10 medium-split-3 large-split-6">&lt;/div>
+        &lt;div class="col-10 medium-split-3 large-split-6">&lt;/div>
+      &lt;/section>
+      &lt;h2>Split Grid&lt;/h2>
+      &lt;p>Small = half width, Medium = 1, 2, 3, 4 split, Large = 4, 3, 2, 1 split.&lt;/p>
+      &lt;section data-grid>
+        &lt;div class="col-5 medium-split-1 large-split-4">&lt;/div>
+        &lt;div class="col-5 medium-split-2 large-split-4">&lt;/div>
+        &lt;div class="col-5 medium-split-2 large-split-4">&lt;/div>
+        &lt;div class="col-5 medium-split-3 large-split-4">&lt;/div>
+        &lt;div class="col-5 medium-split-3 large-split-3">&lt;/div>
+        &lt;div class="col-5 medium-split-3 large-split-3">&lt;/div>
+        &lt;div class="col-5 medium-split-4 large-split-3">&lt;/div>
+        &lt;div class="col-5 medium-split-4 large-split-2">&lt;/div>
+        &lt;div class="col-5 medium-split-4 large-split-2">&lt;/div>
+        &lt;div class="col-5 medium-split-4 large-split-1">&lt;/div>
+      &lt;/section>
+      &lt;h2>Hidden Elements&lt;/h2>
+      &lt;p>Small = Hide Small, Medium = Hide Medium, Large = Hide Large.&lt;/p>
+      &lt;section data-grid>
+        &lt;div class="col-10 hide-small">Small&lt;/div>
+        &lt;div class="col-10 hide-medium">Medium&lt;/div>
+        &lt;div class="col-10 hide-large">Large&lt;/div>
+      &lt;/section>
+      &lt;style>
+        * {
+          box-sizing: border-box;
+        }
+        [data-grid] div {
+          min-height: 50px;
+          background: lime;
+          border: 5px solid white;
+        }
+        /* Element Query Grid */
+        @element '[data-grid]' {
+          $this,
+          $this * {
+            box-sizing: border-box;
+          }
+          $this:after,
+          $this [data-row]:after {
+            content: '';
+            display: block;
+            clear: both;
+          }
+          $this [class*=-col-],
+          $this [class*=-split-] { float: left; }
+          $this [class^=col-1] { width: 10%; }
+          $this [class^=col-2] { width: 20%; }
+          $this [class^=col-3] { width: 30%; }
+          $this [class^=col-4] { width: 40%; }
+          $this [class^=col-5] { width: 50%; }
+          $this [class^=col-6] { width: 60%; }
+          $this [class^=col-7] { width: 70%; }
+          $this [class^=col-8] { width: 80%; }
+          $this [class^=col-9] { width: 90%; }
+          $this [class^=col-10] { width: 100%; }
+          $this [class^=split-1] { width: calc(100%/1); }
+          $this [class^=split-2] { width: calc(100%/2); }
+          $this [class^=split-3] { width: calc(100%/3); }
+          $this [class^=split-4] { width: calc(100%/4); }
+          $this [class^=split-5] { width: calc(100%/5); }
+          $this [class^=split-6] { width: calc(100%/6); }
+          $this [class^=split-7] { width: calc(100%/7); }
+          $this [class^=split-8] { width: calc(100%/8); }
+          $this [class^=split-9] { width: calc(100%/9); }
+          $this [class^=split-10] { width: calc(100%/10); }
+        }
+        @element '[data-grid]' and (max-width: 400px) {
+          $this [class*=small-col-1] { width: 10%; }
+          $this [class*=small-col-2] { width: 20%; }
+          $this [class*=small-col-3] { width: 30%; }
+          $this [class*=small-col-4] { width: 40%; }
+          $this [class*=small-col-5] { width: 50%; }
+          $this [class*=small-col-6] { width: 60%; }
+          $this [class*=small-col-7] { width: 70%; }
+          $this [class*=small-col-8] { width: 80%; }
+          $this [class*=small-col-9] { width: 90%; }
+          $this [class*=small-col-10] { width: 100%; }
+          $this [class*=small-split-1] { width: calc(100%/1); }
+          $this [class*=small-split-2] { width: calc(100%/2); }
+          $this [class*=small-split-3] { width: calc(100%/3); }
+          $this [class*=small-split-4] { width: calc(100%/4); }
+          $this [class*=small-split-5] { width: calc(100%/5); }
+          $this [class*=small-split-6] { width: calc(100%/6); }
+          $this [class*=small-split-7] { width: calc(100%/7); }
+          $this [class*=small-split-8] { width: calc(100%/8); }
+          $this [class*=small-split-9] { width: calc(100%/9); }
+          $this [class*=small-split-10] { width: calc(100%/10); }
+          $this [class*=hide-small] { display: none; }
+        }
+        @element '[data-grid]' and (min-width: 400px) and (max-width: 800px) {
+          $this [class*=medium-col-1] { width: 10%; }
+          $this [class*=medium-col-2] { width: 20%; }
+          $this [class*=medium-col-3] { width: 30%; }
+          $this [class*=medium-col-4] { width: 40%; }
+          $this [class*=medium-col-5] { width: 50%; }
+          $this [class*=medium-col-6] { width: 60%; }
+          $this [class*=medium-col-7] { width: 70%; }
+          $this [class*=medium-col-8] { width: 80%; }
+          $this [class*=medium-col-9] { width: 90%; }
+          $this [class*=medium-col-10] { width: 100%; }
+          $this [class*=medium-split-1] { width: calc(100%/1); }
+          $this [class*=medium-split-2] { width: calc(100%/2); }
+          $this [class*=medium-split-3] { width: calc(100%/3); }
+          $this [class*=medium-split-4] { width: calc(100%/4); }
+          $this [class*=medium-split-5] { width: calc(100%/5); }
+          $this [class*=medium-split-6] { width: calc(100%/6); }
+          $this [class*=medium-split-7] { width: calc(100%/7); }
+          $this [class*=medium-split-8] { width: calc(100%/8); }
+          $this [class*=medium-split-9] { width: calc(100%/9); }
+          $this [class*=medium-split-10] { width: calc(100%/10); }
+          $this [class*=hide-medium] { display: none; }
+        }
+        @element '[data-grid]' and (min-width: 800px) {
+          $this [class*=large-col-1] { width: 10%; }
+          $this [class*=large-col-2] { width: 20%; }
+          $this [class*=large-col-3] { width: 30%; }
+          $this [class*=large-col-4] { width: 40%; }
+          $this [class*=large-col-5] { width: 50%; }
+          $this [class*=large-col-6] { width: 60%; }
+          $this [class*=large-col-7] { width: 70%; }
+          $this [class*=large-col-8] { width: 80%; }
+          $this [class*=large-col-9] { width: 90%; }
+          $this [class*=large-col-10] { width: 100%; }
+          $this [class*=large-split-1] { width: calc(100%/1); }
+          $this [class*=large-split-2] { width: calc(100%/2); }
+          $this [class*=large-split-3] { width: calc(100%/3); }
+          $this [class*=large-split-4] { width: calc(100%/4); }
+          $this [class*=large-split-5] { width: calc(100%/5); }
+          $this [class*=large-split-6] { width: calc(100%/6); }
+          $this [class*=large-split-7] { width: calc(100%/7); }
+          $this [class*=large-split-8] { width: calc(100%/8); }
+          $this [class*=large-split-9] { width: calc(100%/9); }
+          $this [class*=large-split-10] { width: calc(100%/10); }
+          $this [class*=hide-large] { display: none; }
+        }
+      &lt;/style>
+    </pre>
+  </div>
+
+  This example uses ''@element'' queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a>, we can use these same styles to power many grids in the same layout all using the same styles.
