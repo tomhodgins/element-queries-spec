@@ -15,41 +15,35 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
   This defines the terms used in the various parts of an element query.
 
   <pre>
-    <dfn data-dfn-type=at-rule id=at-ruledef-element>@element</dfn> = <<scoped-style>>
+    <dfn dfn-type=at-rule>@element</dfn> = @element <<eq-prelude>> { <<stylesheet>> }
 
-    <dfn data-dfn-type=type id=scoped-style>&lt;scoped-style></dfn> = @element " <<selector-list>> " [ <<condition-list>> ] { <<rule-list>> }
+    <dfn dfn-type=type>&lt;eq-prelude></dfn> = <<selector-list>> | <<selector-list>> <<eq-condition>>*
 
-    <dfn data-dfn-type=type>&lt;condition-list></dfn> = [ and <<eq-condition>>* ]
+    <dfn dfn-type=type>&lt;eq-condition></dfn> = and ( <<eq-name>> : <<eq-value>> )
 
-    <dfn data-dfn-type=type>&lt;eq-condition></dfn> = ( <<eq-name>> : <<eq-value>> )
-
-    <dfn data-dfn-type=type>&lt;eq-name></dfn> = min-width | max-width | min-height
+    <dfn dfn-type=type>&lt;eq-name></dfn> = min-width | max-width | min-height
       | max-height | min-characters | max-characters
       | min-lines | max-lines | min-children
       | max-children | min-scroll-y | max-scroll-y
       | min-scroll-x | max-scroll-x | orientation
       | min-aspect-ratio | max-aspect-ratio
 
-    <dfn data-dfn-type=type>&lt;eq-value></dfn> = <<number>> | <<dimension>> | <<ratio>> | <<ident>>
+    <dfn dfn-type=type>&lt;eq-value></dfn> = <<number>> | <<dimension>> | <<ratio>> | <<ident>>
 
-    <dfn data-dfn-type=at-rule id=at-ruledef-meta-selectors>meta-selectors</dfn> = $this | $parent | $prev | $next | $it
+    <dfn dfn-type=selector>meta-selectors</dfn> = $this | $parent | $prev | $next | $it
 
-    <dfn data-dfn-type=at-rule id=at-ruledef-units>element-based-units</dfn> = ew | eh | emin | emax
+    <dfn dfn-type=dfn>eq-unit</dfn> = ew | eh | emin | emax
+
+    <dfn dfn-type=function>eval("")</dfn> = eval(" ''javascript-code'' ")
   </pre>
 
 <h2 id=style-scoping>Style Scoping</h2>
 
   <h3 id=scoped-styles>Scoped Styles</h3>
 
-    <pre class=descdef>
-      Name: scoped-style
-      For: @element
-      Value: @element " <<selector-list>> " { <<rule-list>> }
-    </pre>
-
     By default all CSS is written from the global scope ('':root'', or the HTML element), and ''@media'' queries apply based on the conditions of the browser and media.
 
-    The idea of a <<scoped-style>> is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as thought it was '':root''
+    The idea of a scoped style is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as thought it was '':root''
 
     Just like CSS has ''@media'' queries which help us define styles for different media, this document describes functionality for an ''@element'' query syntax to allow us to write styles that target elements more specifically based on their own properties.
 
@@ -59,7 +53,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example scoped style</strong>
       <pre class=language-css>
         @element 'html' {
-          
+
         }
       </pre>
     </div>
@@ -72,7 +66,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         Comma-separated selector list
         <pre class=language-css>
           @element 'ul, ol' {
-            
+
           }
         </pre>
       </div>
@@ -146,13 +140,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=element-queries>Element Queries</h3>
 
-    <pre class=descdef>
-      Name: element-query
-      For: @element
-      Value: @element " <<selector-list>> " and ( <<eq-condition>> ) { <<rule-list>> }
-    </pre>
-
-    An 'element-query' is a <<scoped-style>> with one or more responsive conditions added.
+    An element query is a scoped style with one or more responsive conditions added.
 
     The following global CSS and scoped style are equivalent.
 
@@ -257,7 +245,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <h4 id=self-referential-element-queries>Self-Referential ''@element'' queries</h4>
 
       With element queries comes the new possibility that the rules you are applying when your responsive conditions are met will conflict with the responsive condition in your element query. In this situation we should not attempt to detect or handle these cases by ignoring certain styles, or checking whether any of the rules affect the validity of the responsive condition. It is best to apply the rule naïvely and allow the conflict to occur.
-    
+
       Note, The responsibility lies with the author to write ''@element'' queries which can be interpreted logically.
 
       <div class=example>
@@ -293,122 +281,91 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
       In this example any element with a class of <code>.widget</code> that is equal to <code>400px</code> or wider will apply a rule setting the width of the same element to <code>200px</code>, which makes the following ''@element'' query valid. The second query sets a width of <code>500px</code> on the same element. In this case, even though the element now matches the responsive condition of the first query again, rather than get stuck in an infinite loop, we consider evaluation complete.
 
-<h2 id=meta-selectors>Meta-Selectors</h2>
+<h2 id=meta-selectors-in-css>Meta-Selectors</h2>
 
   With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined. These new selectors only work inside a scoped style or element query and are called ''meta-selectors''.
 
   <h3 id=diagram-of-meta-selectors>Diagram of ''meta-selectors''</h4>
 
-  Here is a diagram showing the relationship between the meta-selectors. The <a class="property" data-link-type="propdesc" data-lt="$parent" for=meta-selectors>$parent</a> is the parent element of <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a>, and <a class="property" data-link-type="propdesc" data-lt="$prev" for=meta-selectors>$prev</a> and <a class="property" data-link-type="propdesc" data-lt="$next" for=meta-selectors>$next</a> represent the adjacent siblings to <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a>.
+  Here is a diagram showing the relationship between the meta-selectors. The <a selector>$parent</a> is the parent element of <a selector>$this</a>, and <a selector>$prev</a> and <a selector>$next</a> represent the adjacent siblings to <a selector>$this</a>.
 
   <pre style=text-align:center;>
-    <a class="property" data-link-type="propdesc" data-lt="$parent" for=meta-selectors>$parent</a>
+    <a selector>$parent</a>
     ↑
-    <a class="property" data-link-type="propdesc" data-lt="$prev" for=meta-selectors>$prev</a> ← <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a> → <a class="property" data-link-type="propdesc" data-lt="$next" for=meta-selectors>$next</a>
+    <a selector>$prev</a> ← <a selector>$this</a> → <a selector>$next</a>
   </pre>
 
-  <h3 id=this-selector><code>$this</code> selector</h3>
+  <dl dfn-type=selector dfn-for=meta-selectors>
 
-    <pre class=descdef>
-      Name: $this
-      For: meta-selectors
-      Value: $this | eq_this
-      Type: selector
-    </pre>
+    <dt><dfn>$this</dfn>
+    <dd>
+      The <a selector>$this</a> meta-selector refers each element at the root of our scoped style when it matches the responsive condition.
 
-    The <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a> meta-selector refers each element at the root of our scoped style when it matches the responsive condition.
-
-    <div class=example>
-      Example of <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a> meta-selector
-      <pre class=language-css>
-        @element '.widget' and (min-width: 200px) {
-          $this {
-            background: lime;
+      <div class=example>
+        Example of <a selector>$this</a> meta-selector
+        <pre class=language-css>
+          @element '.widget' and (min-width: 200px) {
+            $this {
+              background: lime;
+            }
           }
-        }
-      </pre>
-      In this case, any element with a class of <code>.widget</code> that is <code>200px</code> or wider will have a green background.
-    </div>
+        </pre>
+        In this case, any element with a class of <code>.widget</code> that is <code>200px</code> or wider will have a green background.
+      </div>
 
-  <h3 id=parent-selector><code>$parent</code> selector</h3>
+    <dt><dfn>$parent</dfn>
+    <dd>
+      The <a selector>$parent</a> meta-selector refers to the element containing the element(s) in the scope of our scoped style or element query.
 
-    <pre class=descdef>
-      Name: $parent
-      For: meta-selectors
-      Value: $parent | eq_parent
-      Type: selector
-    </pre>
-
-    The <a class="property" data-link-type="propdesc" data-lt="$parent" for=meta-selectors>$parent</a> meta-selector refers to the element containing the element(s) in the scope of our scoped style or element query.
-
-    <div class=example>
-      Example of <a class="property" data-link-type="propdesc" data-lt="$parent" for=meta-selectors>$parent</a> meta-selector
-      <pre class=language-css>
-        @element '.widget' and (min-width: 200px) {
-          $parent {
-            background: lime;
+      <div class=example>
+        Example of <a selector>$parent</a> meta-selector
+        <pre class=language-css>
+          @element '.widget' and (min-width: 200px) {
+            $parent {
+              background: lime;
+            }
           }
-        }
-      </pre>
-      In this case, any element containing an element with a class of <code>.widget</code> that is equal or wider than <code>200px</code> will have a green background.
-    </div>
+        </pre>
+        In this case, any element containing an element with a class of <code>.widget</code> that is equal or wider than <code>200px</code> will have a green background.
+      </div>
 
-  <h3 id=prev-selector><code>$prev</code> selector</h3>
+    <dt><dfn>$prev</dfn>
+    <dd>
+      The <a selector>$prev</a> meta-selector refers to the sibling directly above the element at the root of our scoped style or element query.
 
-    <pre class=descdef>
-      Name: $prev
-      For: meta-selectors
-      Value: $prev | eq_prev
-      Type: selector
-    </pre>
-
-    The <a class="property" data-link-type="propdesc" data-lt="$prev" for=meta-selectors>$prev</a> meta-selector refers to the sibling directly above the element at the root of our scoped style or element query.
-
-    <div class=example>
-      Example of <a class="property" data-link-type="propdesc" data-lt="$prev" for=meta-selectors>$prev</a> meta-selector
-      <pre class=language-css>
-        @element '.widget' {
-          $prev {
-            background: lime;
+      <div class=example>
+        Example of <a selector>$prev</a> meta-selector
+        <pre class=language-css>
+          @element '.widget' {
+            $prev {
+              background: lime;
+            }
           }
-        }
-      </pre>
-      In this case, any sibling coming directly before any element with a class of <code>.widget</code> will have a green background.
-    </div>
+        </pre>
+        In this case, any sibling coming directly before any element with a class of <code>.widget</code> will have a green background.
+      </div>
 
-  <h3 id=next-selector><code>$next</code> selector</h3>
+    <dt><dfn>$next</dfn>
+    <dd>
+      The <a selector>$next</a> meta-selector refers to the sibling directly below the element at the root of our scoped style or element query.
 
-    <pre class=descdef>
-      Name: $next
-      For: meta-selectors
-      Value: $next | eq_next
-      Type: selector
-    </pre>
-
-    The <a class="property" data-link-type="propdesc" data-lt="$next" for=meta-selectors>$next</a> meta-selector refers to the sibling directly below the element at the root of our scoped style or element query.
-
-    <div class=example>
-      Example of <a class="property" data-link-type="propdesc" data-lt="$next" for=meta-selectors>$next</a> meta-selector
-      <pre class=language-css>
-        @element '.widget' {
-          $next {
-            background: lime;
+      <div class=example>
+        Example of <a selector>$next</a> meta-selector
+        <pre class=language-css>
+          @element '.widget' {
+            $next {
+              background: lime;
+            }
           }
-        }
-      </pre>
-      In this case, any sibling coming directly after any element with a class of <code>.widget</code> will have a green background.
-    </div>
+        </pre>
+        In this case, any sibling coming directly after any element with a class of <code>.widget</code> will have a green background.
+      </div>
 
-    Note, the <a class="property" data-link-type="propdesc" data-lt="$next" for=meta-selectors>$next</a> is similar to the selector: <code>$this + *</code>
+      Note, the <a selector>$next</a> is similar to the selector: <code>$this + *</code>
+
+  </dl>
 
 <h2 id=responsive-conditions>Responsive Conditions</h2>
-
-  <pre class=descdef>
-    Name: eq-condition
-    Value: ( <<eq-name>> : <<eq-value>> )
-    For: @element
-    Type: range
-  </pre>
 
   All responsive conditions for ''@element'' queries are formatted as a condition name and value, separated by a colon (<code>:</code>) character, surrounded by brackets (<code>()</code>).
 
@@ -434,7 +391,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=min-width>Min-width</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: min-width
       Value: <<dimension>>
       For: @element
@@ -457,7 +414,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=max-width>Max-width</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: max-width
       Value: <<dimension>>
       For: @element
@@ -480,7 +437,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=min-height>Min-height</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: min-height
       Value: <<dimension>>
       For: @element
@@ -503,7 +460,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=max-height>Max-height</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: max-height
       Value: <<dimension>>
       For: @element
@@ -526,7 +483,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=min-characters>Min-characters</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: min-characters
       Value: <<number>>
       For: @element
@@ -549,7 +506,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=max-characters>Max-characters</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: max-characters
       Value: <<number>>
       For: @element
@@ -572,7 +529,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=min-lines>Min-lines</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: min-lines
       Value: <<number>>
       For: @element
@@ -595,7 +552,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=max-lines>Max-lines</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: max-lines
       Value: <<number>>
       For: @element
@@ -618,7 +575,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=min-children>Min-children</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: min-children
       Value: <<number>>
       For: @element
@@ -641,7 +598,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=max-children>Max-children</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: max-children
       Value: <<number>>
       For: @element
@@ -664,7 +621,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=min-scroll-y>Min-scroll-y</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: min-scroll-y
       Value: <<dimension>>
       For: @element
@@ -687,7 +644,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=max-scroll-y>Max-scroll-y</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: max-scroll-y
       Value: <<dimension>>
       For: @element
@@ -710,7 +667,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=min-scroll-x>Min-scroll-x</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: min-scroll-x
       Value: <<dimension>>
       For: @element
@@ -733,7 +690,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=max-scroll-x>Max-scroll-x</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: max-scroll-x
       Value: <<dimension>>
       For: @element
@@ -756,7 +713,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=orientation>Orientation</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: orientation
       Value: portrait | square | landscape
       For: @element
@@ -824,7 +781,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=min-aspect-ratio>Min-aspect-ratio</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: min-aspect-ratio
       Value: <<ratio>>
       For: @element
@@ -847,7 +804,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=max-aspect-ratio>Max-aspect-ratio</h3>
 
-    <pre class=descdef>
+    <pre class="descdef mq">
       Name: max-aspect-ratio
       Value: <<ratio>>
       For: @element
@@ -872,31 +829,25 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=eval>eval("")</h3>
 
-    <pre class=descdef>
-      Name: eval("")
-      For: @element
-      Value: javascript
-    </pre>
+    Note, Much of the functionality of this feature is similar to CSS variables, however being able to execute JavaScript from the vantage point of the element in the scope could perhaps be a way that CSS variables could be used a little differently inside scoped styles or element queries.
 
-    Note, Much of the functionality of this feature is similar to CSS variables, however being able to execute JavaScript from the vantage point of the element in the scope could perhaps be a way that CSS variables could be used a little different inside scoped styles or element queries.
+    The <a>eval("")</a> function can be used anywhere inside a scoped style or element query. It shares a scope with the element in the root of the scoped style.
 
-    The <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> function can be used anywhere inside a scoped style or element query. It shares a scope with the element in the root of the scoped style.
-
-    When using <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> you can write <code>eval</code>, followed by a pair of brackets (<code>(</code>,<code>)</code>) which contain JavaScript code, wrapped in either single (<code>'</code>) or double (<code>"</code>) quotes.
+    When using <a>eval("")</a> you can write <code>eval</code>, followed by a pair of brackets (<code>(</code>,<code>)</code>) which contain JavaScript code, wrapped in either single (<code>'</code>) or double (<code>"</code>) quotes.
 
     This JavaScript can do something simple like reference the value of a variable, perform a simple calculation inline, or it can use the value return by a function.
 
-      Note, Unlike CSS variables, the <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> function can be used anywhere in CSS: as a value, a property name, a selector, a '@media' query breakpoint - it can be used for anything, as long as it is inside of a scoped style.
+      Note, Unlike CSS variables, the <a>eval("")</a> function can be used anywhere in CSS: as a value, a property name, a selector, a '@media' query breakpoint - it can be used for anything, as long as it is inside of a scoped style.
 
     <h4 id=using-js-variables-in-css>Using JavaScript Variables in CSS</h4>
 
       <div class=example>
-        Accessing a JavaScript variable with <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a></strong>
+        Accessing a JavaScript variable with <a>eval("")</a></strong>
         <pre class=language-html>
           &lt;script>
             var brandColor = 'lime'
           &lt;/script>
-  
+
           &lt;style>
             @element '.widget' {
               $this {
@@ -911,7 +862,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <h4 id=writing-js-in-css>Writing JavaScript in CSS</h4>
 
       <div class=example>
-        Evaluating JavaScript Inline with <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a>
+        Evaluating JavaScript Inline with <a>eval("")</a>
         <pre class=language-css>
           @element '.widget' {
             font-size: eval("10 * 2")px;
@@ -923,7 +874,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <h4 id=using-js-functions-in-css>Using JavaScript Functions in CSS</h4>
 
       <div class=example>
-        Using Values Returned from Functions with <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a></strong>
+        Using Values Returned from Functions with <a>eval("")</a></strong>
         <pre class=language-html>
           &lt;script>
             function addTen(number){
@@ -931,7 +882,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
               return number + 10
             }
           &lt;/script>
-  
+
           &lt;style>
             @element '.widget' {
               font-size: eval("addTen(15)")px;
@@ -944,12 +895,12 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <h4 id=replacing-values-in-css>Replacing Values in CSS</h4>
 
       <div class=example>
-        Here is <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> being used as a value:
+        Here is <a>eval("")</a> being used as a value:
         <pre class=language-html>
           &lt;script>
             var blue = '#07f'
           &lt;/script>
-  
+
           &lt;style>
             @element 'div' {
               $this {
@@ -964,13 +915,13 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <h4 id=replacing-properties-in-css>Replacing Properties in CSS</h4>
 
       <div class=example>
-        Here is <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> being used as a property:
+        Here is <a>eval("")</a> being used as a property:
         <pre class=language-html>
           &lt;input>
           &lt;script>
             var browser = /Safari/.test(navigator.userAgent) ? '-webkit-':''
           &lt;/script>
-  
+
           &lt;style>
             @element 'input' {
               $this {
@@ -985,12 +936,12 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <h4 id=replacing-selectors-in-css>Replacing Selectors in CSS</h4>
 
       <div class=example>
-        Here is <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> replacing a list of selectors:
+        Here is <a>eval("")</a> replacing a list of selectors:
         <pre class=language-html>
           &lt;script>
             var buttonish = '[type=button], [type=submit], [type=reset], button'
           &lt;/script>
-  
+
           &lt;style>
             @element 'html' {
               eval('buttonish') {
@@ -1014,18 +965,15 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         Check the <a href=#using-variables-as-selectors>Using Variables as Selectors</a> example below for a more elaborate demonstration, including pseudo-classes like <code>:hover</code> or <code>:focus</code>
       </div>
 
-      Note, Because <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> works everywhere in CSS inside of a scoped style, it's also possible to use inside the 'content' property for pseudo-elements like ''before'' and ''after''.
+      Note, Because <a>eval("")</a> works everywhere in CSS inside of a scoped style, it's also possible to use inside the 'content' property for pseudo-elements like ''before'' and ''after''.
 
     <h4 id=it-selector><code>$it</code> selector</h4>
 
-      <pre class=descdef>
-        Name: $it
-        For: meta-selectors
-        Value: $it | eq_it
-        Type: selector
-      </pre>
+<dl dfn-type=selector dfn-for=meta-selectors>
 
-      By default the inline evaluation of <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> shares the same scope in JavaScript as the scoped element. This means for a scoped style like <code>@element '.widget' {}</code>, things like <code>innerHTML</code> represent the <code>innerHTML</code> of the elements with <code>.widget</code>. This would also apply individually to each element if more than one element on the page matches that selector. In this example we can use <code>parentNode</code> inside of <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> to check how many child elements the parent element holding any <code>.widget</code> element contains.
+    <dt><dfn>$it</dfn>
+    <dd>
+      By default the inline evaluation of <a>eval("")</a> shares the same scope in JavaScript as the scoped element. This means for a scoped style like <code>@element '.widget' {}</code>, things like <code>innerHTML</code> represent the <code>innerHTML</code> of the elements with <code>.widget</code>. This would also apply individually to each element if more than one element on the page matches that selector. In this example we can use <code>parentNode</code> inside of <a>eval("")</a> to check how many child elements the parent element holding any <code>.widget</code> element contains.
 
       <div class=example>
         Example of ''eval("")'' with Implicit Context
@@ -1039,10 +987,10 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         In this case the pseudo-element <code>:before</code> the content of any element with a class of <code>.widget</code> will contain text of the number of child elements inside the parent element of our <code>.widget</code> element.
       </div>
 
-      The meta-selector <a class="property" data-link-type="propdesc" data-lt="$it" for=meta-selectors>$it</a> works inside <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> as a placeholder for the scoped element. The following example is functionally equivalent to the last example:
+      The meta-selector <a selector>$it</a> works inside <a>eval("")</a> as a placeholder for the scoped element. The following example is functionally equivalent to the last example:
 
       <div class=example>
-        Example of <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> with the <a class="property" data-link-type="propdesc" data-lt="$it" for=meta-selectors>$it</a> Selector
+        Example of <a>eval("")</a> with the <a selector>$it</a> Selector
         <pre class=language-css>
           @element '.widget' {
             $this:before {
@@ -1052,109 +1000,89 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         </pre>
       </div>
 
+    </dl>
+
 <h2 id=element-based-units>Element-based Units</h2>
 
-  Just as CSS has viewport-based units: ''vw'', ''vh'', ''vmin'', and ''vmax'' which represent a distance equal to 1/100th of the viewport width, height, shortest edge, and longest edge. In a similar way the following element-based units 'ew', 'eh', 'emin', and 'emax' represent a distance equal to 1/100th of the element's own width, height, shortest edge, and longest edge.
+  Just as CSS has viewport-percentage units: ''vw'', ''vh'', ''vmin'', and ''vmax'' which represent a distance equal to 1% of the viewport width, height, shortest edge, and longest edge, in a similar way the following element-percentage units ''ew'', ''eh'', ''emin'', and ''emax'' represent a distance equal to 1% of the element's own width, height, shortest edge, and longest edge. When the width of height of the element changes, the value of these units scale accordingly.
 
-  <h3 id=ew-units>EW units</h3>
+  Note, These new <a dfn>eq-unit</a> units always refer to the dimensions of the element in the scope, and can be used inside of a scoped style or element query to style other elements.
 
-    <pre class=descdef>
-      Name: ew
-      Value: <<number>> ew
-      For: element-based-units
-      Type: unit
-    </pre>
+  <dl dfn-type=value dfn-for=eq-unit>
 
-    The 'ew' unit is equal to 1/100th of the width of any scoped element and is able to be used anywhere inside a scoped style.
+    <dt><dfn id=ew lt=ew>ew unit</dfn>
+    <dd>
+      Equal to 1% of the width of the scoped element
 
-    <div class=example>
-      Example of 'ew' Units Inside a Scoped Style
-      <pre class=language-css>
-        @element '.widget' {
-          $this {
-            font-size: 10ew;
+      <div class=example>
+        Example of ew Units Inside a Scoped Style
+        <pre class=language-css>
+          @element '.widget' {
+            $this {
+              font-size: 10ew;
+            }
           }
-        }
-      </pre>
-      In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 of the scoped element's width.
-    </div>
+        </pre>
+        In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element's width.
+      </div>
 
-    Note, This unit is similar to the ''vw'' viewport unit, but based on an element's dimensions.
+      Note, This unit is similar to the ''vw'' viewport unit, but based on the scoped element's dimensions.
 
-  <h3 id=eh-units>EH units</h3>
+    <dt><dfn id=eh lt=eh>eh unit</dfn>
+    <dd>
+      Equal to 1% of the height of the scoped element
 
-    <pre class=descdef>
-      Name: eh
-      Value: <<number>> eh
-      For: element-based-units
-      Type: unit
-    </pre>
-
-    The 'eh' unit is equal to 1/100th of the height of any scoped element and is able to be used anywhere inside a scoped style.
-
-    <div class=example>
-      Example of 'eh' Units Inside a Scoped Style
-      <pre class=language-css>
-        @element '.widget' {
-          $this {
-            font-size: 10eh;
+      <div class=example>
+        Example of eh Units Inside a Scoped Style
+        <pre class=language-css>
+          @element '.widget' {
+            $this {
+              font-size: 10eh;
+            }
           }
-        }
-      </pre>
-      In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 of the scoped element's height.
-    </div>
+        </pre>
+        In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element's height.
+      </div>
 
-    Note, This unit is similar to the ''vh'' viewport unit, but based on an element's dimensions.
+      Note, This unit is similar to the ''vh'' viewport unit, but based on the scoped element's dimensions.
 
-  <h3 id=emin-units>EMIN units</h3>
+    <dt><dfn id=emin lt=emin>emin unit</dfn>
+    <dd>
+      Equal to the smaller of ew or eh
 
-    <pre class=descdef>
-      Name: emin
-      Value: <<number>> emin
-      For: element-based-units
-      Type: unit
-    </pre>
-
-    The 'emin' unit is equal to 1/100th of the smallest dimension (width or height) of any scoped element and is able to be used anywhere inside a scoped style.
-
-    <div class=example>
-      Example of 'emin' Units Inside a Scoped Style
-      <pre class=language-css>
-        @element '.widget' {
-          $this {
-            font-size: 10emin;
+      <div class=example>
+        Example of emin Units Inside a Scoped Style
+        <pre class=language-css>
+          @element '.widget' {
+            $this {
+              font-size: 10emin;
+            }
           }
-        }
-      </pre>
-      In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 of the scoped element's shortest edge.
-    </div>
+        </pre>
+        In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element's shortest edge.
+      </div>
 
-    Note, This unit is similar to the ''vmin'' viewport unit, but based on an element's dimensions.
+      Note, This unit is similar to the ''vmin'' viewport unit, but based on the scoped element's dimensions.
 
-  <h3 id=emax-units>EMAX units</h3>
+    <dt><dfn id=emax lt=emax>emax unit</dfn>
+    <dd>
+      Equal to the larger of ew or eh
 
-    <pre class=descdef>
-      Name: emax
-      Value: <<number>> emax
-      For: element-based-units
-      Type: unit
-    </pre>
-
-    The 'emax' unit is equal to 1/100th of the largest dimension (width or height) of any scoped element and is able to be used anywhere inside a scoped style.
-
-    <div class=example>
-      Example of 'emax' Units Inside a Scoped Style
-      <pre class=language-css>
-        @element '.widget' {
-          $this {
-            font-size: 10emax;
+      <div class=example>
+        Example of emax Units Inside a Scoped Style
+        <pre class=language-css>
+          @element '.widget' {
+            $this {
+              font-size: 10emax;
+            }
           }
-        }
-      </pre>
-      In this case the font size of any element with a class of <code>.widget</code> is equal to 10/100 of the scoped element's longest edge.
-    </div>
+        </pre>
+        In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element's longest edge.
+      </div>
 
-    Note, This unit is similar to the ''vmax'' viewport unit, but based on an element's dimensions.
+      Note, This unit is similar to the ''vmax'' viewport unit, but based on the scoped element's dimensions.
+
+  </dl>
 
 <h2 id=examples-of-element-queries>Examples of Scoped Styles & Element Queries</h2>
 
@@ -1172,7 +1100,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         }
       &lt;/style>
     </pre>
-    In this example the <code>iframe</code> element has a <code>width=""</code> and <code>height=""</code> attribute supplied in HTML which is being accessed from CSS using <code>$it.width</code> and <code>$it.height</code> inside our <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> function. Because we are able to compute the HTML attributes directly, this one rule will make multiple <code>iframe</code> elements with <em>different</em> attribute values on the same page responsive, as it computes each iframe separately as <code>$this</code>.
+    In this example the <code>iframe</code> element has a <code>width=""</code> and <code>height=""</code> attribute supplied in HTML which is being accessed from CSS using <code>$it.width</code> and <code>$it.height</code> inside our <a>eval("")</a> function. Because we are able to compute the HTML attributes directly, this one rule will make multiple <code>iframe</code> elements with <em>different</em> attribute values on the same page responsive, as it computes each iframe separately as <code>$this</code>.
   </div>
 
 <h3 id=faking-input-empty>Faking <code>input:empty</code></h3>
@@ -1183,13 +1111,13 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       &lt;style>
         /* input:empty */
         @element 'input' and (max-characters: 0) {
-          $this { 
+          $this {
             background: red;
           }
         }
         /* input:not(:empty) */
         @element 'input' and (min-characters: 1) {
-          $this { 
+          $this {
             background: lime;
           }
         }
@@ -1211,7 +1139,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         }
       &lt;/style>
     </pre>
-    In this example we are using <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> to reset the 'height' value of our element and immediately set it to the scrollHeight of the element, ensuring that no matter how many lines of text it contains, it will always expand & contract to contain all of them.
+    In this example we are using <a>eval("")</a> to reset the 'height' value of our element and immediately set it to the scrollHeight of the element, ensuring that no matter how many lines of text it contains, it will always expand & contract to contain all of them.
   </div>
 
 <h3 id=display-browser-dimensions>Display Browser Dimensions</h3>
@@ -1229,7 +1157,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         }
       &lt;/style>
     </pre>
-    This example will create a new pseudo-element on our ':root' element (the HTML element) and uses <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> to display the <code>innerWidth</code> and <code>innerHeight</code> values of our <code>window</code>.
+    This example will create a new pseudo-element on our ':root' element (the HTML element) and uses <a>eval("")</a> to display the <code>innerWidth</code> and <code>innerHeight</code> values of our <code>window</code>.
   </div>
 
 <h3 id=self-responsive-grid>Self-responsive Grid</h3>
@@ -1382,7 +1310,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         }
       &lt;/style>
     </pre>
-    This example uses ''@element'' queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a class="property" data-link-type="propdesc" data-lt="$this" for=meta-selectors>$this</a>, we can use these same styles to power many grids in the same layout all using the same styles.
+    This example uses ''@element'' queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a selector>$this</a>, we can use these same styles to power many grids in the same layout all using the same styles.
   </div>
 
 <h3 id=using-variables-as-selectors>Using Variables as Selectors</h3>
@@ -1439,7 +1367,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         }
       &lt;/style>
     </pre>
-    In this example we use <a class="property" data-link-type="propdesc" data-lt='eval("")'>eval("")</a> to return either a list of selectors (stored as strings in a JavaScript array) or we use the return from a function that allows us to append strings like ':hover', or ':focus' to each selector as it gives them to use as a selector or selector list in our CSS inside of a scoped style. For manipulating or styling many similar things (like text-style inputs but not other inputs) we can simplify the selectors we need to use throughout our CSS while maintaining full control over what gets styled.
+    In this example we use <a>eval("")</a> to return either a list of selectors (stored as strings in a JavaScript array) or we use the return from a function that allows us to append strings like ':hover', or ':focus' to each selector as it gives them to use as a selector or selector list in our CSS inside of a scoped style. For manipulating or styling many similar things (like text-style inputs but not other inputs) we can simplify the selectors we need to use throughout our CSS while maintaining full control over what gets styled.
   </div>
 
 <h3 id=clamped-numbers-in-CSS>Clamped Numbers in CSS</h3>
