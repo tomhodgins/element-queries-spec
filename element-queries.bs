@@ -1086,6 +1086,33 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
 <h2 id=examples-of-element-queries>Examples of Scoped Styles & Element Queries</h2>
 
+<h3 id=example-scoped-styles>Examples of valid scoped styles</h3>
+
+  <div class=example>
+    <pre class=language-css>
+      @element 'div' {}
+    </pre>
+  </div>
+
+  <div class=example>
+    <pre class=language-css>
+      @element 'div, span' {}
+    </pre>
+  </div>
+
+  <div class=example>
+    <pre class=language-css>
+      @element 'div' and (min-width: 500px) {}
+    </pre>
+  </div>
+
+  <div class=example>
+    <pre class=language-css>
+      @element 'div' and (min-width: 500px) and (min-lines: 3) {}
+    </pre>
+  </div>
+
+
 <h3 id=wrapper-free-responsive-iframe>Wrapper-free responsive iframe resize</h3>
 
   <div class=example>

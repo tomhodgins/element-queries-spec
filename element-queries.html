@@ -1423,7 +1423,7 @@ Possible extra rowspan handling
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Element Queries</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2016-12-13">13 December 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2016-12-27">27 December 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1437,7 +1437,7 @@ Possible extra rowspan handling
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 13 December 2016,
+In addition, as of 27 December 2016,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1521,13 +1521,14 @@ Parts of this work may be from another specification document.  If so, those par
     <li>
      <a href="#examples-of-element-queries"><span class="secno">7</span> <span class="content">Examples of Scoped Styles &amp; Element Queries</span></a>
      <ol class="toc">
-      <li><a href="#wrapper-free-responsive-iframe"><span class="secno">7.1</span> <span class="content">Wrapper-free responsive iframe resize</span></a>
-      <li><a href="#faking-input-empty"><span class="secno">7.2</span> <span class="content">Faking <code>input:empty</code></span></a>
-      <li><a href="#auto-expanding-textarea"><span class="secno">7.3</span> <span class="content">Auto-expanding <code>textarea</code></span></a>
-      <li><a href="#display-browser-dimensions"><span class="secno">7.4</span> <span class="content">Display Browser Dimensions</span></a>
-      <li><a href="#self-responsive-grid"><span class="secno">7.5</span> <span class="content">Self-responsive Grid</span></a>
-      <li><a href="#using-variables-as-selectors"><span class="secno">7.6</span> <span class="content">Using Variables as Selectors</span></a>
-      <li><a href="#clamped-numbers-in-CSS"><span class="secno">7.7</span> <span class="content">Clamped Numbers in CSS</span></a>
+      <li><a href="#example-scoped-styles"><span class="secno">7.1</span> <span class="content">Examples of valid scoped styles</span></a>
+      <li><a href="#wrapper-free-responsive-iframe"><span class="secno">7.2</span> <span class="content">Wrapper-free responsive iframe resize</span></a>
+      <li><a href="#faking-input-empty"><span class="secno">7.3</span> <span class="content">Faking <code>input:empty</code></span></a>
+      <li><a href="#auto-expanding-textarea"><span class="secno">7.4</span> <span class="content">Auto-expanding <code>textarea</code></span></a>
+      <li><a href="#display-browser-dimensions"><span class="secno">7.5</span> <span class="content">Display Browser Dimensions</span></a>
+      <li><a href="#self-responsive-grid"><span class="secno">7.6</span> <span class="content">Self-responsive Grid</span></a>
+      <li><a href="#using-variables-as-selectors"><span class="secno">7.7</span> <span class="content">Using Variables as Selectors</span></a>
+      <li><a href="#clamped-numbers-in-CSS"><span class="secno">7.8</span> <span class="content">Clamped Numbers in CSS</span></a>
      </ol>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
@@ -2536,7 +2537,28 @@ Parts of this work may be from another specification document.  If so, those par
      <p class="note" role="note">Note, This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmax">vmax</a> viewport unit, but based on the scoped element’s dimensions.</p>
    </dl>
    <h2 class="heading settled" data-level="7" id="examples-of-element-queries"><span class="secno">7. </span><span class="content">Examples of Scoped Styles &amp; Element Queries</span><a class="self-link" href="#examples-of-element-queries"></a></h2>
-   <h3 class="heading settled" data-level="7.1" id="wrapper-free-responsive-iframe"><span class="secno">7.1. </span><span class="content">Wrapper-free responsive iframe resize</span><a class="self-link" href="#wrapper-free-responsive-iframe"></a></h3>
+   <h3 class="heading settled" data-level="7.1" id="example-scoped-styles"><span class="secno">7.1. </span><span class="content">Examples of valid scoped styles</span><a class="self-link" href="#example-scoped-styles"></a></h3>
+   <div class="example" id="example-950901a4">
+    <a class="self-link" href="#example-950901a4"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'div'</span> <span class="p">{}</span>
+</pre>
+   </div>
+   <div class="example" id="example-4e71e53b">
+    <a class="self-link" href="#example-4e71e53b"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'div, span'</span> <span class="p">{}</span>
+</pre>
+   </div>
+   <div class="example" id="example-b0263c7e">
+    <a class="self-link" href="#example-b0263c7e"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'div'</span> and <span class="p">(</span>min-width<span class="nt">: 500px) </span><span class="p">{</span><span class="p">}</span>
+</pre>
+   </div>
+   <div class="example" id="example-a3e255ae">
+    <a class="self-link" href="#example-a3e255ae"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'div'</span> and <span class="p">(</span>min-width<span class="nt">: 500px) and (min-lines: 3) </span><span class="p">{</span><span class="p">}</span>
+</pre>
+   </div>
+   <h3 class="heading settled" data-level="7.2" id="wrapper-free-responsive-iframe"><span class="secno">7.2. </span><span class="content">Wrapper-free responsive iframe resize</span><a class="self-link" href="#wrapper-free-responsive-iframe"></a></h3>
    <div class="example" id="example-e3f9465f">
     <a class="self-link" href="#example-e3f9465f"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">width</span><span class="o">=</span><span class="s">"640"</span> <span class="na">height</span><span class="o">=</span><span class="s">"360"</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">iframe</span><span class="p">></span>
@@ -2551,7 +2573,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this example the <code>iframe</code> element has a <code>width=""</code> and <code>height=""</code> attribute supplied in HTML which is being accessed from CSS using <code>$it.width</code> and <code>$it.height</code> inside our <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-15">eval("")</a> function. Because we are able to compute the HTML attributes directly, this one rule will make multiple <code>iframe</code> elements with <em>different</em> attribute values on the same page responsive, as it computes each iframe separately as <code>$this</code>.</p>
    </div>
-   <h3 class="heading settled" data-level="7.2" id="faking-input-empty"><span class="secno">7.2. </span><span class="content">Faking <code>input:empty</code></span><a class="self-link" href="#faking-input-empty"></a></h3>
+   <h3 class="heading settled" data-level="7.3" id="faking-input-empty"><span class="secno">7.3. </span><span class="content">Faking <code>input:empty</code></span><a class="self-link" href="#faking-input-empty"></a></h3>
    <div class="example" id="example-6769fe6c">
     <a class="self-link" href="#example-6769fe6c"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">></span>
@@ -2572,7 +2594,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this example we are able to apply styles based on whether there are zero or at least one characters inside any <code>input</code> element. CSS has the pseudo-class <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#empty-pseudo">:empty</a>, however it doesn’t apply to all elements (like <code>input</code> elements) so by using <a class="property" data-link-type="propdesc" href="#descdef-element-max-characters" id="ref-for-descdef-element-max-characters-3">max-characters</a> and <a class="property" data-link-type="propdesc" href="#descdef-element-min-characters" id="ref-for-descdef-element-min-characters-3">min-characters</a> with element queries we are able to express and style a similar idea.</p>
    </div>
-   <h3 class="heading settled" data-level="7.3" id="auto-expanding-textarea"><span class="secno">7.3. </span><span class="content">Auto-expanding <code>textarea</code></span><a class="self-link" href="#auto-expanding-textarea"></a></h3>
+   <h3 class="heading settled" data-level="7.4" id="auto-expanding-textarea"><span class="secno">7.4. </span><span class="content">Auto-expanding <code>textarea</code></span><a class="self-link" href="#auto-expanding-textarea"></a></h3>
    <div class="example" id="example-8abfe05e">
     <a class="self-link" href="#example-8abfe05e"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">textarea</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">textarea</span><span class="p">></span>
@@ -2586,7 +2608,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this example we are using <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-16">eval("")</a> to reset the <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css21/visudet.html#propdef-height">height</a> value of our element and immediately set it to the scrollHeight of the element, ensuring that no matter how many lines of text it contains, it will always expand &amp; contract to contain all of them.</p>
    </div>
-   <h3 class="heading settled" data-level="7.4" id="display-browser-dimensions"><span class="secno">7.4. </span><span class="content">Display Browser Dimensions</span><a class="self-link" href="#display-browser-dimensions"></a></h3>
+   <h3 class="heading settled" data-level="7.5" id="display-browser-dimensions"><span class="secno">7.5. </span><span class="content">Display Browser Dimensions</span><a class="self-link" href="#display-browser-dimensions"></a></h3>
    <div class="example" id="example-66971180">
     <a class="self-link" href="#example-66971180"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
@@ -2602,7 +2624,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>This example will create a new pseudo-element on our ':root' element (the HTML element) and uses <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-17">eval("")</a> to display the <code>innerWidth</code> and <code>innerHeight</code> values of our <code>window</code>.</p>
    </div>
-   <h3 class="heading settled" data-level="7.5" id="self-responsive-grid"><span class="secno">7.5. </span><span class="content">Self-responsive Grid</span><a class="self-link" href="#self-responsive-grid"></a></h3>
+   <h3 class="heading settled" data-level="7.6" id="self-responsive-grid"><span class="secno">7.6. </span><span class="content">Self-responsive Grid</span><a class="self-link" href="#self-responsive-grid"></a></h3>
    <div class="example" id="example-2beb31a9">
     <a class="self-link" href="#example-2beb31a9"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">h2</span><span class="p">></span>Responsive Grid<span class="p">&lt;</span><span class="p">/</span><span class="nt">h2</span><span class="p">></span>
@@ -2753,7 +2775,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>This example uses <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-30">@element</a> queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-6">$this</a>, we can use these same styles to power many grids in the same layout all using the same styles.</p>
    </div>
-   <h3 class="heading settled" data-level="7.6" id="using-variables-as-selectors"><span class="secno">7.6. </span><span class="content">Using Variables as Selectors</span><a class="self-link" href="#using-variables-as-selectors"></a></h3>
+   <h3 class="heading settled" data-level="7.7" id="using-variables-as-selectors"><span class="secno">7.7. </span><span class="content">Using Variables as Selectors</span><a class="self-link" href="#using-variables-as-selectors"></a></h3>
    <div class="example" id="example-7dacbc69">
     <a class="self-link" href="#example-7dacbc69"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">hidden</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">hidden</span><span class="p">></span>
@@ -2808,7 +2830,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this example we use <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-18">eval("")</a> to return either a list of selectors (stored as strings in a JavaScript array) or we use the return from a function that allows us to append strings like ':hover', or ':focus' to each selector as it gives them to use as a selector or selector list in our CSS inside of a scoped style. For manipulating or styling many similar things (like text-style inputs but not other inputs) we can simplify the selectors we need to use throughout our CSS while maintaining full control over what gets styled.</p>
    </div>
-   <h3 class="heading settled" data-level="7.7" id="clamped-numbers-in-CSS"><span class="secno">7.7. </span><span class="content">Clamped Numbers in CSS</span><a class="self-link" href="#clamped-numbers-in-CSS"></a></h3>
+   <h3 class="heading settled" data-level="7.8" id="clamped-numbers-in-CSS"><span class="secno">7.8. </span><span class="content">Clamped Numbers in CSS</span><a class="self-link" href="#clamped-numbers-in-CSS"></a></h3>
    <div class="example" id="example-44b5a47f">
     <a class="self-link" href="#example-44b5a47f"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">h1</span><span class="p">></span>Headline<span class="p">&lt;</span><span class="p">/</span><span class="nt">h1</span><span class="p">></span>
@@ -3217,7 +3239,7 @@ Parts of this work may be from another specification document.  If so, those par
     <li><a href="#ref-for-at-ruledef-element-27">4.15. Orientation</a>
     <li><a href="#ref-for-at-ruledef-element-28">4.16. Min-aspect-ratio</a>
     <li><a href="#ref-for-at-ruledef-element-29">4.17. Max-aspect-ratio</a>
-    <li><a href="#ref-for-at-ruledef-element-30">7.5. Self-responsive Grid</a>
+    <li><a href="#ref-for-at-ruledef-element-30">7.6. Self-responsive Grid</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="typedef-eq-prelude">
@@ -3269,17 +3291,17 @@ Parts of this work may be from another specification document.  If so, those par
     <li><a href="#ref-for-funcdef-eval-8">5.1.5. Replacing Properties in CSS</a>
     <li><a href="#ref-for-funcdef-eval-9">5.1.6. Replacing Selectors in CSS</a> <a href="#ref-for-funcdef-eval-10">(2)</a>
     <li><a href="#ref-for-funcdef-eval-11">5.1.7. $it selector</a> <a href="#ref-for-funcdef-eval-12">(2)</a> <a href="#ref-for-funcdef-eval-13">(3)</a> <a href="#ref-for-funcdef-eval-14">(4)</a>
-    <li><a href="#ref-for-funcdef-eval-15">7.1. Wrapper-free responsive iframe resize</a>
-    <li><a href="#ref-for-funcdef-eval-16">7.3. Auto-expanding textarea</a>
-    <li><a href="#ref-for-funcdef-eval-17">7.4. Display Browser Dimensions</a>
-    <li><a href="#ref-for-funcdef-eval-18">7.6. Using Variables as Selectors</a>
+    <li><a href="#ref-for-funcdef-eval-15">7.2. Wrapper-free responsive iframe resize</a>
+    <li><a href="#ref-for-funcdef-eval-16">7.4. Auto-expanding textarea</a>
+    <li><a href="#ref-for-funcdef-eval-17">7.5. Display Browser Dimensions</a>
+    <li><a href="#ref-for-funcdef-eval-18">7.7. Using Variables as Selectors</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="selectordef-meta-selectors-this">
    <b><a href="#selectordef-meta-selectors-this">#selectordef-meta-selectors-this</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-selectordef-meta-selectors-this-1">3.1. Diagram of meta-selectors</a> <a href="#ref-for-selectordef-meta-selectors-this-2">(2)</a> <a href="#ref-for-selectordef-meta-selectors-this-3">(3)</a> <a href="#ref-for-selectordef-meta-selectors-this-4">(4)</a> <a href="#ref-for-selectordef-meta-selectors-this-5">(5)</a>
-    <li><a href="#ref-for-selectordef-meta-selectors-this-6">7.5. Self-responsive Grid</a>
+    <li><a href="#ref-for-selectordef-meta-selectors-this-6">7.6. Self-responsive Grid</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="selectordef-meta-selectors-parent">
@@ -3328,14 +3350,14 @@ Parts of this work may be from another specification document.  If so, those par
    <b><a href="#descdef-element-min-characters">#descdef-element-min-characters</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-descdef-element-min-characters-1">4.5. Min-characters</a> <a href="#ref-for-descdef-element-min-characters-2">(2)</a>
-    <li><a href="#ref-for-descdef-element-min-characters-3">7.2. Faking input:empty</a>
+    <li><a href="#ref-for-descdef-element-min-characters-3">7.3. Faking input:empty</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="descdef-element-max-characters">
    <b><a href="#descdef-element-max-characters">#descdef-element-max-characters</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-descdef-element-max-characters-1">4.6. Max-characters</a> <a href="#ref-for-descdef-element-max-characters-2">(2)</a>
-    <li><a href="#ref-for-descdef-element-max-characters-3">7.2. Faking input:empty</a>
+    <li><a href="#ref-for-descdef-element-max-characters-3">7.3. Faking input:empty</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="descdef-element-min-lines">
