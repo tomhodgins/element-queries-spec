@@ -1,10 +1,8 @@
-# element-queries-spec
+# Element Queries Spec
 
-A spec for a Container-Style Element Query syntax
+A spec for a container-style element query syntax in CSS
 
-**View online:** [element-queries.html](https://tomhodgins.github.io/element-queries-spec/element-queries.html)
-
-**View demo:** [demo.html](https://tomhodgins.github.io/element-queries-spec/demo.html)
+**Read online:** [element-queries.html](https://tomhodgins.github.io/element-queries-spec/element-queries.html)
 
 ## What is this about?
 
@@ -61,6 +59,19 @@ As a reference for the syntax described in the spec, I have included a JavaScrip
 **View Plugin:** [element-queries.js](plugin/element-queries.js)
 
 **View Demo:** [demo.html](demo.html)
+
+## Related Projects
+
+There are a few projects currently working with the syntax described in this spec:
+
+- [EQCSS](https://github.com/eqcss/eqcss) Element Query CSS browser plugin
+- [eqcss-compiler](https://github.com/tomhodgins/eqcss-compiler) an EQCSS to JavaScript compiler
+
+## Further Examples
+
+More examples of this syntax can be found on Codepen by searching for "EQCSS".
+
+**Search Codepen for EQCSS:** [Codepen Search](http://codepen.io/search/pens?q=eqcss&limit=all&type=type-pens)
 
 ## Who am I?
 

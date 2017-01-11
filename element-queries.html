@@ -1423,7 +1423,7 @@ Possible extra rowspan handling
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Element Queries</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2016-12-27">27 December 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-01-11">11 January 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1437,7 +1437,7 @@ Possible extra rowspan handling
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 27 December 2016,
+In addition, as of 11 January 2017,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1576,9 +1576,9 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
    <h2 class="heading settled" data-level="2" id="style-scoping"><span class="secno">2. </span><span class="content">Style Scoping</span><a class="self-link" href="#style-scoping"></a></h2>
    <h3 class="heading settled" data-level="2.1" id="scoped-styles"><span class="secno">2.1. </span><span class="content">Scoped Styles</span><a class="self-link" href="#scoped-styles"></a></h3>
-   <p>By default all CSS is written from the global scope (<a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#root-pseudo">:root</a>, or the HTML element), and <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a> queries apply based on the conditions of the browser and media.</p>
-   <p>The idea of a scoped style is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as thought it was <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#root-pseudo">:root</a></p>
-   <p>Just like CSS has <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a> queries which help us define styles for different media, this document describes functionality for an <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-1">@element</a> query syntax to allow us to write styles that target elements more specifically based on their own properties.</p>
+   <p>By default all CSS is written from the global scope (<a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#root-pseudo">:root</a>, or the HTML element), and <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a> queries apply globally to all elements based on the conditions of the browser and media.</p>
+   <p>The idea of a scoped style is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as though it was <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#root-pseudo">:root</a>.</p>
+   <p>Just like CSS already has <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a> queries which help define styles for different media conditions, this document describes functionality for an <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-1">@element</a> query syntax to define styles that target elements more specifically with conditions based on their own properties.</p>
    <p>To write a scoped style, write <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-2">@element</a>, followed by any amount of whitespace. Wrap one or more comma-separated CSS <a class="production css" data-link-type="type" href="https://www.w3.org/TR/selectors4/#ltselector">&lt;selector></a> in single (<code>'</code>) or double (<code>"</code>) quotes, followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).</p>
    <div class="example" id="example-e356e460">
     <a class="self-link" href="#example-e356e460"></a> Example scoped style 

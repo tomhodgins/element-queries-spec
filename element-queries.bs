@@ -41,11 +41,11 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=scoped-styles>Scoped Styles</h3>
 
-    By default all CSS is written from the global scope ('':root'', or the HTML element), and ''@media'' queries apply based on the conditions of the browser and media.
+    By default all CSS is written from the global scope ('':root'', or the HTML element), and ''@media'' queries apply globally to all elements based on the conditions of the browser and media.
 
-    The idea of a scoped style is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as thought it was '':root''
+    The idea of a scoped style is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as though it was '':root''.
 
-    Just like CSS has ''@media'' queries which help us define styles for different media, this document describes functionality for an ''@element'' query syntax to allow us to write styles that target elements more specifically based on their own properties.
+    Just like CSS already has ''@media'' queries which help define styles for different media conditions, this document describes functionality for an ''@element'' query syntax to define styles that target elements more specifically with conditions based on their own properties.
 
     To write a scoped style, write ''@element'', followed by any amount of whitespace. Wrap one or more comma-separated CSS <<selector>> in single (<code>'</code>) or double (<code>"</code>) quotes, followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).
 
