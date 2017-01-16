@@ -1,5 +1,5 @@
 <pre class=metadata>
-Title: Element Queries
+Title: CSS Element Queries
 Shortname: element-queries
 Level: 1
 Status: DREAM

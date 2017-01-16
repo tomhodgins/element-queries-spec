@@ -1,4 +1,4 @@
-# Element Queries Spec
+# CSS Element Queries
 
 A spec for a container-style element query syntax in CSS
 
