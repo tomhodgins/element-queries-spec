@@ -22,7 +22,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=values>Values</h3>
 
-  Value types not defined in this specification, such as <<integer>>, <<number>>, <<dimension>>, <<ratio>>, and <<ident>> are defined in [[!CSS3VAL]], and [[!MEDIAQUERIES-4]]
+  Value types not defined in this specification, such as <<integer>>, <<dimension>>, <<ratio>>, and <<ident>> are defined in [[!CSS3VAL]], and [[!MEDIAQUERIES-4]]
 
   <h3 id=units>Units</h3>
 
@@ -313,7 +313,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       | min-scroll-x | max-scroll-x | orientation
       | min-aspect-ratio | max-aspect-ratio
 
-    <dfn dfn-type=type>&lt;eq-value></dfn> = <<number>> | <<dimension>> | <<ratio>> | <<ident>>
+    <dfn dfn-type=type>&lt;eq-value></dfn> = <<integer>> | <<dimension>> | <<ratio>> | <<ident>>
 
     <dfn dfn-type=selector>meta-selectors</dfn> = $this | $parent | $prev | $next | $it
 
@@ -554,7 +554,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <pre class="descdef mq">
       Name: lines
-      Value: <<number>>
+      Value: <<integer>>
       For: @element
       Type: range
     </pre>
@@ -591,7 +591,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <pre class="descdef mq">
       Name: children
-      Value: <<number>>
+      Value: <<integer>>
       For: @element
       Type: range
     </pre>

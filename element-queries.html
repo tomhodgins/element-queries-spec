@@ -1561,7 +1561,7 @@ Parts of this work may be from another specification document.  If so, those par
    <p>The idea of a scoped style is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as though it was <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#root-pseudo">:root</a>.</p>
    <p>Just like CSS already has <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a> queries which help define styles for different media conditions, this document describes functionality for an <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-1">@element</a> query syntax to define styles that target elements more specifically with conditions based on their own properties.</p>
    <h3 class="heading settled" data-level="1.1" id="values"><span class="secno">1.1. </span><span class="content">Values</span><a class="self-link" href="#values"></a></h3>
-   <p>Value types not defined in this specification, such as <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a>, <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a>, <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a>, <a class="production css" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a>, and <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a> are defined in <a data-link-type="biblio" href="#biblio-css3val">[CSS3VAL]</a>, and <a data-link-type="biblio" href="#biblio-mediaqueries-4">[MEDIAQUERIES-4]</a></p>
+   <p>Value types not defined in this specification, such as <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a>, <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a>, <a class="production css" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a>, and <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a> are defined in <a data-link-type="biblio" href="#biblio-css3val">[CSS3VAL]</a>, and <a data-link-type="biblio" href="#biblio-mediaqueries-4">[MEDIAQUERIES-4]</a></p>
    <h3 class="heading settled" data-level="1.2" id="units"><span class="secno">1.2. </span><span class="content">Units</span><a class="self-link" href="#units"></a></h3>
    <p>The units used in element queries are the same as in other parts of CSS, as defined in <a data-link-type="biblio" href="#biblio-css3val">[CSS3VAL]</a>. For example, the pixel unit represents CSS pixels and not physical pixels.</p>
    <p>Additionally, new <a href="#element-based-units">element-based units</a> are defined in this document which relate to an element’s own properties after styles have been applied to the document.</p>
@@ -1861,7 +1861,7 @@ Parts of this work may be from another specification document.  If so, those par
   | min-scroll-x | max-scroll-x | orientation
   | min-aspect-ratio | max-aspect-ratio
 
-<dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-value">&lt;eq-value></dfn> = <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a>
+<dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-value">&lt;eq-value></dfn> = <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a>
 
 <dfn class="dfn-paneled" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors">meta-selectors</dfn> = $this | $parent | $prev | $next | $it
 
@@ -2079,7 +2079,7 @@ Parts of this work may be from another specification document.  If so, those par
       <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-16">@element</a>
      <tr>
       <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a>
+      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a>
      <tr>
       <th>Type:
       <td>range
@@ -2117,7 +2117,7 @@ Parts of this work may be from another specification document.  If so, those par
       <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-17">@element</a>
      <tr>
       <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a>
+      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a>
      <tr>
       <th>Type:
       <td>range
@@ -3038,7 +3038,6 @@ Parts of this work may be from another specification document.  If so, those par
     <a data-link-type="biblio">[CSS3VAL]</a> defines the following terms:
     <ul>
      <li><a href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a>
-     <li><a href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a>
     </ul>
    <li>
     <a data-link-type="biblio">[CSS3VAL]</a> defines the following terms:
@@ -3115,12 +3114,12 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
      <tr>
       <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-lines">lines</a>
-      <td>&lt;number>
+      <td>&lt;integer>
       <td>
       <td>range
      <tr>
       <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-children">children</a>
-      <td>&lt;number>
+      <td>&lt;integer>
       <td>
       <td>range
      <tr>
