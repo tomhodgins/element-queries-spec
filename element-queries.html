@@ -1,7 +1,7 @@
 <!doctype html><html lang="en">
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <title>CSS Element Queries</title>
+  <title>CSS Element Queries [Level 1]</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 <style data-fill-with="stylesheet">/******************************************************************************
  *                   Style sheet for the W3C specifications                   *
@@ -1361,6 +1361,8 @@ Possible extra rowspan handling
 
         .dfn-paneled { cursor: pointer; }
         </style>
+<style>/* style-railroad */
+svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path{stroke-width:3;stroke:black;fill:rgba(0,0,0,0);}svg.railroad-diagram text{font:bold 14px monospace;text-anchor:middle;}svg.railroad-diagram text.label{text-anchor:start;}svg.railroad-diagram text.comment{font:italic 12px monospace;}svg.railroad-diagram rect{stroke-width:3;stroke:black;fill:hsl(120,100%,90%);}</style>
 <style>/* style-syntax-highlighting */
 
         .highlight:not(.idl) { background: hsl(24, 20%, 95%); }
@@ -1422,8 +1424,8 @@ Possible extra rowspan handling
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"></p>
-   <h1 class="p-name no-ref" id="title">CSS Element Queries</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-01-16">16 January 2017</time></span></h2>
+   <h1 class="p-name no-ref" id="title">CSS Element Queries [Level 1]</h1>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-01-17">17 January 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1437,7 +1439,7 @@ Possible extra rowspan handling
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 16 January 2017,
+In addition, as of 17 January 2017,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1445,24 +1447,30 @@ Parts of this work may be from another specification document.  If so, those par
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
   <div class="p-summary" data-fill-with="abstract">
-   <p>The goal of this document is to specify a syntax for scoped styles and element queries in a container query style, as well as the related selectors, functions, and units that make scoped styles and element queries versatile and powerful way to write layout-independent responsive conditions for elements in CSS.</p>
+   <p>Element Queries allow authors to test and query values or features of elements in an HTML document. They are used in the CSS @element rule to conditionally apply styles to a document, and in various other contexts and languages, such as HTML and JavaScript.</p>
+   <p>CSS Element Queries [Level 1] describes the mechanism and syntax of scoped styles and element queries, the responsive conditions. It also describes the meta-selectors, functions, and units that make element queries powerful.</p>
   </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
-    <li><a href="#eqcss-syntax"><span class="secno">1</span> <span class="content">EQCSS Syntax</span></a>
     <li>
-     <a href="#style-scoping"><span class="secno">2</span> <span class="content">Style Scoping</span></a>
+     <a href="#introduction"><span class="secno">1</span> <span class="content">Introduction</span></a>
+     <ol class="toc">
+      <li><a href="#values"><span class="secno">1.1</span> <span class="content">Values</span></a>
+      <li><a href="#units"><span class="secno">1.2</span> <span class="content">Units</span></a>
+     </ol>
+    <li>
+     <a href="#element-queries"><span class="secno">2</span> <span class="content">Element Queries</span></a>
      <ol class="toc">
       <li>
        <a href="#scoped-styles"><span class="secno">2.1</span> <span class="content">Scoped Styles</span></a>
        <ol class="toc">
         <li><a href="#multiple-selectors"><span class="secno">2.1.1</span> <span class="content">Multiple Selectors</span></a>
-        <li><a href="#evaluating-the-scope"><span class="secno">2.1.2</span> <span class="content">Evaluating the Scope</span></a>
+        <li><a href="#understanding-the-scope"><span class="secno">2.1.2</span> <span class="content">Understanding the Scope</span></a>
        </ol>
       <li>
-       <a href="#element-queries"><span class="secno">2.2</span> <span class="content">Element Queries</span></a>
+       <a href="#scoped-styles-with-repsonsive-conditions"><span class="secno">2.2</span> <span class="content">Scoped Styles with Responsive Conditions</span></a>
        <ol class="toc">
         <li><a href="#multiple-conditions"><span class="secno">2.2.1</span> <span class="content">Multiple Conditions</span></a>
         <li><a href="#combining-element-and-media-queries"><span class="secno">2.2.2</span> <span class="content">Combining <span class="css">@element</span> and <span class="css">@media</span> queries</span></a>
@@ -1471,64 +1479,61 @@ Parts of this work may be from another specification document.  If so, those par
        </ol>
      </ol>
     <li>
-     <a href="#meta-selectors-in-css"><span class="secno">3</span> <span class="content">Meta-Selectors</span></a>
+     <a href="#syntax"><span class="secno">3</span> <span class="content">Syntax</span></a>
      <ol class="toc">
-      <li><a href="#diagram-of-meta-selectors"><span class="secno">3.1</span> <span class="content">Diagram of <span class="css">meta-selectors</span></span></a>
+      <li><a href="#evaluating-element-queries"><span class="secno">3.1</span> <span class="content">Evaluating Element Queries</span></a>
      </ol>
     <li>
-     <a href="#responsive-conditions"><span class="secno">4</span> <span class="content">Responsive Conditions</span></a>
+     <a href="#meta-selectors-in-css"><span class="secno">4</span> <span class="content">Meta-Selectors</span></a>
      <ol class="toc">
-      <li><a href="#min-width"><span class="secno">4.1</span> <span class="content">Min-width</span></a>
-      <li><a href="#max-width"><span class="secno">4.2</span> <span class="content">Max-width</span></a>
-      <li><a href="#min-height"><span class="secno">4.3</span> <span class="content">Min-height</span></a>
-      <li><a href="#max-height"><span class="secno">4.4</span> <span class="content">Max-height</span></a>
-      <li><a href="#min-characters"><span class="secno">4.5</span> <span class="content">Min-characters</span></a>
-      <li><a href="#max-characters"><span class="secno">4.6</span> <span class="content">Max-characters</span></a>
-      <li><a href="#min-lines"><span class="secno">4.7</span> <span class="content">Min-lines</span></a>
-      <li><a href="#max-lines"><span class="secno">4.8</span> <span class="content">Max-lines</span></a>
-      <li><a href="#min-children"><span class="secno">4.9</span> <span class="content">Min-children</span></a>
-      <li><a href="#max-children"><span class="secno">4.10</span> <span class="content">Max-children</span></a>
-      <li><a href="#min-scroll-y"><span class="secno">4.11</span> <span class="content">Min-scroll-y</span></a>
-      <li><a href="#max-scroll-y"><span class="secno">4.12</span> <span class="content">Max-scroll-y</span></a>
-      <li><a href="#min-scroll-x"><span class="secno">4.13</span> <span class="content">Min-scroll-x</span></a>
-      <li><a href="#max-scroll-x"><span class="secno">4.14</span> <span class="content">Max-scroll-x</span></a>
-      <li>
-       <a href="#orientation"><span class="secno">4.15</span> <span class="content">Orientation</span></a>
-       <ol class="toc">
-        <li><a href="#portrait-orientation"><span class="secno">4.15.1</span> <span class="content">Portrait Orientation</span></a>
-        <li><a href="#square-orientation"><span class="secno">4.15.2</span> <span class="content">Square Orientation</span></a>
-        <li><a href="#landscape-orientation"><span class="secno">4.15.3</span> <span class="content">Landscape Orientation</span></a>
-       </ol>
-      <li><a href="#min-aspect-ratio"><span class="secno">4.16</span> <span class="content">Min-aspect-ratio</span></a>
-      <li><a href="#max-aspect-ratio"><span class="secno">4.17</span> <span class="content">Max-aspect-ratio</span></a>
+      <li><a href="#diagram-of-meta-selectors"><span class="secno">4.1</span> <span class="content">Diagram of <span class="css">meta-selectors</span></span></a>
      </ol>
     <li>
-     <a href="#css-functions"><span class="secno">5</span> <span class="content">CSS Functions</span></a>
+     <a href="#responsive-conditions"><span class="secno">5</span> <span class="content">Responsive Conditions</span></a>
      <ol class="toc">
+      <li><a href="#min-width"><span class="secno">5.1</span> <span class="content">Width</span></a>
+      <li><a href="#height"><span class="secno">5.2</span> <span class="content">Height</span></a>
+      <li><a href="#characters"><span class="secno">5.3</span> <span class="content">Characters</span></a>
+      <li><a href="#lines"><span class="secno">5.4</span> <span class="content">Lines</span></a>
+      <li><a href="#children"><span class="secno">5.5</span> <span class="content">Children</span></a>
+      <li><a href="#scroll-y"><span class="secno">5.6</span> <span class="content">Scroll-Y</span></a>
+      <li><a href="#scroll-x"><span class="secno">5.7</span> <span class="content">Scroll-X</span></a>
+      <li><a href="#aspect-ratio"><span class="secno">5.8</span> <span class="content">Aspect-Ratio</span></a>
       <li>
-       <a href="#eval"><span class="secno">5.1</span> <span class="content">eval("")</span></a>
+       <a href="#orientation"><span class="secno">5.9</span> <span class="content">Orientation</span></a>
        <ol class="toc">
-        <li><a href="#using-js-variables-in-css"><span class="secno">5.1.1</span> <span class="content">Using JavaScript Variables in CSS</span></a>
-        <li><a href="#writing-js-in-css"><span class="secno">5.1.2</span> <span class="content">Writing JavaScript in CSS</span></a>
-        <li><a href="#using-js-functions-in-css"><span class="secno">5.1.3</span> <span class="content">Using JavaScript Functions in CSS</span></a>
-        <li><a href="#replacing-values-in-css"><span class="secno">5.1.4</span> <span class="content">Replacing Values in CSS</span></a>
-        <li><a href="#replacing-properties-in-css"><span class="secno">5.1.5</span> <span class="content">Replacing Properties in CSS</span></a>
-        <li><a href="#replacing-selectors-in-css"><span class="secno">5.1.6</span> <span class="content">Replacing Selectors in CSS</span></a>
-        <li><a href="#it-selector"><span class="secno">5.1.7</span> <span class="content"><code>$it</code> selector</span></a>
+        <li><a href="#portrait-orientation"><span class="secno">5.9.1</span> <span class="content">Portrait Orientation</span></a>
+        <li><a href="#square-orientation"><span class="secno">5.9.2</span> <span class="content">Square Orientation</span></a>
+        <li><a href="#landscape-orientation"><span class="secno">5.9.3</span> <span class="content">Landscape Orientation</span></a>
        </ol>
      </ol>
-    <li><a href="#element-based-units"><span class="secno">6</span> <span class="content">Element-based Units</span></a>
     <li>
-     <a href="#examples-of-element-queries"><span class="secno">7</span> <span class="content">Examples of Scoped Styles &amp; Element Queries</span></a>
+     <a href="#css-functions"><span class="secno">6</span> <span class="content">CSS Functions</span></a>
      <ol class="toc">
-      <li><a href="#example-scoped-styles"><span class="secno">7.1</span> <span class="content">Examples of valid scoped styles</span></a>
-      <li><a href="#wrapper-free-responsive-iframe"><span class="secno">7.2</span> <span class="content">Wrapper-free responsive iframe resize</span></a>
-      <li><a href="#faking-input-empty"><span class="secno">7.3</span> <span class="content">Faking <code>input:empty</code></span></a>
-      <li><a href="#auto-expanding-textarea"><span class="secno">7.4</span> <span class="content">Auto-expanding <code>textarea</code></span></a>
-      <li><a href="#display-browser-dimensions"><span class="secno">7.5</span> <span class="content">Display Browser Dimensions</span></a>
-      <li><a href="#self-responsive-grid"><span class="secno">7.6</span> <span class="content">Self-responsive Grid</span></a>
-      <li><a href="#using-variables-as-selectors"><span class="secno">7.7</span> <span class="content">Using Variables as Selectors</span></a>
-      <li><a href="#clamped-numbers-in-CSS"><span class="secno">7.8</span> <span class="content">Clamped Numbers in CSS</span></a>
+      <li>
+       <a href="#eval"><span class="secno">6.1</span> <span class="content">eval("")</span></a>
+       <ol class="toc">
+        <li><a href="#using-js-variables-in-css"><span class="secno">6.1.1</span> <span class="content">Using JavaScript Variables in CSS</span></a>
+        <li><a href="#writing-js-in-css"><span class="secno">6.1.2</span> <span class="content">Writing JavaScript in CSS</span></a>
+        <li><a href="#using-js-functions-in-css"><span class="secno">6.1.3</span> <span class="content">Using JavaScript Functions in CSS</span></a>
+        <li><a href="#replacing-values-in-css"><span class="secno">6.1.4</span> <span class="content">Replacing Values in CSS</span></a>
+        <li><a href="#replacing-properties-in-css"><span class="secno">6.1.5</span> <span class="content">Replacing Properties in CSS</span></a>
+        <li><a href="#replacing-selectors-in-css"><span class="secno">6.1.6</span> <span class="content">Replacing Selectors in CSS</span></a>
+        <li><a href="#it-selector"><span class="secno">6.1.7</span> <span class="content"><code>$it</code> selector</span></a>
+       </ol>
+     </ol>
+    <li><a href="#element-based-units"><span class="secno">7</span> <span class="content">Element-based Units</span></a>
+    <li>
+     <a href="#examples-of-element-queries"><span class="secno">8</span> <span class="content">Examples of Scoped Styles &amp; Element Queries</span></a>
+     <ol class="toc">
+      <li><a href="#example-scoped-styles"><span class="secno">8.1</span> <span class="content">Examples of valid scoped styles</span></a>
+      <li><a href="#wrapper-free-responsive-iframe"><span class="secno">8.2</span> <span class="content">Wrapper-free responsive iframe resize</span></a>
+      <li><a href="#faking-input-empty"><span class="secno">8.3</span> <span class="content">Faking <code>input:empty</code></span></a>
+      <li><a href="#auto-expanding-textarea"><span class="secno">8.4</span> <span class="content">Auto-expanding <code>textarea</code></span></a>
+      <li><a href="#display-browser-dimensions"><span class="secno">8.5</span> <span class="content">Display Browser Dimensions</span></a>
+      <li><a href="#self-responsive-grid"><span class="secno">8.6</span> <span class="content">Self-responsive Grid</span></a>
+      <li><a href="#using-variables-as-selectors"><span class="secno">8.7</span> <span class="content">Using Variables as Selectors</span></a>
+      <li><a href="#clamped-numbers-in-CSS"><span class="secno">8.8</span> <span class="content">Clamped Numbers in CSS</span></a>
      </ol>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
@@ -1551,34 +1556,116 @@ Parts of this work may be from another specification document.  If so, those par
    </ol>
   </nav>
   <main>
-   <h2 class="heading settled" data-level="1" id="eqcss-syntax"><span class="secno">1. </span><span class="content">EQCSS Syntax</span><a class="self-link" href="#eqcss-syntax"></a></h2>
-   <p>This defines the terms used in the various parts of an element query.</p>
-<pre><dfn class="dfn-paneled" data-dfn-type="at-rule" data-export="" id="at-ruledef-element">@element</dfn> = @element <a class="production" data-link-type="type" href="#typedef-eq-prelude" id="ref-for-typedef-eq-prelude-1">&lt;eq-prelude></a> { <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-syntax-3/#typedef-stylesheet">&lt;stylesheet></a> }
-
-<dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-prelude">&lt;eq-prelude></dfn> = <a class="production" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a> <a class="production" data-link-type="type" href="#typedef-eq-condition" id="ref-for-typedef-eq-condition-1">&lt;eq-condition></a>*
-
-<dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-condition">&lt;eq-condition></dfn> = and ( <a class="production" data-link-type="type" href="#typedef-eq-name" id="ref-for-typedef-eq-name-1">&lt;eq-name></a> : <a class="production" data-link-type="type" href="#typedef-eq-value" id="ref-for-typedef-eq-value-1">&lt;eq-value></a> )
-
-<dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-name">&lt;eq-name></dfn> = min-width | max-width | min-height
-  | max-height | min-characters | max-characters
-  | min-lines | max-lines | min-children
-  | max-children | min-scroll-y | max-scroll-y
-  | min-scroll-x | max-scroll-x | orientation
-  | min-aspect-ratio | max-aspect-ratio
-
-<dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-value">&lt;eq-value></dfn> = <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a>
-
-<dfn class="dfn-paneled" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors">meta-selectors</dfn> = $this | $parent | $prev | $next | $it
-
-<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="eq-unit">eq-unit</dfn> = ew | eh | emin | emax
-
-<dfn class="dfn-paneled" data-dfn-type="function" data-export="" data-lt="eval()" id="funcdef-eval">eval("")</dfn> = eval(" <span class="css">javascript-code</span> ")
-</pre>
-   <h2 class="heading settled" data-level="2" id="style-scoping"><span class="secno">2. </span><span class="content">Style Scoping</span><a class="self-link" href="#style-scoping"></a></h2>
-   <h3 class="heading settled" data-level="2.1" id="scoped-styles"><span class="secno">2.1. </span><span class="content">Scoped Styles</span><a class="self-link" href="#scoped-styles"></a></h3>
+   <h2 class="heading settled" data-level="1" id="introduction"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#introduction"></a></h2>
    <p>By default all CSS is written from the global scope (<a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#root-pseudo">:root</a>, or the HTML element), and <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a> queries apply globally to all elements based on the conditions of the browser and media.</p>
    <p>The idea of a scoped style is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as though it was <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#root-pseudo">:root</a>.</p>
    <p>Just like CSS already has <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a> queries which help define styles for different media conditions, this document describes functionality for an <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-1">@element</a> query syntax to define styles that target elements more specifically with conditions based on their own properties.</p>
+   <h3 class="heading settled" data-level="1.1" id="values"><span class="secno">1.1. </span><span class="content">Values</span><a class="self-link" href="#values"></a></h3>
+   <p>Value types not defined in this specification, such as <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a>, <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a>, <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a>, <a class="production css" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a>, and <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a> are defined in <a data-link-type="biblio" href="#biblio-css3val">[CSS3VAL]</a>, and <a data-link-type="biblio" href="#biblio-mediaqueries-4">[MEDIAQUERIES-4]</a></p>
+   <h3 class="heading settled" data-level="1.2" id="units"><span class="secno">1.2. </span><span class="content">Units</span><a class="self-link" href="#units"></a></h3>
+   <p>The units used in element queries are the same as in other parts of CSS, as defined in <a data-link-type="biblio" href="#biblio-css3val">[CSS3VAL]</a>. For example, the pixel unit represents CSS pixels and not physical pixels.</p>
+   <p>Additionally, new <a href="#element-based-units">element-based units</a> are defined in this document which relate to an element’s own properties after styles have been applied to the document.</p>
+   <h2 class="heading settled" data-level="2" id="element-queries"><span class="secno">2. </span><span class="content">Element Queries</span><a class="self-link" href="#element-queries"></a></h2>
+   <p>An <strong>element query</strong> is a method of testing certain aspects of an element and applying styles based on whether that test is true or false.</p>
+   <p>The syntax of an element query consists of a <a class="production css" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a>, plus an optional list of zero or more responsive conditions, followed by one or more CSS rules:</p>
+   <div class="railroad">
+    <svg class="railroad-diagram" height="81" viewBox="0 0 869 81" width="869">
+     <g transform="translate(.5 .5)">
+      <path d="M 20 31 v 20 m 10 -20 v 20 m -10 -10 h 20.5" data-type="start" data-updown="10 10"></path>
+      <path d="M40 41h10"></path>
+      <path d="M134 41h10"></path>
+      <g data-type="terminal" data-updown="11 11">
+       <path d="M50 41h0.0"></path>
+       <path d="M134.0 41h0.0"></path>
+       <rect height="22" rx="10" ry="10" width="84" x="50.0" y="30"></rect>
+       <text x="92.0" y="45"> @element</text>
+      </g>
+      <path d="M144 41h10"></path>
+      <path d="M278 41h10"></path>
+      <g data-type="non-terminal" data-updown="11 11">
+       <path d="M154 41h0.0"></path>
+       <path d="M278.0 41h0.0"></path>
+       <rect height="22" width="124" x="154.0" y="30"></rect>
+       <text x="216.0" y="45"> selector list</text>
+      </g>
+      <g data-type="choice" data-updown="21 20">
+       <path d="M288 41h0.0"></path>
+       <path d="M612.0 41h0.0"></path>
+       <path d="M288.0 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path>
+       <path d="M592.0 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path>
+       <g data-type="skip" data-updown="0 0">
+        <path d="M308.0 21h284"></path>
+       </g>
+       <path d="M288.0 41h20"></path>
+       <path d="M592.0 41h20"></path>
+       <g data-type="oneormore" data-updown="11 20">
+        <path d="M308.0 41h0.0"></path>
+        <path d="M592.0 41h0.0"></path>
+        <path d="M308.0 41h10"></path>
+        <path d="M582.0 41h10"></path>
+        <path d="M318.0 41a10 10 0 0 0 -10 10v0a10 10 0 0 0 10 10"></path>
+        <path d="M582.0 61a10 10 0 0 0 10 -10v0a10 10 0 0 0 -10 -10"></path>
+        <g data-type="sequence" data-updown="11 11">
+         <path d="M318.0 41h0.0"></path>
+         <path d="M582.0 41h0.0"></path>
+         <path d="M318.0 41h10"></path>
+         <path d="M372.0 41h10"></path>
+         <g data-type="terminal" data-updown="11 11">
+          <path d="M328.0 41h0.0"></path>
+          <path d="M372.0 41h0.0"></path>
+          <rect height="22" rx="10" ry="10" width="44" x="328.0" y="30"></rect>
+          <text x="350.0" y="45"> and</text>
+         </g>
+         <path d="M382.0 41h10"></path>
+         <path d="M572.0 41h10"></path>
+         <g data-type="non-terminal" data-updown="11 11">
+          <path d="M392.0 41h0.0"></path>
+          <path d="M572.0 41h0.0"></path>
+          <rect height="22" width="180" x="392.0" y="30"></rect>
+          <text x="482.0" y="45"> responsive condition</text>
+         </g>
+        </g>
+        <g data-type="skip" data-updown="0 0">
+         <path d="M318.0 61h264"></path>
+        </g>
+       </g>
+      </g>
+      <path d="M612 41h10"></path>
+      <path d="M650 41h10"></path>
+      <g data-type="terminal" data-updown="11 11">
+       <path d="M622 41h0.0"></path>
+       <path d="M650.0 41h0.0"></path>
+       <rect height="22" rx="10" ry="10" width="28" x="622.0" y="30"></rect>
+       <text x="636.0" y="45"> {</text>
+      </g>
+      <path d="M660 41h10"></path>
+      <path d="M770 41h10"></path>
+      <g data-type="non-terminal" data-updown="11 11">
+       <path d="M670 41h0.0"></path>
+       <path d="M770.0 41h0.0"></path>
+       <rect height="22" width="100" x="670.0" y="30"></rect>
+       <text x="720.0" y="45"> stylesheet</text>
+      </g>
+      <path d="M780 41h10"></path>
+      <path d="M818 41h10"></path>
+      <g data-type="terminal" data-updown="11 11">
+       <path d="M790 41h0.0"></path>
+       <path d="M818.0 41h0.0"></path>
+       <rect height="22" rx="10" ry="10" width="28" x="790.0" y="30"></rect>
+       <text x="804.0" y="45"> }</text>
+      </g>
+      <path d="M 828 41 h 20 m -10 -10 v 20 m 10 -20 v 20" data-type="end" data-updown="10 10"></path>
+     </g>
+    </svg>
+   </div>
+   <p>A scoped style will return true as long as at least one element in the document matches a selector in the <a class="production css" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a>.</p>
+   <p>An element query is a logical expression that is either true or false. An element query is true if:</p>
+   <ul>
+    <li>at least one element in the document matches a selector in the <a class="production css" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a> 
+    <li>all responsive conditions are true 
+   </ul>
+   <p>User agents must re-evaluate element queries in response to changes in the user environment that they’re aware of, for example resizing the browser, clicking, or scrolling, depending on which responsive conditions are being evaluated, and change the styles applied accordingly.</p>
+   <h3 class="heading settled" data-level="2.1" id="scoped-styles"><span class="secno">2.1. </span><span class="content">Scoped Styles</span><a class="self-link" href="#scoped-styles"></a></h3>
    <p>To write a scoped style, write <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-2">@element</a>, followed by any amount of whitespace. Wrap one or more comma-separated CSS <a class="production css" data-link-type="type" href="https://www.w3.org/TR/selectors4/#ltselector">&lt;selector></a> in single (<code>'</code>) or double (<code>"</code>) quotes, followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).</p>
    <div class="example" id="example-e356e460">
     <a class="self-link" href="#example-e356e460"></a> Example scoped style 
@@ -1596,7 +1683,7 @@ Parts of this work may be from another specification document.  If so, those par
 }</span>
 </pre>
    </div>
-   <h4 class="heading settled" data-level="2.1.2" id="evaluating-the-scope"><span class="secno">2.1.2. </span><span class="content">Evaluating the Scope</span><a class="self-link" href="#evaluating-the-scope"></a></h4>
+   <h4 class="heading settled" data-level="2.1.2" id="understanding-the-scope"><span class="secno">2.1.2. </span><span class="content">Understanding the Scope</span><a class="self-link" href="#understanding-the-scope"></a></h4>
    <p>Any element on the page that matches a selector will apply the rules contained inside its scope to the page. The following examples will illustrate how the scope applies.</p>
    <p>If we have two <code>div</code> elements in our HTML:</p>
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">div</span><span class="p">></span>
@@ -1653,7 +1740,7 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this example we did not have any <code>select</code> elements in our HTML, so nothing will match our scope and no styles will be applied, leaving both of our <code>div</code> elements untouched.</p>
    </div>
    <p>It is possible for an element to match more than one <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-3">@element</a> query.</p>
-   <h3 class="heading settled" data-level="2.2" id="element-queries"><span class="secno">2.2. </span><span class="content">Element Queries</span><a class="self-link" href="#element-queries"></a></h3>
+   <h3 class="heading settled" data-level="2.2" id="scoped-styles-with-repsonsive-conditions"><span class="secno">2.2. </span><span class="content">Scoped Styles with Responsive Conditions</span><a class="self-link" href="#scoped-styles-with-repsonsive-conditions"></a></h3>
    <p>An element query is a scoped style with one or more responsive conditions added.</p>
    <p>The following global CSS and scoped style are equivalent.</p>
    <div class="example" id="example-0e633278">
@@ -1759,9 +1846,36 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
    </div>
    <p>In this example any element with a class of <code>.widget</code> that is equal to <code>400px</code> or wider will apply a rule setting the width of the same element to <code>200px</code>, which makes the following <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-11">@element</a> query valid. The second query sets a width of <code>500px</code> on the same element. In this case, even though the element now matches the responsive condition of the first query again, rather than get stuck in an infinite loop, we consider evaluation complete.</p>
-   <h2 class="heading settled" data-level="3" id="meta-selectors-in-css"><span class="secno">3. </span><span class="content">Meta-Selectors</span><a class="self-link" href="#meta-selectors-in-css"></a></h2>
+   <h2 class="heading settled" data-level="3" id="syntax"><span class="secno">3. </span><span class="content">Syntax</span><a class="self-link" href="#syntax"></a></h2>
+   <p>Informal descriptions of the element query syntax appear in the prose and railroad diagrams of the previous sections. The formal element query syntax is described in this section, with the rule/property gramma syntax defined in <a data-link-type="biblio" href="#biblio-css3syn">[CSS3SYN]</a> and <a data-link-type="biblio" href="#biblio-css3val">[CSS3VAL]</a>.</p>
+<pre><dfn class="dfn-paneled" data-dfn-type="at-rule" data-export="" id="at-ruledef-element">@element</dfn> = @element <a class="production" data-link-type="type" href="#typedef-eq-prelude" id="ref-for-typedef-eq-prelude-1">&lt;eq-prelude></a> { <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-syntax-3/#typedef-stylesheet">&lt;stylesheet></a> }
+
+<dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-prelude">&lt;eq-prelude></dfn> = <a class="production" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a> <a class="production" data-link-type="type" href="#typedef-eq-condition" id="ref-for-typedef-eq-condition-1">&lt;eq-condition></a>*
+
+<dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-condition">&lt;eq-condition></dfn> = and ( <a class="production" data-link-type="type" href="#typedef-eq-name" id="ref-for-typedef-eq-name-1">&lt;eq-name></a> : <a class="production" data-link-type="type" href="#typedef-eq-value" id="ref-for-typedef-eq-value-1">&lt;eq-value></a> )
+
+<dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-name">&lt;eq-name></dfn> = min-width | max-width | min-height
+  | max-height | min-characters | max-characters
+  | min-lines | max-lines | min-children
+  | max-children | min-scroll-y | max-scroll-y
+  | min-scroll-x | max-scroll-x | orientation
+  | min-aspect-ratio | max-aspect-ratio
+
+<dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-value">&lt;eq-value></dfn> = <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a>
+
+<dfn class="dfn-paneled" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors">meta-selectors</dfn> = $this | $parent | $prev | $next | $it
+
+<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="eq-unit">eq-unit</dfn> = ew | eh | emin | emax
+
+<dfn class="dfn-paneled" data-dfn-type="function" data-export="" data-lt="eval()" id="funcdef-eval">eval("")</dfn> = eval(" <span class="css">javascript-code</span> ")
+</pre>
+   <h3 class="heading settled" data-level="3.1" id="evaluating-element-queries"><span class="secno">3.1. </span><span class="content">Evaluating Element Queries</span><a class="self-link" href="#evaluating-element-queries"></a></h3>
+   <p>Each <a class="production css" data-link-type="type" href="#typedef-eq-condition" id="ref-for-typedef-eq-condition-2">&lt;eq-condition></a> is associated with a boolean result, the same as the result of evaluating the specified responsive condition.</p>
+   <p>If the result of any responsive condition is used in any context that expects a two-valued boolean, "unknown" must be converted to "false".</p>
+   <p class="note" role="note">Note: This means that, for example, when an element query is used in an @element rule, if it resolves to "unknown" it is treated as "false" and fails to match.</p>
+   <h2 class="heading settled" data-level="4" id="meta-selectors-in-css"><span class="secno">4. </span><span class="content">Meta-Selectors</span><a class="self-link" href="#meta-selectors-in-css"></a></h2>
    <p>With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined. These new selectors only work inside a scoped style or element query and are called <a class="css" data-link-type="maybe" href="#selectordef-meta-selectors" id="ref-for-selectordef-meta-selectors-1">meta-selectors</a>.</p>
-   <h3 class="heading settled" data-level="3.1" id="diagram-of-meta-selectors"><span class="secno">3.1. </span><span class="content">Diagram of <a class="css" data-link-type="maybe" href="#selectordef-meta-selectors" id="ref-for-selectordef-meta-selectors-2">meta-selectors</a></span><a class="self-link" href="#diagram-of-meta-selectors"></a></h3>
+   <h3 class="heading settled" data-level="4.1" id="diagram-of-meta-selectors"><span class="secno">4.1. </span><span class="content">Diagram of <a class="css" data-link-type="maybe" href="#selectordef-meta-selectors" id="ref-for-selectordef-meta-selectors-2">meta-selectors</a></span><a class="self-link" href="#diagram-of-meta-selectors"></a></h3>
    <p>Here is a diagram showing the relationship between the meta-selectors. The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-1">$parent</a> is the parent element of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-1">$this</a>, and <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-1">$prev</a> and <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-1">$next</a> represent the adjacent siblings to <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-2">$this</a>.</p>
 <pre style="text-align:center;"><a data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-2">$parent</a>
 ↑
@@ -1822,9 +1936,9 @@ Parts of this work may be from another specification document.  If so, those par
      </div>
      <p class="note" role="note">Note, the <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-5">$next</a> is similar to the selector: <code>$this + *</code></p>
    </dl>
-   <h2 class="heading settled" data-level="4" id="responsive-conditions"><span class="secno">4. </span><span class="content">Responsive Conditions</span><a class="self-link" href="#responsive-conditions"></a></h2>
+   <h2 class="heading settled" data-level="5" id="responsive-conditions"><span class="secno">5. </span><span class="content">Responsive Conditions</span><a class="self-link" href="#responsive-conditions"></a></h2>
    <p>All responsive conditions for <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-12">@element</a> queries are formatted as a condition name and value, separated by a colon (<code>:</code>) character, surrounded by brackets (<code>()</code>).</p>
-   <p>The following examples are all valid as <a class="production css" data-link-type="type" href="#typedef-eq-condition" id="ref-for-typedef-eq-condition-2">&lt;eq-condition></a>:</p>
+   <p>The following examples are all valid as <a class="production css" data-link-type="type" href="#typedef-eq-condition" id="ref-for-typedef-eq-condition-3">&lt;eq-condition></a>:</p>
    <div class="example" id="example-806ba5e6">
     <a class="self-link" href="#example-806ba5e6"></a> 
 <pre class="language-css highlight">(min-width: 500px)
@@ -1840,12 +1954,12 @@ Parts of this work may be from another specification document.  If so, those par
 <pre class="language-css highlight">(orientation: landscape)
 </pre>
    </div>
-   <h3 class="heading settled" data-level="4.1" id="min-width"><span class="secno">4.1. </span><span class="content">Min-width</span><a class="self-link" href="#min-width"></a></h3>
+   <h3 class="heading settled" data-level="5.1" id="min-width"><span class="secno">5.1. </span><span class="content">Width</span><a class="self-link" href="#min-width"></a></h3>
    <table class="def descdef mq">
     <tbody>
      <tr>
       <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-min-width">min-width</dfn>
+      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-width">width</dfn>
      <tr>
       <th>For:
       <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-13">@element</a>
@@ -1856,9 +1970,9 @@ Parts of this work may be from another specification document.  If so, those par
       <th>Type:
       <td>range
    </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-min-width" id="ref-for-descdef-element-min-width-1">min-width</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) width to the specified value.</p>
-   <div class="example" id="example-5fd02f22">
-    <a class="self-link" href="#example-5fd02f22"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-min-width" id="ref-for-descdef-element-min-width-2">min-width</a> element query 
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-1">min-width</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) width to the specified value.</p>
+   <div class="example" id="example-e7b50074">
+    <a class="self-link" href="#example-e7b50074"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-2">min-width</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>min-width<span class="nt">: 200px) </span><span class="p">{</span>
   $this {
     background: lime;
@@ -1867,12 +1981,23 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.widget</code> that is at least <code>200px</code> or wider will have a green background.</p>
    </div>
-   <h3 class="heading settled" data-level="4.2" id="max-width"><span class="secno">4.2. </span><span class="content">Max-width</span><a class="self-link" href="#max-width"></a></h3>
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-3">max-width</a> responsive condition applies to any scoped element that has lesser or equal (<code>&lt;=</code>) width to the specified value.</p>
+   <div class="example" id="example-cc25b3e5">
+    <a class="self-link" href="#example-cc25b3e5"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-4">max-width</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>max-width<span class="nt">: 200) </span><span class="p">{</span>
+  $this {
+    background: lime;
+  }
+}
+</pre>
+    <p>In this case any element with a class of <code>.widget</code> that <code>200px</code> or narrower will have a green background.</p>
+   </div>
+   <h3 class="heading settled" data-level="5.2" id="height"><span class="secno">5.2. </span><span class="content">Height</span><a class="self-link" href="#height"></a></h3>
    <table class="def descdef mq">
     <tbody>
      <tr>
       <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-max-width">max-width</dfn>
+      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-height">height</dfn>
      <tr>
       <th>For:
       <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-14">@element</a>
@@ -1883,36 +2008,9 @@ Parts of this work may be from another specification document.  If so, those par
       <th>Type:
       <td>range
    </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-max-width" id="ref-for-descdef-element-max-width-1">max-width</a> responsive condition applies to any scoped element that has lesser or equal (<code>&lt;=</code>) width to the specified value.</p>
-   <div class="example" id="example-92eb06a1">
-    <a class="self-link" href="#example-92eb06a1"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-max-width" id="ref-for-descdef-element-max-width-2">max-width</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>max-width<span class="nt">: 200) </span><span class="p">{</span>
-  $this {
-    background: lime;
-  }
-}
-</pre>
-    <p>In this case any element with a class of <code>.widget</code> that <code>200px</code> or narrower will have a green background.</p>
-   </div>
-   <h3 class="heading settled" data-level="4.3" id="min-height"><span class="secno">4.3. </span><span class="content">Min-height</span><a class="self-link" href="#min-height"></a></h3>
-   <table class="def descdef mq">
-    <tbody>
-     <tr>
-      <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-min-height">min-height</dfn>
-     <tr>
-      <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-15">@element</a>
-     <tr>
-      <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a>
-     <tr>
-      <th>Type:
-      <td>range
-   </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-min-height" id="ref-for-descdef-element-min-height-1">min-height</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) height to the specified value.</p>
-   <div class="example" id="example-325a586e">
-    <a class="self-link" href="#example-325a586e"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-min-height" id="ref-for-descdef-element-min-height-2">min-height</a> element query 
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-1">min-height</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) height to the specified value.</p>
+   <div class="example" id="example-31d6cfca">
+    <a class="self-link" href="#example-31d6cfca"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-2">min-height</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>min-height<span class="nt">: 50px) </span><span class="p">{</span>
   $this {
     background: lime;
@@ -1921,26 +2019,10 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.widget</code> that is at least <code>50px</code> or taller will have a green background.</p>
    </div>
-   <h3 class="heading settled" data-level="4.4" id="max-height"><span class="secno">4.4. </span><span class="content">Max-height</span><a class="self-link" href="#max-height"></a></h3>
-   <table class="def descdef mq">
-    <tbody>
-     <tr>
-      <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-max-height">max-height</dfn>
-     <tr>
-      <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-16">@element</a>
-     <tr>
-      <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a>
-     <tr>
-      <th>Type:
-      <td>range
-   </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-max-height" id="ref-for-descdef-element-max-height-1">max-height</a> responsive condition applies to any scoped element that has lesser or equal (<code>&lt;=</code>) height to the specified value.</p>
-   <div class="example" id="example-f167ecb8">
-    <a class="self-link" href="#example-f167ecb8"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-max-height" id="ref-for-descdef-element-max-height-2">max-height</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>min-height<span class="nt">: 50px) </span><span class="p">{</span>
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-3">max-height</a> responsive condition applies to any scoped element that has lesser or equal (<code>&lt;=</code>) height to the specified value.</p>
+   <div class="example" id="example-04650ccd">
+    <a class="self-link" href="#example-04650ccd"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-4">max-height</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>max-height<span class="nt">: 50px) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -1948,12 +2030,88 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.widget</code> that is at least <code>50px</code> or shorter will have a green background.</p>
    </div>
-   <h3 class="heading settled" data-level="4.5" id="min-characters"><span class="secno">4.5. </span><span class="content">Min-characters</span><a class="self-link" href="#min-characters"></a></h3>
+   <h3 class="heading settled" data-level="5.3" id="characters"><span class="secno">5.3. </span><span class="content">Characters</span><a class="self-link" href="#characters"></a></h3>
    <table class="def descdef mq">
     <tbody>
      <tr>
       <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-min-characters">min-characters</dfn>
+      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-characters">characters</dfn>
+     <tr>
+      <th>For:
+      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-15">@element</a>
+     <tr>
+      <th>Value:
+      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a>
+     <tr>
+      <th>Type:
+      <td>range
+   </table>
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-1">min-characters</a> responsive condition applies to any scoped element that contains a greater or equal (<code>>=</code>) number of characters.</p>
+   <div class="example" id="example-e35566e6">
+    <a class="self-link" href="#example-e35566e6"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-2">min-characters</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'input'</span> and <span class="p">(</span>min-characters<span class="nt">: 5) </span><span class="p">{</span>
+  $this {
+    background: lime;
+  }
+}
+</pre>
+    <p>In this case any input with 5 or more characters will have a green background.</p>
+   </div>
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-3">max-characters</a> responsive condition applies to any scoped element that contains lesser or equal (<code>&lt;=</code>) number of characters specified.</p>
+   <div class="example" id="example-912b420b">
+    <a class="self-link" href="#example-912b420b"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-4">max-characters</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'input'</span> and <span class="p">(</span>max-characters<span class="nt">: 5) </span><span class="p">{</span>
+  $this {
+    background: lime;
+  }
+}
+</pre>
+    <p>In this case any input with 5 or fewer characters will have a green background.</p>
+   </div>
+   <h3 class="heading settled" data-level="5.4" id="lines"><span class="secno">5.4. </span><span class="content">Lines</span><a class="self-link" href="#lines"></a></h3>
+   <table class="def descdef mq">
+    <tbody>
+     <tr>
+      <th>Name:
+      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-lines">lines</dfn>
+     <tr>
+      <th>For:
+      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-16">@element</a>
+     <tr>
+      <th>Value:
+      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a>
+     <tr>
+      <th>Type:
+      <td>range
+   </table>
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-1">min-lines</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of specified lines of text.</p>
+   <div class="example" id="example-67f15d26">
+    <a class="self-link" href="#example-67f15d26"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-2">min-lines</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'textarea'</span> and <span class="p">(</span>min-lines<span class="nt">: 3) </span><span class="p">{</span>
+  $this {
+    background: lime;
+  }
+}
+</pre>
+    <p>In this case any textarea with 3 or more lines will have a green background.</p>
+   </div>
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-3">max-lines</a> responsive condition applies to any scoped element that contains lesser or equal (<code>&lt;=</code>) number of specified lines of text.</p>
+   <div class="example" id="example-84774634">
+    <a class="self-link" href="#example-84774634"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-4">max-lines</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'textarea'</span> and <span class="p">(</span>max-lines<span class="nt">: 3) </span><span class="p">{</span>
+  $this {
+    background: lime;
+  }
+}
+</pre>
+    <p>In this case any textarea with 3 or fewer lines will have a green background.</p>
+   </div>
+   <h3 class="heading settled" data-level="5.5" id="children"><span class="secno">5.5. </span><span class="content">Children</span><a class="self-link" href="#children"></a></h3>
+   <table class="def descdef mq">
+    <tbody>
+     <tr>
+      <th>Name:
+      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-children">children</dfn>
      <tr>
       <th>For:
       <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-17">@element</a>
@@ -1964,117 +2122,9 @@ Parts of this work may be from another specification document.  If so, those par
       <th>Type:
       <td>range
    </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-min-characters" id="ref-for-descdef-element-min-characters-1">min-characters</a> responsive condition applies to any scoped element that contains a greater or equal (<code>>=</code>) number of characters.</p>
-   <div class="example" id="example-c63e58c2">
-    <a class="self-link" href="#example-c63e58c2"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-min-characters" id="ref-for-descdef-element-min-characters-2">min-characters</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'input'</span> and <span class="p">(</span>min-characters<span class="nt">: 5) </span><span class="p">{</span>
-  $this {
-    background: lime;
-  }
-}
-</pre>
-    <p>In this case any input with 5 or more characters will have a green background.</p>
-   </div>
-   <h3 class="heading settled" data-level="4.6" id="max-characters"><span class="secno">4.6. </span><span class="content">Max-characters</span><a class="self-link" href="#max-characters"></a></h3>
-   <table class="def descdef mq">
-    <tbody>
-     <tr>
-      <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-max-characters">max-characters</dfn>
-     <tr>
-      <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-18">@element</a>
-     <tr>
-      <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a>
-     <tr>
-      <th>Type:
-      <td>range
-   </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-max-characters" id="ref-for-descdef-element-max-characters-1">max-characters</a> responsive condition applies to any scoped element that contains lesser or equal (<code>&lt;=</code>) number of characters specified.</p>
-   <div class="example" id="example-b9414820">
-    <a class="self-link" href="#example-b9414820"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-max-characters" id="ref-for-descdef-element-max-characters-2">max-characters</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'input'</span> and <span class="p">(</span>max-characters<span class="nt">: 5) </span><span class="p">{</span>
-  $this {
-    background: lime;
-  }
-}
-</pre>
-    <p>In this case any input with 5 or fewer characters will have a green background.</p>
-   </div>
-   <h3 class="heading settled" data-level="4.7" id="min-lines"><span class="secno">4.7. </span><span class="content">Min-lines</span><a class="self-link" href="#min-lines"></a></h3>
-   <table class="def descdef mq">
-    <tbody>
-     <tr>
-      <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-min-lines">min-lines</dfn>
-     <tr>
-      <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-19">@element</a>
-     <tr>
-      <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a>
-     <tr>
-      <th>Type:
-      <td>range
-   </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-min-lines" id="ref-for-descdef-element-min-lines-1">min-lines</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of specified lines of text.</p>
-   <div class="example" id="example-92c0f222">
-    <a class="self-link" href="#example-92c0f222"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-min-lines" id="ref-for-descdef-element-min-lines-2">min-lines</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'textarea'</span> and <span class="p">(</span>min-lines<span class="nt">: 3) </span><span class="p">{</span>
-  $this {
-    background: lime;
-  }
-}
-</pre>
-    <p>In this case any textarea with 3 or more lines will have a green background.</p>
-   </div>
-   <h3 class="heading settled" data-level="4.8" id="max-lines"><span class="secno">4.8. </span><span class="content">Max-lines</span><a class="self-link" href="#max-lines"></a></h3>
-   <table class="def descdef mq">
-    <tbody>
-     <tr>
-      <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-max-lines">max-lines</dfn>
-     <tr>
-      <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-20">@element</a>
-     <tr>
-      <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a>
-     <tr>
-      <th>Type:
-      <td>range
-   </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-max-lines" id="ref-for-descdef-element-max-lines-1">max-lines</a> responsive condition applies to any scoped element that contains lesser or equal (<code>&lt;=</code>) number of specified lines of text.</p>
-   <div class="example" id="example-25b20fe0">
-    <a class="self-link" href="#example-25b20fe0"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-max-lines" id="ref-for-descdef-element-max-lines-2">max-lines</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'textarea'</span> and <span class="p">(</span>max-lines<span class="nt">: 3) </span><span class="p">{</span>
-  $this {
-    background: lime;
-  }
-}
-</pre>
-    <p>In this case any textarea with 3 or fewer lines will have a green background.</p>
-   </div>
-   <h3 class="heading settled" data-level="4.9" id="min-children"><span class="secno">4.9. </span><span class="content">Min-children</span><a class="self-link" href="#min-children"></a></h3>
-   <table class="def descdef mq">
-    <tbody>
-     <tr>
-      <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-min-children">min-children</dfn>
-     <tr>
-      <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-21">@element</a>
-     <tr>
-      <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a>
-     <tr>
-      <th>Type:
-      <td>range
-   </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-min-children" id="ref-for-descdef-element-min-children-1">min-children</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of child elements specified.</p>
-   <div class="example" id="example-3ee431fa">
-    <a class="self-link" href="#example-3ee431fa"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-min-children" id="ref-for-descdef-element-min-children-2">min-children</a> element query 
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-1">min-children</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of child elements specified.</p>
+   <div class="example" id="example-c4b5f634">
+    <a class="self-link" href="#example-c4b5f634"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-2">min-children</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.social-icons'</span> and <span class="p">(</span>min-children<span class="nt">: 5) </span><span class="p">{</span>
   $this {
     background: lime;
@@ -2083,25 +2133,9 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.social-icons</code> that contains more 5 or more direct descendants will have a green background.</p>
    </div>
-   <h3 class="heading settled" data-level="4.10" id="max-children"><span class="secno">4.10. </span><span class="content">Max-children</span><a class="self-link" href="#max-children"></a></h3>
-   <table class="def descdef mq">
-    <tbody>
-     <tr>
-      <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-max-children">max-children</dfn>
-     <tr>
-      <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-22">@element</a>
-     <tr>
-      <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a>
-     <tr>
-      <th>Type:
-      <td>range
-   </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-max-children" id="ref-for-descdef-element-max-children-1">max-children</a> responsive condition applies to any scoped element that contains lesser or equal (<code>&lt;=</code>) number of child elements specified.</p>
-   <div class="example" id="example-98381dae">
-    <a class="self-link" href="#example-98381dae"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-max-children" id="ref-for-descdef-element-max-children-2">max-children</a> element query 
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-3">max-children</a> responsive condition applies to any scoped element that contains lesser or equal (<code>&lt;=</code>) number of child elements specified.</p>
+   <div class="example" id="example-2d81e055">
+    <a class="self-link" href="#example-2d81e055"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-4">max-children</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.social-icons'</span> and <span class="p">(</span>max-children<span class="nt">: 5) </span><span class="p">{</span>
   $this {
     background: lime;
@@ -2110,15 +2144,15 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.social-icons</code> that contains more 5 or fewer direct descendants will have a green background.</p>
    </div>
-   <h3 class="heading settled" data-level="4.11" id="min-scroll-y"><span class="secno">4.11. </span><span class="content">Min-scroll-y</span><a class="self-link" href="#min-scroll-y"></a></h3>
+   <h3 class="heading settled" data-level="5.6" id="scroll-y"><span class="secno">5.6. </span><span class="content">Scroll-Y</span><a class="self-link" href="#scroll-y"></a></h3>
    <table class="def descdef mq">
     <tbody>
      <tr>
       <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-min-scroll-y">min-scroll-y</dfn>
+      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-scroll-y">scroll-y</dfn>
      <tr>
       <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-23">@element</a>
+      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-18">@element</a>
      <tr>
       <th>Value:
       <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a>
@@ -2126,9 +2160,9 @@ Parts of this work may be from another specification document.  If so, those par
       <th>Type:
       <td>range
    </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-min-scroll-y" id="ref-for-descdef-element-min-scroll-y-1">min-scroll-y</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a vertical direction.</p>
-   <div class="example" id="example-43730338">
-    <a class="self-link" href="#example-43730338"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-min-scroll-y" id="ref-for-descdef-element-min-scroll-y-2">min-scroll-y</a> element query 
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-1">min-scroll-y</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a vertical direction.</p>
+   <div class="example" id="example-2a76b37c">
+    <a class="self-link" href="#example-2a76b37c"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-2">min-scroll-y</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.feed'</span> and <span class="p">(</span>min-scroll-y<span class="nt">: 100px) </span><span class="p">{</span>
   $this {
     background: lime;
@@ -2137,25 +2171,9 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.feed</code> that has scrolled <code>100px</code> or more vertical will have a green background.</p>
    </div>
-   <h3 class="heading settled" data-level="4.12" id="max-scroll-y"><span class="secno">4.12. </span><span class="content">Max-scroll-y</span><a class="self-link" href="#max-scroll-y"></a></h3>
-   <table class="def descdef mq">
-    <tbody>
-     <tr>
-      <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-max-scroll-y">max-scroll-y</dfn>
-     <tr>
-      <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-24">@element</a>
-     <tr>
-      <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a>
-     <tr>
-      <th>Type:
-      <td>range
-   </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-max-scroll-y" id="ref-for-descdef-element-max-scroll-y-1">max-scroll-y</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code>&lt;=</code>) amount to the value specified in a vertical direction.</p>
-   <div class="example" id="example-5a3d9e18">
-    <a class="self-link" href="#example-5a3d9e18"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-max-scroll-y" id="ref-for-descdef-element-max-scroll-y-2">max-scroll-y</a> element query 
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-3">max-scroll-y</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code>&lt;=</code>) amount to the value specified in a vertical direction.</p>
+   <div class="example" id="example-cdca554e">
+    <a class="self-link" href="#example-cdca554e"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-4">max-scroll-y</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.feed'</span> and <span class="p">(</span>max-scroll-y<span class="nt">: 100px) </span><span class="p">{</span>
   $this {
     background: lime;
@@ -2164,15 +2182,15 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.feed</code> that has scrolled <code>100px</code> or less vertically will have a green background.</p>
    </div>
-   <h3 class="heading settled" data-level="4.13" id="min-scroll-x"><span class="secno">4.13. </span><span class="content">Min-scroll-x</span><a class="self-link" href="#min-scroll-x"></a></h3>
+   <h3 class="heading settled" data-level="5.7" id="scroll-x"><span class="secno">5.7. </span><span class="content">Scroll-X</span><a class="self-link" href="#scroll-x"></a></h3>
    <table class="def descdef mq">
     <tbody>
      <tr>
       <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-min-scroll-x">min-scroll-x</dfn>
+      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-scroll-x">scroll-x</dfn>
      <tr>
       <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-25">@element</a>
+      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-19">@element</a>
      <tr>
       <th>Value:
       <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a>
@@ -2180,9 +2198,9 @@ Parts of this work may be from another specification document.  If so, those par
       <th>Type:
       <td>range
    </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-min-scroll-x" id="ref-for-descdef-element-min-scroll-x-1">min-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a horizontal direction.</p>
-   <div class="example" id="example-3188983d">
-    <a class="self-link" href="#example-3188983d"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-min-scroll-x" id="ref-for-descdef-element-min-scroll-x-2">min-scroll-x</a> element query 
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-1">min-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a horizontal direction.</p>
+   <div class="example" id="example-37d530df">
+    <a class="self-link" href="#example-37d530df"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-2">min-scroll-x</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.feed'</span> and <span class="p">(</span>min-scroll-x<span class="nt">: 100px) </span><span class="p">{</span>
   $this {
     background: lime;
@@ -2191,25 +2209,9 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.feed</code> that has scrolled <code>100px</code> or more horizontally will have a green background.</p>
    </div>
-   <h3 class="heading settled" data-level="4.14" id="max-scroll-x"><span class="secno">4.14. </span><span class="content">Max-scroll-x</span><a class="self-link" href="#max-scroll-x"></a></h3>
-   <table class="def descdef mq">
-    <tbody>
-     <tr>
-      <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-max-scroll-x">max-scroll-x</dfn>
-     <tr>
-      <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-26">@element</a>
-     <tr>
-      <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a>
-     <tr>
-      <th>Type:
-      <td>range
-   </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-max-scroll-x" id="ref-for-descdef-element-max-scroll-x-1">max-scroll-x</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code>&lt;=</code>) amount to the value specified in a horizontal direction.</p>
-   <div class="example" id="example-8b3f4ad6">
-    <a class="self-link" href="#example-8b3f4ad6"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-max-scroll-x" id="ref-for-descdef-element-max-scroll-x-2">max-scroll-x</a> element query 
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-3">max-scroll-x</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code>&lt;=</code>) amount to the value specified in a horizontal direction.</p>
+   <div class="example" id="example-1771fa3e">
+    <a class="self-link" href="#example-1771fa3e"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-4">max-scroll-x</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.feed'</span> and <span class="p">(</span>max-scroll-x<span class="nt">: 100px) </span><span class="p">{</span>
   $this {
     background: lime;
@@ -2218,7 +2220,45 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.feed</code> that has scrolled <code>100px</code> or less horizontally will have a green background.</p>
    </div>
-   <h3 class="heading settled" data-level="4.15" id="orientation"><span class="secno">4.15. </span><span class="content">Orientation</span><a class="self-link" href="#orientation"></a></h3>
+   <h3 class="heading settled" data-level="5.8" id="aspect-ratio"><span class="secno">5.8. </span><span class="content">Aspect-Ratio</span><a class="self-link" href="#aspect-ratio"></a></h3>
+   <table class="def descdef mq">
+    <tbody>
+     <tr>
+      <th>Name:
+      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-aspect-ratio">aspect-ratio</dfn>
+     <tr>
+      <th>For:
+      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-20">@element</a>
+     <tr>
+      <th>Value:
+      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a>
+     <tr>
+      <th>Type:
+      <td>range
+   </table>
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-1">min-aspect-ratio</a> responsive condition applies to any scoped element with a greater or equal (<code>>=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).</p>
+   <div class="example" id="example-6bfccd88">
+    <a class="self-link" href="#example-6bfccd88"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-2">min-aspect-ratio</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>min-aspect-ratio<span class="nt">: 16/9) </span><span class="p">{</span>
+  $this {
+    background: lime;
+  }
+}
+</pre>
+    <p>In this case any element that had an aspect ratio of <code>16/9</code> or greater would have a green background.</p>
+   </div>
+   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-3">max-aspect-ratio</a> responsive condition applies to any scoped element with a lesser or equal (<code>&lt;=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).</p>
+   <div class="example" id="example-fa4f4e88">
+    <a class="self-link" href="#example-fa4f4e88"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-4">max-aspect-ratio</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>max-aspect-ratio<span class="nt">: 16/9) </span><span class="p">{</span>
+  $this {
+    background: lime;
+  }
+}
+</pre>
+    <p>In this case any element that had an aspect ratio of <code>16/9</code> or lesser would have a green background.</p>
+   </div>
+   <h3 class="heading settled" data-level="5.9" id="orientation"><span class="secno">5.9. </span><span class="content">Orientation</span><a class="self-link" href="#orientation"></a></h3>
    <table class="def descdef mq">
     <tbody>
      <tr>
@@ -2226,7 +2266,7 @@ Parts of this work may be from another specification document.  If so, those par
       <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-orientation">orientation</dfn>
      <tr>
       <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-27">@element</a>
+      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-21">@element</a>
      <tr>
       <th>Value:
       <td class="prod">portrait <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one">|</a> square <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one">|</a> landscape
@@ -2235,7 +2275,7 @@ Parts of this work may be from another specification document.  If so, those par
       <td>discrete
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-orientation" id="ref-for-descdef-element-orientation-1">orientation</a> responsive condition applies to any scoped element that matches the orientation specified. The following orientations are included: <a class="css" data-link-type="maybe" href="#valdef-element-orientation-landscape" id="ref-for-valdef-element-orientation-landscape-1">landscape</a>, <a class="css" data-link-type="maybe" href="#valdef-element-orientation-square" id="ref-for-valdef-element-orientation-square-1">square</a>, <a class="css" data-link-type="maybe" href="#valdef-element-orientation-portrait" id="ref-for-valdef-element-orientation-portrait-1">portrait</a></p>
-   <h4 class="heading settled" data-level="4.15.1" id="portrait-orientation"><span class="secno">4.15.1. </span><span class="content">Portrait Orientation</span><a class="self-link" href="#portrait-orientation"></a></h4>
+   <h4 class="heading settled" data-level="5.9.1" id="portrait-orientation"><span class="secno">5.9.1. </span><span class="content">Portrait Orientation</span><a class="self-link" href="#portrait-orientation"></a></h4>
    <dl>
     <dt><dfn class="dfn-paneled css" data-dfn-for="@element/orientation" data-dfn-type="value" data-export="" id="valdef-element-orientation-portrait">portrait</dfn> 
     <dd>The <a class="property" data-link-type="propdesc" href="#descdef-element-orientation" id="ref-for-descdef-element-orientation-2">orientation</a> is <a class="css" data-link-type="maybe" href="#valdef-element-orientation-portrait" id="ref-for-valdef-element-orientation-portrait-2">portrait</a> if the scoped element has a greater (<code>></code>) height than width 
@@ -2250,7 +2290,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.widget</code> that is narrower than it is tall will have a green background.</p>
    </div>
-   <h4 class="heading settled" data-level="4.15.2" id="square-orientation"><span class="secno">4.15.2. </span><span class="content">Square Orientation</span><a class="self-link" href="#square-orientation"></a></h4>
+   <h4 class="heading settled" data-level="5.9.2" id="square-orientation"><span class="secno">5.9.2. </span><span class="content">Square Orientation</span><a class="self-link" href="#square-orientation"></a></h4>
    <dl>
     <dt><dfn class="dfn-paneled css" data-dfn-for="@element/orientation" data-dfn-type="value" data-export="" id="valdef-element-orientation-square">square</dfn> 
     <dd>The <a class="property" data-link-type="propdesc" href="#descdef-element-orientation" id="ref-for-descdef-element-orientation-3">orientation</a> is <a class="css" data-link-type="maybe" href="#valdef-element-orientation-square" id="ref-for-valdef-element-orientation-square-2">square</a> if the scoped element has an equal (<code>=</code>) height and width 
@@ -2265,7 +2305,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.widget</code> that has an equal width and height will have a green background.</p>
    </div>
-   <h4 class="heading settled" data-level="4.15.3" id="landscape-orientation"><span class="secno">4.15.3. </span><span class="content">Landscape Orientation</span><a class="self-link" href="#landscape-orientation"></a></h4>
+   <h4 class="heading settled" data-level="5.9.3" id="landscape-orientation"><span class="secno">5.9.3. </span><span class="content">Landscape Orientation</span><a class="self-link" href="#landscape-orientation"></a></h4>
    <dl>
     <dt><dfn class="dfn-paneled css" data-dfn-for="@element/orientation" data-dfn-type="value" data-export="" id="valdef-element-orientation-landscape">landscape</dfn> 
     <dd>The <a class="property" data-link-type="propdesc" href="#descdef-element-orientation" id="ref-for-descdef-element-orientation-4">orientation</a> is <a class="css" data-link-type="maybe" href="#valdef-element-orientation-landscape" id="ref-for-valdef-element-orientation-landscape-2">landscape</a> if the scoped element has a greater (<code>></code>) width than height 
@@ -2280,68 +2320,14 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.widget</code> that is wider than it is tall will have a green background.</p>
    </div>
-   <h3 class="heading settled" data-level="4.16" id="min-aspect-ratio"><span class="secno">4.16. </span><span class="content">Min-aspect-ratio</span><a class="self-link" href="#min-aspect-ratio"></a></h3>
-   <table class="def descdef mq">
-    <tbody>
-     <tr>
-      <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-min-aspect-ratio">min-aspect-ratio</dfn>
-     <tr>
-      <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-28">@element</a>
-     <tr>
-      <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a>
-     <tr>
-      <th>Type:
-      <td>range
-   </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-min-aspect-ratio" id="ref-for-descdef-element-min-aspect-ratio-1">min-aspect-ratio</a> responsive condition applies to any scoped element with a greater or equal (<code>>=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).</p>
-   <div class="example" id="example-b0544434">
-    <a class="self-link" href="#example-b0544434"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-min-aspect-ratio" id="ref-for-descdef-element-min-aspect-ratio-2">min-aspect-ratio</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>min-aspect-ratio<span class="nt">: 16/9) </span><span class="p">{</span>
-  $this {
-    background: lime;
-  }
-}
-</pre>
-    <p>In this case any element that had an aspect ratio of <code>16/9</code> or greater would have a green background.</p>
-   </div>
-   <h3 class="heading settled" data-level="4.17" id="max-aspect-ratio"><span class="secno">4.17. </span><span class="content">Max-aspect-ratio</span><a class="self-link" href="#max-aspect-ratio"></a></h3>
-   <table class="def descdef mq">
-    <tbody>
-     <tr>
-      <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-for="@element" data-dfn-type="descriptor" data-export="" id="descdef-element-max-aspect-ratio">max-aspect-ratio</dfn>
-     <tr>
-      <th>For:
-      <td><a class="css" data-link-type="at-rule" href="#at-ruledef-element" id="ref-for-at-ruledef-element-29">@element</a>
-     <tr>
-      <th>Value:
-      <td class="prod"><a class="production css" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a>
-     <tr>
-      <th>Type:
-      <td>range
-   </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-max-aspect-ratio" id="ref-for-descdef-element-max-aspect-ratio-1">max-aspect-ratio</a> responsive condition applies to any scoped element with a lesser or equal (<code>&lt;=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).</p>
-   <div class="example" id="example-077aa701">
-    <a class="self-link" href="#example-077aa701"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-max-aspect-ratio" id="ref-for-descdef-element-max-aspect-ratio-2">max-aspect-ratio</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>max-aspect-ratio<span class="nt">: 16/9) </span><span class="p">{</span>
-  $this {
-    background: lime;
-  }
-}
-</pre>
-    <p>In this case any element that had an aspect ratio of <code>16/9</code> or lesser would have a green background.</p>
-   </div>
-   <h2 class="heading settled" data-level="5" id="css-functions"><span class="secno">5. </span><span class="content">CSS Functions</span><a class="self-link" href="#css-functions"></a></h2>
-   <h3 class="heading settled" data-level="5.1" id="eval"><span class="secno">5.1. </span><span class="content">eval("")</span><a class="self-link" href="#eval"></a></h3>
+   <h2 class="heading settled" data-level="6" id="css-functions"><span class="secno">6. </span><span class="content">CSS Functions</span><a class="self-link" href="#css-functions"></a></h2>
+   <h3 class="heading settled" data-level="6.1" id="eval"><span class="secno">6.1. </span><span class="content">eval("")</span><a class="self-link" href="#eval"></a></h3>
    <p class="note" role="note">Note, Much of the functionality of this feature is similar to CSS variables, however being able to execute JavaScript from the vantage point of the element in the scope could perhaps be a way that CSS variables could be used a little differently inside scoped styles or element queries.</p>
    <p>The <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-1">eval("")</a> function can be used anywhere inside a scoped style or element query. It shares a scope with the element in the root of the scoped style.</p>
    <p>When using <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-2">eval("")</a> you can write <code>eval</code>, followed by a pair of brackets (<code>(</code>,<code>)</code>) which contain JavaScript code, wrapped in either single (<code>'</code>) or double (<code>"</code>) quotes.</p>
    <p>This JavaScript can do something simple like reference the value of a variable, perform a simple calculation inline, or it can use the value return by a function.</p>
    <p class="note" role="note">Note, Unlike CSS variables, the <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-3">eval("")</a> function can be used anywhere in CSS: as a value, a property name, a selector, a '@media' query breakpoint - it can be used for anything, as long as it is inside of a scoped style.</p>
-   <h4 class="heading settled" data-level="5.1.1" id="using-js-variables-in-css"><span class="secno">5.1.1. </span><span class="content">Using JavaScript Variables in CSS</span><a class="self-link" href="#using-js-variables-in-css"></a></h4>
+   <h4 class="heading settled" data-level="6.1.1" id="using-js-variables-in-css"><span class="secno">6.1.1. </span><span class="content">Using JavaScript Variables in CSS</span><a class="self-link" href="#using-js-variables-in-css"></a></h4>
    <div class="example" id="example-a50be6c9">
     <a class="self-link" href="#example-a50be6c9"></a> Accessing a JavaScript variable with <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-4">eval("")</a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
@@ -2358,7 +2344,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.widget</code> will have a green background.</p>
    </div>
-   <h4 class="heading settled" data-level="5.1.2" id="writing-js-in-css"><span class="secno">5.1.2. </span><span class="content">Writing JavaScript in CSS</span><a class="self-link" href="#writing-js-in-css"></a></h4>
+   <h4 class="heading settled" data-level="6.1.2" id="writing-js-in-css"><span class="secno">6.1.2. </span><span class="content">Writing JavaScript in CSS</span><a class="self-link" href="#writing-js-in-css"></a></h4>
    <div class="example" id="example-8f0b14c9">
     <a class="self-link" href="#example-8f0b14c9"></a> Evaluating JavaScript Inline with <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-5">eval("")</a> 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> <span class="p">{</span>
@@ -2367,7 +2353,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case our inline JavaScript (<code>10 * 2</code>) evaluates in place, leaving us with a font size of <code>20px</code>.</p>
    </div>
-   <h4 class="heading settled" data-level="5.1.3" id="using-js-functions-in-css"><span class="secno">5.1.3. </span><span class="content">Using JavaScript Functions in CSS</span><a class="self-link" href="#using-js-functions-in-css"></a></h4>
+   <h4 class="heading settled" data-level="6.1.3" id="using-js-functions-in-css"><span class="secno">6.1.3. </span><span class="content">Using JavaScript Functions in CSS</span><a class="self-link" href="#using-js-functions-in-css"></a></h4>
    <div class="example" id="example-78004bc6">
     <a class="self-link" href="#example-78004bc6"></a> Using Values Returned from Functions with <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-6">eval("")</a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
@@ -2385,7 +2371,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.widget</code> will have a font size of <code>25px</code>.</p>
    </div>
-   <h4 class="heading settled" data-level="5.1.4" id="replacing-values-in-css"><span class="secno">5.1.4. </span><span class="content">Replacing Values in CSS</span><a class="self-link" href="#replacing-values-in-css"></a></h4>
+   <h4 class="heading settled" data-level="6.1.4" id="replacing-values-in-css"><span class="secno">6.1.4. </span><span class="content">Replacing Values in CSS</span><a class="self-link" href="#replacing-values-in-css"></a></h4>
    <div class="example" id="example-235e7786">
     <a class="self-link" href="#example-235e7786"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-7">eval("")</a> being used as a value: 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
@@ -2402,7 +2388,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>This example would be equivalent to: <code>div { color: #07f; }</code></p>
    </div>
-   <h4 class="heading settled" data-level="5.1.5" id="replacing-properties-in-css"><span class="secno">5.1.5. </span><span class="content">Replacing Properties in CSS</span><a class="self-link" href="#replacing-properties-in-css"></a></h4>
+   <h4 class="heading settled" data-level="6.1.5" id="replacing-properties-in-css"><span class="secno">6.1.5. </span><span class="content">Replacing Properties in CSS</span><a class="self-link" href="#replacing-properties-in-css"></a></h4>
    <div class="example" id="example-b4139501">
     <a class="self-link" href="#example-b4139501"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-8">eval("")</a> being used as a property: 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">></span>
@@ -2420,7 +2406,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>This example would use the property: <code>-webit-appearance</code> if the browser was Safari, otherwise would use: <code>appearance</code>.</p>
    </div>
-   <h4 class="heading settled" data-level="5.1.6" id="replacing-selectors-in-css"><span class="secno">5.1.6. </span><span class="content">Replacing Selectors in CSS</span><a class="self-link" href="#replacing-selectors-in-css"></a></h4>
+   <h4 class="heading settled" data-level="6.1.6" id="replacing-selectors-in-css"><span class="secno">6.1.6. </span><span class="content">Replacing Selectors in CSS</span><a class="self-link" href="#replacing-selectors-in-css"></a></h4>
    <div class="example" id="example-82befd5f">
     <a class="self-link" href="#example-82befd5f"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-9">eval("")</a> replacing a list of selectors: 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
@@ -2449,7 +2435,7 @@ Parts of this work may be from another specification document.  If so, those par
     <p>Check the <a href="#using-variables-as-selectors">Using Variables as Selectors</a> example below for a more elaborate demonstration, including pseudo-classes like <code>:hover</code> or <code>:focus</code></p>
    </div>
    <p class="note" role="note">Note, Because <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-10">eval("")</a> works everywhere in CSS inside of a scoped style, it’s also possible to use inside the <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-content-3/#propdef-content">content</a> property for pseudo-elements like <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-content-3/#valdef-content-before">before</a> and <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-content-3/#valdef-content-after">after</a>.</p>
-   <h4 class="heading settled" data-level="5.1.7" id="it-selector"><span class="secno">5.1.7. </span><span class="content"><code>$it</code> selector</span><a class="self-link" href="#it-selector"></a></h4>
+   <h4 class="heading settled" data-level="6.1.7" id="it-selector"><span class="secno">6.1.7. </span><span class="content"><code>$it</code> selector</span><a class="self-link" href="#it-selector"></a></h4>
    <dl>
     <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-it">$it</dfn> 
     <dd>
@@ -2475,7 +2461,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
      </div>
    </dl>
-   <h2 class="heading settled" data-level="6" id="element-based-units"><span class="secno">6. </span><span class="content">Element-based Units</span><a class="self-link" href="#element-based-units"></a></h2>
+   <h2 class="heading settled" data-level="7" id="element-based-units"><span class="secno">7. </span><span class="content">Element-based Units</span><a class="self-link" href="#element-based-units"></a></h2>
    <p>Just as CSS has viewport-percentage units: <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vw">vw</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vh">vh</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmin">vmin</a>, and <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmax">vmax</a> which represent a distance equal to 1% of the viewport width, height, shortest edge, and longest edge, in a similar way the following element-percentage units <a class="css" data-link-type="maybe" href="#ew" id="ref-for-ew-1">ew</a>, <a class="css" data-link-type="maybe" href="#eh" id="ref-for-eh-1">eh</a>, <a class="css" data-link-type="maybe" href="#emin" id="ref-for-emin-1">emin</a>, and <a class="css" data-link-type="maybe" href="#emax" id="ref-for-emax-1">emax</a> represent a distance equal to 1% of the element’s own width, height, shortest edge, and longest edge. When the width of height of the element changes, the value of these units scale accordingly.</p>
    <p class="note" role="note">Note, These new <a data-link-type="dfn" href="#eq-unit" id="ref-for-eq-unit-1">eq-unit</a> units always refer to the dimensions of the element in the scope, and can be used inside of a scoped style or element query to style other elements.</p>
    <dl>
@@ -2536,8 +2522,8 @@ Parts of this work may be from another specification document.  If so, those par
      </div>
      <p class="note" role="note">Note, This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmax">vmax</a> viewport unit, but based on the scoped element’s dimensions.</p>
    </dl>
-   <h2 class="heading settled" data-level="7" id="examples-of-element-queries"><span class="secno">7. </span><span class="content">Examples of Scoped Styles &amp; Element Queries</span><a class="self-link" href="#examples-of-element-queries"></a></h2>
-   <h3 class="heading settled" data-level="7.1" id="example-scoped-styles"><span class="secno">7.1. </span><span class="content">Examples of valid scoped styles</span><a class="self-link" href="#example-scoped-styles"></a></h3>
+   <h2 class="heading settled" data-level="8" id="examples-of-element-queries"><span class="secno">8. </span><span class="content">Examples of Scoped Styles &amp; Element Queries</span><a class="self-link" href="#examples-of-element-queries"></a></h2>
+   <h3 class="heading settled" data-level="8.1" id="example-scoped-styles"><span class="secno">8.1. </span><span class="content">Examples of valid scoped styles</span><a class="self-link" href="#example-scoped-styles"></a></h3>
    <div class="example" id="example-950901a4">
     <a class="self-link" href="#example-950901a4"></a> 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="s">'div'</span> <span class="p">{}</span>
@@ -2558,7 +2544,7 @@ Parts of this work may be from another specification document.  If so, those par
 <pre class="language-css highlight"><span class="n">@element</span> <span class="s">'div'</span> and <span class="p">(</span>min-width<span class="nt">: 500px) and (min-lines: 3) </span><span class="p">{</span><span class="p">}</span>
 </pre>
    </div>
-   <h3 class="heading settled" data-level="7.2" id="wrapper-free-responsive-iframe"><span class="secno">7.2. </span><span class="content">Wrapper-free responsive iframe resize</span><a class="self-link" href="#wrapper-free-responsive-iframe"></a></h3>
+   <h3 class="heading settled" data-level="8.2" id="wrapper-free-responsive-iframe"><span class="secno">8.2. </span><span class="content">Wrapper-free responsive iframe resize</span><a class="self-link" href="#wrapper-free-responsive-iframe"></a></h3>
    <div class="example" id="example-e3f9465f">
     <a class="self-link" href="#example-e3f9465f"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">width</span><span class="o">=</span><span class="s">"640"</span> <span class="na">height</span><span class="o">=</span><span class="s">"360"</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">iframe</span><span class="p">></span>
@@ -2573,9 +2559,9 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this example the <code>iframe</code> element has a <code>width=""</code> and <code>height=""</code> attribute supplied in HTML which is being accessed from CSS using <code>$it.width</code> and <code>$it.height</code> inside our <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-15">eval("")</a> function. Because we are able to compute the HTML attributes directly, this one rule will make multiple <code>iframe</code> elements with <em>different</em> attribute values on the same page responsive, as it computes each iframe separately as <code>$this</code>.</p>
    </div>
-   <h3 class="heading settled" data-level="7.3" id="faking-input-empty"><span class="secno">7.3. </span><span class="content">Faking <code>input:empty</code></span><a class="self-link" href="#faking-input-empty"></a></h3>
-   <div class="example" id="example-6769fe6c">
-    <a class="self-link" href="#example-6769fe6c"></a> 
+   <h3 class="heading settled" data-level="8.3" id="faking-input-empty"><span class="secno">8.3. </span><span class="content">Faking <code>input:empty</code></span><a class="self-link" href="#faking-input-empty"></a></h3>
+   <div class="example" id="example-baf82963">
+    <a class="self-link" href="#example-baf82963"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
   <span class="c">/* input:empty */</span>
@@ -2592,11 +2578,11 @@ Parts of this work may be from another specification document.  If so, those par
   <span class="p">}</span>
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
 </pre>
-    <p>In this example we are able to apply styles based on whether there are zero or at least one characters inside any <code>input</code> element. CSS has the pseudo-class <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#empty-pseudo">:empty</a>, however it doesn’t apply to all elements (like <code>input</code> elements) so by using <a class="property" data-link-type="propdesc" href="#descdef-element-max-characters" id="ref-for-descdef-element-max-characters-3">max-characters</a> and <a class="property" data-link-type="propdesc" href="#descdef-element-min-characters" id="ref-for-descdef-element-min-characters-3">min-characters</a> with element queries we are able to express and style a similar idea.</p>
+    <p>In this example we are able to apply styles based on whether there are zero or at least one characters inside any <code>input</code> element. CSS has the pseudo-class <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#empty-pseudo">:empty</a>, however it doesn’t apply to all elements (like <code>input</code> elements) so by using <code>max-characters</code> and <code>min-characters</code> with element queries we are able to express and style a similar idea.</p>
    </div>
-   <h3 class="heading settled" data-level="7.4" id="auto-expanding-textarea"><span class="secno">7.4. </span><span class="content">Auto-expanding <code>textarea</code></span><a class="self-link" href="#auto-expanding-textarea"></a></h3>
-   <div class="example" id="example-8abfe05e">
-    <a class="self-link" href="#example-8abfe05e"></a> 
+   <h3 class="heading settled" data-level="8.4" id="auto-expanding-textarea"><span class="secno">8.4. </span><span class="content">Auto-expanding <code>textarea</code></span><a class="self-link" href="#auto-expanding-textarea"></a></h3>
+   <div class="example" id="example-fda853eb">
+    <a class="self-link" href="#example-fda853eb"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">textarea</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">textarea</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
   <span class="k">@element</span> <span class="s1">'textarea'</span> <span class="p">{</span>
@@ -2606,9 +2592,9 @@ Parts of this work may be from another specification document.  If so, those par
   <span class="p">}</span>
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
 </pre>
-    <p>In this example we are using <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-16">eval("")</a> to reset the <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css21/visudet.html#propdef-height">height</a> value of our element and immediately set it to the scrollHeight of the element, ensuring that no matter how many lines of text it contains, it will always expand &amp; contract to contain all of them.</p>
+    <p>In this example we are using <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-16">eval("")</a> to reset the height value of our element and immediately set it to the scrollHeight of the element, ensuring that no matter how many lines of text it contains, it will always expand &amp; contract to contain all of them.</p>
    </div>
-   <h3 class="heading settled" data-level="7.5" id="display-browser-dimensions"><span class="secno">7.5. </span><span class="content">Display Browser Dimensions</span><a class="self-link" href="#display-browser-dimensions"></a></h3>
+   <h3 class="heading settled" data-level="8.5" id="display-browser-dimensions"><span class="secno">8.5. </span><span class="content">Display Browser Dimensions</span><a class="self-link" href="#display-browser-dimensions"></a></h3>
    <div class="example" id="example-66971180">
     <a class="self-link" href="#example-66971180"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
@@ -2624,7 +2610,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>This example will create a new pseudo-element on our ':root' element (the HTML element) and uses <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-17">eval("")</a> to display the <code>innerWidth</code> and <code>innerHeight</code> values of our <code>window</code>.</p>
    </div>
-   <h3 class="heading settled" data-level="7.6" id="self-responsive-grid"><span class="secno">7.6. </span><span class="content">Self-responsive Grid</span><a class="self-link" href="#self-responsive-grid"></a></h3>
+   <h3 class="heading settled" data-level="8.6" id="self-responsive-grid"><span class="secno">8.6. </span><span class="content">Self-responsive Grid</span><a class="self-link" href="#self-responsive-grid"></a></h3>
    <div class="example" id="example-2beb31a9">
     <a class="self-link" href="#example-2beb31a9"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">h2</span><span class="p">></span>Responsive Grid<span class="p">&lt;</span><span class="p">/</span><span class="nt">h2</span><span class="p">></span>
@@ -2773,9 +2759,9 @@ Parts of this work may be from another specification document.  If so, those par
   <span class="p">}</span>
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
 </pre>
-    <p>This example uses <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-30">@element</a> queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-6">$this</a>, we can use these same styles to power many grids in the same layout all using the same styles.</p>
+    <p>This example uses <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-22">@element</a> queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-6">$this</a>, we can use these same styles to power many grids in the same layout all using the same styles.</p>
    </div>
-   <h3 class="heading settled" data-level="7.7" id="using-variables-as-selectors"><span class="secno">7.7. </span><span class="content">Using Variables as Selectors</span><a class="self-link" href="#using-variables-as-selectors"></a></h3>
+   <h3 class="heading settled" data-level="8.7" id="using-variables-as-selectors"><span class="secno">8.7. </span><span class="content">Using Variables as Selectors</span><a class="self-link" href="#using-variables-as-selectors"></a></h3>
    <div class="example" id="example-7dacbc69">
     <a class="self-link" href="#example-7dacbc69"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">hidden</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">hidden</span><span class="p">></span>
@@ -2830,7 +2816,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this example we use <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-18">eval("")</a> to return either a list of selectors (stored as strings in a JavaScript array) or we use the return from a function that allows us to append strings like ':hover', or ':focus' to each selector as it gives them to use as a selector or selector list in our CSS inside of a scoped style. For manipulating or styling many similar things (like text-style inputs but not other inputs) we can simplify the selectors we need to use throughout our CSS while maintaining full control over what gets styled.</p>
    </div>
-   <h3 class="heading settled" data-level="7.8" id="clamped-numbers-in-CSS"><span class="secno">7.8. </span><span class="content">Clamped Numbers in CSS</span><a class="self-link" href="#clamped-numbers-in-CSS"></a></h3>
+   <h3 class="heading settled" data-level="8.8" id="clamped-numbers-in-CSS"><span class="secno">8.8. </span><span class="content">Clamped Numbers in CSS</span><a class="self-link" href="#clamped-numbers-in-CSS"></a></h3>
    <div class="example" id="example-44b5a47f">
     <a class="self-link" href="#example-44b5a47f"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">h1</span><span class="p">></span>Headline<span class="p">&lt;</span><span class="p">/</span><span class="nt">h1</span><span class="p">></span>
@@ -2999,43 +2985,35 @@ Parts of this work may be from another specification document.  If so, those par
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#eh">eh</a><span>, in §6</span>
-   <li><a href="#at-ruledef-element">@element</a><span>, in §1</span>
-   <li><a href="#emax">emax</a><span>, in §6</span>
-   <li><a href="#emin">emin</a><span>, in §6</span>
-   <li><a href="#typedef-eq-condition">&lt;eq-condition></a><span>, in §1</span>
-   <li><a href="#typedef-eq-name">&lt;eq-name></a><span>, in §1</span>
-   <li><a href="#typedef-eq-prelude">&lt;eq-prelude></a><span>, in §1</span>
-   <li><a href="#eq-unit">eq-unit</a><span>, in §1</span>
-   <li><a href="#typedef-eq-value">&lt;eq-value></a><span>, in §1</span>
-   <li><a href="#funcdef-eval">eval()</a><span>, in §1</span>
-   <li><a href="#ew">ew</a><span>, in §6</span>
-   <li><a href="#selectordef-meta-selectors-it">$it</a><span>, in §5.1.7</span>
-   <li><a href="#valdef-element-orientation-landscape">landscape</a><span>, in §4.15.3</span>
-   <li><a href="#descdef-element-max-aspect-ratio">max-aspect-ratio</a><span>, in §4.17</span>
-   <li><a href="#descdef-element-max-characters">max-characters</a><span>, in §4.6</span>
-   <li><a href="#descdef-element-max-children">max-children</a><span>, in §4.10</span>
-   <li><a href="#descdef-element-max-height">max-height</a><span>, in §4.4</span>
-   <li><a href="#descdef-element-max-lines">max-lines</a><span>, in §4.8</span>
-   <li><a href="#descdef-element-max-scroll-x">max-scroll-x</a><span>, in §4.14</span>
-   <li><a href="#descdef-element-max-scroll-y">max-scroll-y</a><span>, in §4.12</span>
-   <li><a href="#descdef-element-max-width">max-width</a><span>, in §4.2</span>
-   <li><a href="#selectordef-meta-selectors">meta-selectors</a><span>, in §1</span>
-   <li><a href="#descdef-element-min-aspect-ratio">min-aspect-ratio</a><span>, in §4.16</span>
-   <li><a href="#descdef-element-min-characters">min-characters</a><span>, in §4.5</span>
-   <li><a href="#descdef-element-min-children">min-children</a><span>, in §4.9</span>
-   <li><a href="#descdef-element-min-height">min-height</a><span>, in §4.3</span>
-   <li><a href="#descdef-element-min-lines">min-lines</a><span>, in §4.7</span>
-   <li><a href="#descdef-element-min-scroll-x">min-scroll-x</a><span>, in §4.13</span>
-   <li><a href="#descdef-element-min-scroll-y">min-scroll-y</a><span>, in §4.11</span>
-   <li><a href="#descdef-element-min-width">min-width</a><span>, in §4.1</span>
-   <li><a href="#selectordef-meta-selectors-next">$next</a><span>, in §3.1</span>
-   <li><a href="#descdef-element-orientation">orientation</a><span>, in §4.15</span>
-   <li><a href="#selectordef-meta-selectors-parent">$parent</a><span>, in §3.1</span>
-   <li><a href="#valdef-element-orientation-portrait">portrait</a><span>, in §4.15.1</span>
-   <li><a href="#selectordef-meta-selectors-prev">$prev</a><span>, in §3.1</span>
-   <li><a href="#valdef-element-orientation-square">square</a><span>, in §4.15.2</span>
-   <li><a href="#selectordef-meta-selectors-this">$this</a><span>, in §3.1</span>
+   <li><a href="#descdef-element-aspect-ratio">aspect-ratio</a><span>, in §5.8</span>
+   <li><a href="#descdef-element-characters">characters</a><span>, in §5.3</span>
+   <li><a href="#descdef-element-children">children</a><span>, in §5.5</span>
+   <li><a href="#eh">eh</a><span>, in §7</span>
+   <li><a href="#at-ruledef-element">@element</a><span>, in §3</span>
+   <li><a href="#emax">emax</a><span>, in §7</span>
+   <li><a href="#emin">emin</a><span>, in §7</span>
+   <li><a href="#typedef-eq-condition">&lt;eq-condition></a><span>, in §3</span>
+   <li><a href="#typedef-eq-name">&lt;eq-name></a><span>, in §3</span>
+   <li><a href="#typedef-eq-prelude">&lt;eq-prelude></a><span>, in §3</span>
+   <li><a href="#eq-unit">eq-unit</a><span>, in §3</span>
+   <li><a href="#typedef-eq-value">&lt;eq-value></a><span>, in §3</span>
+   <li><a href="#funcdef-eval">eval()</a><span>, in §3</span>
+   <li><a href="#ew">ew</a><span>, in §7</span>
+   <li><a href="#descdef-element-height">height</a><span>, in §5.2</span>
+   <li><a href="#selectordef-meta-selectors-it">$it</a><span>, in §6.1.7</span>
+   <li><a href="#valdef-element-orientation-landscape">landscape</a><span>, in §5.9.3</span>
+   <li><a href="#descdef-element-lines">lines</a><span>, in §5.4</span>
+   <li><a href="#selectordef-meta-selectors">meta-selectors</a><span>, in §3</span>
+   <li><a href="#selectordef-meta-selectors-next">$next</a><span>, in §4.1</span>
+   <li><a href="#descdef-element-orientation">orientation</a><span>, in §5.9</span>
+   <li><a href="#selectordef-meta-selectors-parent">$parent</a><span>, in §4.1</span>
+   <li><a href="#valdef-element-orientation-portrait">portrait</a><span>, in §5.9.1</span>
+   <li><a href="#selectordef-meta-selectors-prev">$prev</a><span>, in §4.1</span>
+   <li><a href="#descdef-element-scroll-x">scroll-x</a><span>, in §5.7</span>
+   <li><a href="#descdef-element-scroll-y">scroll-y</a><span>, in §5.6</span>
+   <li><a href="#valdef-element-orientation-square">square</a><span>, in §5.9.2</span>
+   <li><a href="#selectordef-meta-selectors-this">$this</a><span>, in §4.1</span>
+   <li><a href="#descdef-element-width">width</a><span>, in §5.1</span>
   </ul>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
@@ -3052,17 +3030,18 @@ Parts of this work may be from another specification document.  If so, those par
      <li><a href="https://drafts.csswg.org/css-content-3/#propdef-content">content</a>
     </ul>
    <li>
-    <a data-link-type="biblio">[css-syntax-3]</a> defines the following terms:
+    <a data-link-type="biblio">[CSS3SYN]</a> defines the following terms:
     <ul>
      <li><a href="https://drafts.csswg.org/css-syntax-3/#typedef-stylesheet">&lt;stylesheet></a>
     </ul>
    <li>
-    <a data-link-type="biblio">[css-values-3]</a> defines the following terms:
+    <a data-link-type="biblio">[CSS3VAL]</a> defines the following terms:
     <ul>
+     <li><a href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a>
      <li><a href="https://drafts.csswg.org/css-values-3/#number-value">&lt;number></a>
     </ul>
    <li>
-    <a data-link-type="biblio">[css-values-3]</a> defines the following terms:
+    <a data-link-type="biblio">[CSS3VAL]</a> defines the following terms:
     <ul>
      <li><a href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a>
      <li><a href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a>
@@ -3073,12 +3052,7 @@ Parts of this work may be from another specification document.  If so, those par
      <li><a href="https://drafts.csswg.org/css-values-4/#comb-one">|</a>
     </ul>
    <li>
-    <a data-link-type="biblio">[CSS2]</a> defines the following terms:
-    <ul>
-     <li><a href="https://drafts.csswg.org/css21/visudet.html#propdef-height">height</a>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[mediaqueries-4]</a> defines the following terms:
+    <a data-link-type="biblio">[MEDIAQUERIES-4]</a> defines the following terms:
     <ul>
      <li><a href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a>
     </ul>
@@ -3096,9 +3070,9 @@ Parts of this work may be from another specification document.  If so, those par
   <dl>
    <dt id="biblio-css-conditional-3">[CSS-CONDITIONAL-3]
    <dd>CSS Conditional Rules Module Level 3 URL: <a href="https://drafts.csswg.org/css-conditional-3/">https://drafts.csswg.org/css-conditional-3/</a>
-   <dt id="biblio-css-syntax-3">[CSS-SYNTAX-3]
+   <dt id="biblio-css3syn">[CSS3SYN]
    <dd>Tab Atkins Jr.; Simon Sapin. <a href="http://dev.w3.org/csswg/css-syntax/">CSS Syntax Module Level 3</a>. URL: <a href="http://dev.w3.org/csswg/css-syntax/">http://dev.w3.org/csswg/css-syntax/</a>
-   <dt id="biblio-css-values-3">[CSS-VALUES-3]
+   <dt id="biblio-css3val">[CSS3VAL]
    <dd>Tab Atkins Jr.; Elika Etemad. <a href="https://www.w3.org/TR/css-values-3/">CSS Values and Units Module Level 3</a>. 29 September 2016. CR. URL: <a href="https://www.w3.org/TR/css-values-3/">https://www.w3.org/TR/css-values-3/</a>
    <dt id="biblio-mediaqueries-4">[MEDIAQUERIES-4]
    <dd>Florian Rivoal; Tab Atkins Jr.. <a href="https://drafts.csswg.org/mediaqueries-4/">Media Queries Level 4</a>. URL: <a href="https://drafts.csswg.org/mediaqueries-4/">https://drafts.csswg.org/mediaqueries-4/</a>
@@ -3111,8 +3085,6 @@ Parts of this work may be from another specification document.  If so, those par
   <dl>
    <dt id="biblio-css-content-3">[CSS-CONTENT-3]
    <dd>Elika Etemad; Dave Cramer. <a href="https://drafts.csswg.org/css-content/">CSS Generated Content Module Level 3</a>. URL: <a href="https://drafts.csswg.org/css-content/">https://drafts.csswg.org/css-content/</a>
-   <dt id="biblio-css2">[CSS2]
-   <dd>Bert Bos; et al. <a href="https://www.w3.org/TR/CSS2">Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</a>. 7 June 2011. REC. URL: <a href="https://www.w3.org/TR/CSS2">https://www.w3.org/TR/CSS2</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="property-index"><span class="content">Property Index</span><a class="self-link" href="#property-index"></a></h2>
   <p>No properties defined.</p>
@@ -3127,73 +3099,43 @@ Parts of this work may be from another specification document.  If so, those par
       <th scope="col">Type
     <tbody>
      <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-min-width">min-width</a>
+      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-width">width</a>
       <td>&lt;dimension>
       <td>
       <td>range
      <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-max-width">max-width</a>
+      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-height">height</a>
       <td>&lt;dimension>
       <td>
       <td>range
      <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-min-height">min-height</a>
-      <td>&lt;dimension>
+      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-characters">characters</a>
+      <td>&lt;integer>
       <td>
       <td>range
      <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-max-height">max-height</a>
-      <td>&lt;dimension>
-      <td>
-      <td>range
-     <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-min-characters">min-characters</a>
+      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-lines">lines</a>
       <td>&lt;number>
       <td>
       <td>range
      <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-max-characters">max-characters</a>
+      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-children">children</a>
       <td>&lt;number>
       <td>
       <td>range
      <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-min-lines">min-lines</a>
-      <td>&lt;number>
-      <td>
-      <td>range
-     <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-max-lines">max-lines</a>
-      <td>&lt;number>
-      <td>
-      <td>range
-     <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-min-children">min-children</a>
-      <td>&lt;number>
-      <td>
-      <td>range
-     <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-max-children">max-children</a>
-      <td>&lt;number>
-      <td>
-      <td>range
-     <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-min-scroll-y">min-scroll-y</a>
+      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-scroll-y">scroll-y</a>
       <td>&lt;dimension>
       <td>
       <td>range
      <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-max-scroll-y">max-scroll-y</a>
+      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-scroll-x">scroll-x</a>
       <td>&lt;dimension>
       <td>
       <td>range
      <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-min-scroll-x">min-scroll-x</a>
-      <td>&lt;dimension>
-      <td>
-      <td>range
-     <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-max-scroll-x">max-scroll-x</a>
-      <td>&lt;dimension>
+      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-aspect-ratio">aspect-ratio</a>
+      <td>&lt;ratio>
       <td>
       <td>range
      <tr>
@@ -3201,283 +3143,217 @@ Parts of this work may be from another specification document.  If so, those par
       <td>portrait | square | landscape
       <td>
       <td>discrete
-     <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-min-aspect-ratio">min-aspect-ratio</a>
-      <td>&lt;ratio>
-      <td>
-      <td>range
-     <tr>
-      <th scope="row"><a class="css" data-link-type="descriptor" href="#descdef-element-max-aspect-ratio">max-aspect-ratio</a>
-      <td>&lt;ratio>
-      <td>
-      <td>range
    </table>
   </div>
   <aside class="dfn-panel" data-for="at-ruledef-element">
    <b><a href="#at-ruledef-element">#at-ruledef-element</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-at-ruledef-element-1">2.1. Scoped Styles</a> <a href="#ref-for-at-ruledef-element-2">(2)</a>
-    <li><a href="#ref-for-at-ruledef-element-3">2.1.2. Evaluating the Scope</a>
+    <li><a href="#ref-for-at-ruledef-element-1">1. Introduction</a>
+    <li><a href="#ref-for-at-ruledef-element-2">2.1. Scoped Styles</a>
+    <li><a href="#ref-for-at-ruledef-element-3">2.1.2. Understanding the Scope</a>
     <li><a href="#ref-for-at-ruledef-element-4">2.2.2. Combining @element and @media queries</a>
     <li><a href="#ref-for-at-ruledef-element-5">2.2.3. Self-Referential @element queries</a> <a href="#ref-for-at-ruledef-element-6">(2)</a> <a href="#ref-for-at-ruledef-element-7">(3)</a>
     <li><a href="#ref-for-at-ruledef-element-8">2.2.4. Circular Referential @element queries</a> <a href="#ref-for-at-ruledef-element-9">(2)</a> <a href="#ref-for-at-ruledef-element-10">(3)</a> <a href="#ref-for-at-ruledef-element-11">(4)</a>
-    <li><a href="#ref-for-at-ruledef-element-12">4. Responsive Conditions</a>
-    <li><a href="#ref-for-at-ruledef-element-13">4.1. Min-width</a>
-    <li><a href="#ref-for-at-ruledef-element-14">4.2. Max-width</a>
-    <li><a href="#ref-for-at-ruledef-element-15">4.3. Min-height</a>
-    <li><a href="#ref-for-at-ruledef-element-16">4.4. Max-height</a>
-    <li><a href="#ref-for-at-ruledef-element-17">4.5. Min-characters</a>
-    <li><a href="#ref-for-at-ruledef-element-18">4.6. Max-characters</a>
-    <li><a href="#ref-for-at-ruledef-element-19">4.7. Min-lines</a>
-    <li><a href="#ref-for-at-ruledef-element-20">4.8. Max-lines</a>
-    <li><a href="#ref-for-at-ruledef-element-21">4.9. Min-children</a>
-    <li><a href="#ref-for-at-ruledef-element-22">4.10. Max-children</a>
-    <li><a href="#ref-for-at-ruledef-element-23">4.11. Min-scroll-y</a>
-    <li><a href="#ref-for-at-ruledef-element-24">4.12. Max-scroll-y</a>
-    <li><a href="#ref-for-at-ruledef-element-25">4.13. Min-scroll-x</a>
-    <li><a href="#ref-for-at-ruledef-element-26">4.14. Max-scroll-x</a>
-    <li><a href="#ref-for-at-ruledef-element-27">4.15. Orientation</a>
-    <li><a href="#ref-for-at-ruledef-element-28">4.16. Min-aspect-ratio</a>
-    <li><a href="#ref-for-at-ruledef-element-29">4.17. Max-aspect-ratio</a>
-    <li><a href="#ref-for-at-ruledef-element-30">7.6. Self-responsive Grid</a>
+    <li><a href="#ref-for-at-ruledef-element-12">5. Responsive Conditions</a>
+    <li><a href="#ref-for-at-ruledef-element-13">5.1. Width</a>
+    <li><a href="#ref-for-at-ruledef-element-14">5.2. Height</a>
+    <li><a href="#ref-for-at-ruledef-element-15">5.3. Characters</a>
+    <li><a href="#ref-for-at-ruledef-element-16">5.4. Lines</a>
+    <li><a href="#ref-for-at-ruledef-element-17">5.5. Children</a>
+    <li><a href="#ref-for-at-ruledef-element-18">5.6. Scroll-Y</a>
+    <li><a href="#ref-for-at-ruledef-element-19">5.7. Scroll-X</a>
+    <li><a href="#ref-for-at-ruledef-element-20">5.8. Aspect-Ratio</a>
+    <li><a href="#ref-for-at-ruledef-element-21">5.9. Orientation</a>
+    <li><a href="#ref-for-at-ruledef-element-22">8.6. Self-responsive Grid</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="typedef-eq-prelude">
    <b><a href="#typedef-eq-prelude">#typedef-eq-prelude</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-typedef-eq-prelude-1">1. EQCSS Syntax</a>
+    <li><a href="#ref-for-typedef-eq-prelude-1">3. Syntax</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="typedef-eq-condition">
    <b><a href="#typedef-eq-condition">#typedef-eq-condition</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-typedef-eq-condition-1">1. EQCSS Syntax</a>
-    <li><a href="#ref-for-typedef-eq-condition-2">4. Responsive Conditions</a>
+    <li><a href="#ref-for-typedef-eq-condition-1">3. Syntax</a>
+    <li><a href="#ref-for-typedef-eq-condition-2">3.1. Evaluating Element Queries</a>
+    <li><a href="#ref-for-typedef-eq-condition-3">5. Responsive Conditions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="typedef-eq-name">
    <b><a href="#typedef-eq-name">#typedef-eq-name</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-typedef-eq-name-1">1. EQCSS Syntax</a>
+    <li><a href="#ref-for-typedef-eq-name-1">3. Syntax</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="typedef-eq-value">
    <b><a href="#typedef-eq-value">#typedef-eq-value</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-typedef-eq-value-1">1. EQCSS Syntax</a>
+    <li><a href="#ref-for-typedef-eq-value-1">3. Syntax</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="selectordef-meta-selectors">
    <b><a href="#selectordef-meta-selectors">#selectordef-meta-selectors</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-selectordef-meta-selectors-1">3. Meta-Selectors</a>
-    <li><a href="#ref-for-selectordef-meta-selectors-2">3.1. Diagram of meta-selectors</a>
+    <li><a href="#ref-for-selectordef-meta-selectors-1">4. Meta-Selectors</a>
+    <li><a href="#ref-for-selectordef-meta-selectors-2">4.1. Diagram of meta-selectors</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="eq-unit">
    <b><a href="#eq-unit">#eq-unit</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-eq-unit-1">6. Element-based Units</a>
+    <li><a href="#ref-for-eq-unit-1">7. Element-based Units</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="funcdef-eval">
    <b><a href="#funcdef-eval">#funcdef-eval</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-funcdef-eval-1">5.1. eval("")</a> <a href="#ref-for-funcdef-eval-2">(2)</a> <a href="#ref-for-funcdef-eval-3">(3)</a>
-    <li><a href="#ref-for-funcdef-eval-4">5.1.1. Using JavaScript Variables in CSS</a>
-    <li><a href="#ref-for-funcdef-eval-5">5.1.2. Writing JavaScript in CSS</a>
-    <li><a href="#ref-for-funcdef-eval-6">5.1.3. Using JavaScript Functions in CSS</a>
-    <li><a href="#ref-for-funcdef-eval-7">5.1.4. Replacing Values in CSS</a>
-    <li><a href="#ref-for-funcdef-eval-8">5.1.5. Replacing Properties in CSS</a>
-    <li><a href="#ref-for-funcdef-eval-9">5.1.6. Replacing Selectors in CSS</a> <a href="#ref-for-funcdef-eval-10">(2)</a>
-    <li><a href="#ref-for-funcdef-eval-11">5.1.7. $it selector</a> <a href="#ref-for-funcdef-eval-12">(2)</a> <a href="#ref-for-funcdef-eval-13">(3)</a> <a href="#ref-for-funcdef-eval-14">(4)</a>
-    <li><a href="#ref-for-funcdef-eval-15">7.2. Wrapper-free responsive iframe resize</a>
-    <li><a href="#ref-for-funcdef-eval-16">7.4. Auto-expanding textarea</a>
-    <li><a href="#ref-for-funcdef-eval-17">7.5. Display Browser Dimensions</a>
-    <li><a href="#ref-for-funcdef-eval-18">7.7. Using Variables as Selectors</a>
+    <li><a href="#ref-for-funcdef-eval-1">6.1. eval("")</a> <a href="#ref-for-funcdef-eval-2">(2)</a> <a href="#ref-for-funcdef-eval-3">(3)</a>
+    <li><a href="#ref-for-funcdef-eval-4">6.1.1. Using JavaScript Variables in CSS</a>
+    <li><a href="#ref-for-funcdef-eval-5">6.1.2. Writing JavaScript in CSS</a>
+    <li><a href="#ref-for-funcdef-eval-6">6.1.3. Using JavaScript Functions in CSS</a>
+    <li><a href="#ref-for-funcdef-eval-7">6.1.4. Replacing Values in CSS</a>
+    <li><a href="#ref-for-funcdef-eval-8">6.1.5. Replacing Properties in CSS</a>
+    <li><a href="#ref-for-funcdef-eval-9">6.1.6. Replacing Selectors in CSS</a> <a href="#ref-for-funcdef-eval-10">(2)</a>
+    <li><a href="#ref-for-funcdef-eval-11">6.1.7. $it selector</a> <a href="#ref-for-funcdef-eval-12">(2)</a> <a href="#ref-for-funcdef-eval-13">(3)</a> <a href="#ref-for-funcdef-eval-14">(4)</a>
+    <li><a href="#ref-for-funcdef-eval-15">8.2. Wrapper-free responsive iframe resize</a>
+    <li><a href="#ref-for-funcdef-eval-16">8.4. Auto-expanding textarea</a>
+    <li><a href="#ref-for-funcdef-eval-17">8.5. Display Browser Dimensions</a>
+    <li><a href="#ref-for-funcdef-eval-18">8.7. Using Variables as Selectors</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="selectordef-meta-selectors-this">
    <b><a href="#selectordef-meta-selectors-this">#selectordef-meta-selectors-this</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-selectordef-meta-selectors-this-1">3.1. Diagram of meta-selectors</a> <a href="#ref-for-selectordef-meta-selectors-this-2">(2)</a> <a href="#ref-for-selectordef-meta-selectors-this-3">(3)</a> <a href="#ref-for-selectordef-meta-selectors-this-4">(4)</a> <a href="#ref-for-selectordef-meta-selectors-this-5">(5)</a>
-    <li><a href="#ref-for-selectordef-meta-selectors-this-6">7.6. Self-responsive Grid</a>
+    <li><a href="#ref-for-selectordef-meta-selectors-this-1">4.1. Diagram of meta-selectors</a> <a href="#ref-for-selectordef-meta-selectors-this-2">(2)</a> <a href="#ref-for-selectordef-meta-selectors-this-3">(3)</a> <a href="#ref-for-selectordef-meta-selectors-this-4">(4)</a> <a href="#ref-for-selectordef-meta-selectors-this-5">(5)</a>
+    <li><a href="#ref-for-selectordef-meta-selectors-this-6">8.6. Self-responsive Grid</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="selectordef-meta-selectors-parent">
    <b><a href="#selectordef-meta-selectors-parent">#selectordef-meta-selectors-parent</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-selectordef-meta-selectors-parent-1">3.1. Diagram of meta-selectors</a> <a href="#ref-for-selectordef-meta-selectors-parent-2">(2)</a> <a href="#ref-for-selectordef-meta-selectors-parent-3">(3)</a> <a href="#ref-for-selectordef-meta-selectors-parent-4">(4)</a>
+    <li><a href="#ref-for-selectordef-meta-selectors-parent-1">4.1. Diagram of meta-selectors</a> <a href="#ref-for-selectordef-meta-selectors-parent-2">(2)</a> <a href="#ref-for-selectordef-meta-selectors-parent-3">(3)</a> <a href="#ref-for-selectordef-meta-selectors-parent-4">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="selectordef-meta-selectors-prev">
    <b><a href="#selectordef-meta-selectors-prev">#selectordef-meta-selectors-prev</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-selectordef-meta-selectors-prev-1">3.1. Diagram of meta-selectors</a> <a href="#ref-for-selectordef-meta-selectors-prev-2">(2)</a> <a href="#ref-for-selectordef-meta-selectors-prev-3">(3)</a> <a href="#ref-for-selectordef-meta-selectors-prev-4">(4)</a>
+    <li><a href="#ref-for-selectordef-meta-selectors-prev-1">4.1. Diagram of meta-selectors</a> <a href="#ref-for-selectordef-meta-selectors-prev-2">(2)</a> <a href="#ref-for-selectordef-meta-selectors-prev-3">(3)</a> <a href="#ref-for-selectordef-meta-selectors-prev-4">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="selectordef-meta-selectors-next">
    <b><a href="#selectordef-meta-selectors-next">#selectordef-meta-selectors-next</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-selectordef-meta-selectors-next-1">3.1. Diagram of meta-selectors</a> <a href="#ref-for-selectordef-meta-selectors-next-2">(2)</a> <a href="#ref-for-selectordef-meta-selectors-next-3">(3)</a> <a href="#ref-for-selectordef-meta-selectors-next-4">(4)</a> <a href="#ref-for-selectordef-meta-selectors-next-5">(5)</a>
+    <li><a href="#ref-for-selectordef-meta-selectors-next-1">4.1. Diagram of meta-selectors</a> <a href="#ref-for-selectordef-meta-selectors-next-2">(2)</a> <a href="#ref-for-selectordef-meta-selectors-next-3">(3)</a> <a href="#ref-for-selectordef-meta-selectors-next-4">(4)</a> <a href="#ref-for-selectordef-meta-selectors-next-5">(5)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="descdef-element-min-width">
-   <b><a href="#descdef-element-min-width">#descdef-element-min-width</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="descdef-element-width">
+   <b><a href="#descdef-element-width">#descdef-element-width</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-descdef-element-min-width-1">4.1. Min-width</a> <a href="#ref-for-descdef-element-min-width-2">(2)</a>
+    <li><a href="#ref-for-descdef-element-width-1">5.1. Width</a> <a href="#ref-for-descdef-element-width-2">(2)</a> <a href="#ref-for-descdef-element-width-3">(3)</a> <a href="#ref-for-descdef-element-width-4">(4)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="descdef-element-max-width">
-   <b><a href="#descdef-element-max-width">#descdef-element-max-width</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="descdef-element-height">
+   <b><a href="#descdef-element-height">#descdef-element-height</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-descdef-element-max-width-1">4.2. Max-width</a> <a href="#ref-for-descdef-element-max-width-2">(2)</a>
+    <li><a href="#ref-for-descdef-element-height-1">5.2. Height</a> <a href="#ref-for-descdef-element-height-2">(2)</a> <a href="#ref-for-descdef-element-height-3">(3)</a> <a href="#ref-for-descdef-element-height-4">(4)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="descdef-element-min-height">
-   <b><a href="#descdef-element-min-height">#descdef-element-min-height</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="descdef-element-characters">
+   <b><a href="#descdef-element-characters">#descdef-element-characters</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-descdef-element-min-height-1">4.3. Min-height</a> <a href="#ref-for-descdef-element-min-height-2">(2)</a>
+    <li><a href="#ref-for-descdef-element-characters-1">5.3. Characters</a> <a href="#ref-for-descdef-element-characters-2">(2)</a> <a href="#ref-for-descdef-element-characters-3">(3)</a> <a href="#ref-for-descdef-element-characters-4">(4)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="descdef-element-max-height">
-   <b><a href="#descdef-element-max-height">#descdef-element-max-height</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="descdef-element-lines">
+   <b><a href="#descdef-element-lines">#descdef-element-lines</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-descdef-element-max-height-1">4.4. Max-height</a> <a href="#ref-for-descdef-element-max-height-2">(2)</a>
+    <li><a href="#ref-for-descdef-element-lines-1">5.4. Lines</a> <a href="#ref-for-descdef-element-lines-2">(2)</a> <a href="#ref-for-descdef-element-lines-3">(3)</a> <a href="#ref-for-descdef-element-lines-4">(4)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="descdef-element-min-characters">
-   <b><a href="#descdef-element-min-characters">#descdef-element-min-characters</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="descdef-element-children">
+   <b><a href="#descdef-element-children">#descdef-element-children</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-descdef-element-min-characters-1">4.5. Min-characters</a> <a href="#ref-for-descdef-element-min-characters-2">(2)</a>
-    <li><a href="#ref-for-descdef-element-min-characters-3">7.3. Faking input:empty</a>
+    <li><a href="#ref-for-descdef-element-children-1">5.5. Children</a> <a href="#ref-for-descdef-element-children-2">(2)</a> <a href="#ref-for-descdef-element-children-3">(3)</a> <a href="#ref-for-descdef-element-children-4">(4)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="descdef-element-max-characters">
-   <b><a href="#descdef-element-max-characters">#descdef-element-max-characters</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="descdef-element-scroll-y">
+   <b><a href="#descdef-element-scroll-y">#descdef-element-scroll-y</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-descdef-element-max-characters-1">4.6. Max-characters</a> <a href="#ref-for-descdef-element-max-characters-2">(2)</a>
-    <li><a href="#ref-for-descdef-element-max-characters-3">7.3. Faking input:empty</a>
+    <li><a href="#ref-for-descdef-element-scroll-y-1">5.6. Scroll-Y</a> <a href="#ref-for-descdef-element-scroll-y-2">(2)</a> <a href="#ref-for-descdef-element-scroll-y-3">(3)</a> <a href="#ref-for-descdef-element-scroll-y-4">(4)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="descdef-element-min-lines">
-   <b><a href="#descdef-element-min-lines">#descdef-element-min-lines</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="descdef-element-scroll-x">
+   <b><a href="#descdef-element-scroll-x">#descdef-element-scroll-x</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-descdef-element-min-lines-1">4.7. Min-lines</a> <a href="#ref-for-descdef-element-min-lines-2">(2)</a>
+    <li><a href="#ref-for-descdef-element-scroll-x-1">5.7. Scroll-X</a> <a href="#ref-for-descdef-element-scroll-x-2">(2)</a> <a href="#ref-for-descdef-element-scroll-x-3">(3)</a> <a href="#ref-for-descdef-element-scroll-x-4">(4)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="descdef-element-max-lines">
-   <b><a href="#descdef-element-max-lines">#descdef-element-max-lines</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="descdef-element-aspect-ratio">
+   <b><a href="#descdef-element-aspect-ratio">#descdef-element-aspect-ratio</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-descdef-element-max-lines-1">4.8. Max-lines</a> <a href="#ref-for-descdef-element-max-lines-2">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="descdef-element-min-children">
-   <b><a href="#descdef-element-min-children">#descdef-element-min-children</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-descdef-element-min-children-1">4.9. Min-children</a> <a href="#ref-for-descdef-element-min-children-2">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="descdef-element-max-children">
-   <b><a href="#descdef-element-max-children">#descdef-element-max-children</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-descdef-element-max-children-1">4.10. Max-children</a> <a href="#ref-for-descdef-element-max-children-2">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="descdef-element-min-scroll-y">
-   <b><a href="#descdef-element-min-scroll-y">#descdef-element-min-scroll-y</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-descdef-element-min-scroll-y-1">4.11. Min-scroll-y</a> <a href="#ref-for-descdef-element-min-scroll-y-2">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="descdef-element-max-scroll-y">
-   <b><a href="#descdef-element-max-scroll-y">#descdef-element-max-scroll-y</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-descdef-element-max-scroll-y-1">4.12. Max-scroll-y</a> <a href="#ref-for-descdef-element-max-scroll-y-2">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="descdef-element-min-scroll-x">
-   <b><a href="#descdef-element-min-scroll-x">#descdef-element-min-scroll-x</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-descdef-element-min-scroll-x-1">4.13. Min-scroll-x</a> <a href="#ref-for-descdef-element-min-scroll-x-2">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="descdef-element-max-scroll-x">
-   <b><a href="#descdef-element-max-scroll-x">#descdef-element-max-scroll-x</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-descdef-element-max-scroll-x-1">4.14. Max-scroll-x</a> <a href="#ref-for-descdef-element-max-scroll-x-2">(2)</a>
+    <li><a href="#ref-for-descdef-element-aspect-ratio-1">5.8. Aspect-Ratio</a> <a href="#ref-for-descdef-element-aspect-ratio-2">(2)</a> <a href="#ref-for-descdef-element-aspect-ratio-3">(3)</a> <a href="#ref-for-descdef-element-aspect-ratio-4">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="descdef-element-orientation">
    <b><a href="#descdef-element-orientation">#descdef-element-orientation</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-descdef-element-orientation-1">4.15. Orientation</a>
-    <li><a href="#ref-for-descdef-element-orientation-2">4.15.1. Portrait Orientation</a>
-    <li><a href="#ref-for-descdef-element-orientation-3">4.15.2. Square Orientation</a>
-    <li><a href="#ref-for-descdef-element-orientation-4">4.15.3. Landscape Orientation</a>
+    <li><a href="#ref-for-descdef-element-orientation-1">5.9. Orientation</a>
+    <li><a href="#ref-for-descdef-element-orientation-2">5.9.1. Portrait Orientation</a>
+    <li><a href="#ref-for-descdef-element-orientation-3">5.9.2. Square Orientation</a>
+    <li><a href="#ref-for-descdef-element-orientation-4">5.9.3. Landscape Orientation</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="valdef-element-orientation-portrait">
    <b><a href="#valdef-element-orientation-portrait">#valdef-element-orientation-portrait</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-element-orientation-portrait-1">4.15. Orientation</a>
-    <li><a href="#ref-for-valdef-element-orientation-portrait-2">4.15.1. Portrait Orientation</a> <a href="#ref-for-valdef-element-orientation-portrait-3">(2)</a>
+    <li><a href="#ref-for-valdef-element-orientation-portrait-1">5.9. Orientation</a>
+    <li><a href="#ref-for-valdef-element-orientation-portrait-2">5.9.1. Portrait Orientation</a> <a href="#ref-for-valdef-element-orientation-portrait-3">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="valdef-element-orientation-square">
    <b><a href="#valdef-element-orientation-square">#valdef-element-orientation-square</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-element-orientation-square-1">4.15. Orientation</a>
-    <li><a href="#ref-for-valdef-element-orientation-square-2">4.15.2. Square Orientation</a> <a href="#ref-for-valdef-element-orientation-square-3">(2)</a>
+    <li><a href="#ref-for-valdef-element-orientation-square-1">5.9. Orientation</a>
+    <li><a href="#ref-for-valdef-element-orientation-square-2">5.9.2. Square Orientation</a> <a href="#ref-for-valdef-element-orientation-square-3">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="valdef-element-orientation-landscape">
    <b><a href="#valdef-element-orientation-landscape">#valdef-element-orientation-landscape</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-element-orientation-landscape-1">4.15. Orientation</a>
-    <li><a href="#ref-for-valdef-element-orientation-landscape-2">4.15.3. Landscape Orientation</a> <a href="#ref-for-valdef-element-orientation-landscape-3">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="descdef-element-min-aspect-ratio">
-   <b><a href="#descdef-element-min-aspect-ratio">#descdef-element-min-aspect-ratio</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-descdef-element-min-aspect-ratio-1">4.16. Min-aspect-ratio</a> <a href="#ref-for-descdef-element-min-aspect-ratio-2">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="descdef-element-max-aspect-ratio">
-   <b><a href="#descdef-element-max-aspect-ratio">#descdef-element-max-aspect-ratio</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-descdef-element-max-aspect-ratio-1">4.17. Max-aspect-ratio</a> <a href="#ref-for-descdef-element-max-aspect-ratio-2">(2)</a>
+    <li><a href="#ref-for-valdef-element-orientation-landscape-1">5.9. Orientation</a>
+    <li><a href="#ref-for-valdef-element-orientation-landscape-2">5.9.3. Landscape Orientation</a> <a href="#ref-for-valdef-element-orientation-landscape-3">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="selectordef-meta-selectors-it">
    <b><a href="#selectordef-meta-selectors-it">#selectordef-meta-selectors-it</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-selectordef-meta-selectors-it-1">5.1.7. $it selector</a> <a href="#ref-for-selectordef-meta-selectors-it-2">(2)</a>
+    <li><a href="#ref-for-selectordef-meta-selectors-it-1">6.1.7. $it selector</a> <a href="#ref-for-selectordef-meta-selectors-it-2">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="ew">
    <b><a href="#ew">#ew</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-ew-1">6. Element-based Units</a>
+    <li><a href="#ref-for-ew-1">7. Element-based Units</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="eh">
    <b><a href="#eh">#eh</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-eh-1">6. Element-based Units</a>
+    <li><a href="#ref-for-eh-1">7. Element-based Units</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="emin">
    <b><a href="#emin">#emin</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-emin-1">6. Element-based Units</a>
+    <li><a href="#ref-for-emin-1">7. Element-based Units</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="emax">
    <b><a href="#emax">#emax</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-emax-1">6. Element-based Units</a>
+    <li><a href="#ref-for-emax-1">7. Element-based Units</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */

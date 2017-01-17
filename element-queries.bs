@@ -1,51 +1,66 @@
 <pre class=metadata>
-Title: CSS Element Queries
-Shortname: element-queries
+Title: CSS Element Queries [Level 1]
+Shortname: elementqueries
 Level: 1
 Status: DREAM
 URL: https://github.com/tomhodgins/element-queries-spec
 Repository: tomhodgins/element-query-spec
 Editor: Tommy Hodgins, tomhodgins@gmail.com
-Abstract: The goal of this document is to specify a syntax for scoped styles and element queries in a container query style, as well as the related selectors, functions, and units that make scoped styles and element queries versatile and powerful way to write layout-independent responsive conditions for elements in CSS.
+Abstract: Element Queries allow authors to test and query values or features of elements in an HTML document. They are used in the CSS @element rule to conditionally apply styles to a document, and in various other contexts and languages, such as HTML and JavaScript.
+Abstract:
+Abstract: CSS Element Queries [Level 1] describes the mechanism and syntax of scoped styles and element queries, the responsive conditions. It also describes the meta-selectors, functions, and units that make element queries powerful.
 Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 </pre>
 
-<h2 id=eqcss-syntax>EQCSS Syntax</h2>
+<h2 id=introduction>Introduction</h2>
 
-  This defines the terms used in the various parts of an element query.
+  By default all CSS is written from the global scope ('':root'', or the HTML element), and ''@media'' queries apply globally to all elements based on the conditions of the browser and media.
 
-  <pre>
-    <dfn dfn-type=at-rule>@element</dfn> = @element <<eq-prelude>> { <<stylesheet>> }
+  The idea of a scoped style is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as though it was '':root''.
 
-    <dfn dfn-type=type>&lt;eq-prelude></dfn> = <<selector-list>> | <<selector-list>> <<eq-condition>>*
+  Just like CSS already has ''@media'' queries which help define styles for different media conditions, this document describes functionality for an ''@element'' query syntax to define styles that target elements more specifically with conditions based on their own properties.
 
-    <dfn dfn-type=type>&lt;eq-condition></dfn> = and ( <<eq-name>> : <<eq-value>> )
+  <h3 id=values>Values</h3>
 
-    <dfn dfn-type=type>&lt;eq-name></dfn> = min-width | max-width | min-height
-      | max-height | min-characters | max-characters
-      | min-lines | max-lines | min-children
-      | max-children | min-scroll-y | max-scroll-y
-      | min-scroll-x | max-scroll-x | orientation
-      | min-aspect-ratio | max-aspect-ratio
+  Value types not defined in this specification, such as <<integer>>, <<number>>, <<dimension>>, <<ratio>>, and <<ident>> are defined in [[!CSS3VAL]], and [[!MEDIAQUERIES-4]]
 
-    <dfn dfn-type=type>&lt;eq-value></dfn> = <<number>> | <<dimension>> | <<ratio>> | <<ident>>
+  <h3 id=units>Units</h3>
 
-    <dfn dfn-type=selector>meta-selectors</dfn> = $this | $parent | $prev | $next | $it
+  The units used in element queries are the same as in other parts of CSS, as defined in [[!CSS3VAL]]. For example, the pixel unit represents CSS pixels and not physical pixels.
 
-    <dfn dfn-type=dfn>eq-unit</dfn> = ew | eh | emin | emax
+  Additionally, new <a href=#element-based-units>element-based units</a> are defined in this document which relate to an element's own properties after styles have been applied to the document.
 
-    <dfn dfn-type=function>eval("")</dfn> = eval(" ''javascript-code'' ")
+
+<h2 id=element-queries>Element Queries</h2>
+
+  An <strong>element query</strong> is a method of testing certain aspects of an element and applying styles based on whether that test is true or false.
+
+  The syntax of an element query consists of a <<selector-list>>, plus an optional list of zero or more responsive conditions, followed by one or more CSS rules:
+
+  <pre class=railroad>
+    T: @element
+    N: selector list
+    Star:
+      And:
+        T: and
+        N: responsive condition
+    T: {
+    N: stylesheet
+    T: }
   </pre>
 
-<h2 id=style-scoping>Style Scoping</h2>
+  A scoped style will return true as long as at least one element in the document matches a selector in the <<selector-list>>.
+
+  An element query is a logical expression that is either true or false. An element query is true if:
+
+  <ul>
+    <li>at least one element in the document matches a selector in the <<selector-list>>
+    <li>all responsive conditions are true
+  </ul>
+
+  User agents must re-evaluate element queries in response to changes in the user environment that they're aware of, for example resizing the browser, clicking, or scrolling, depending on which responsive conditions are being evaluated, and change the styles applied accordingly.
 
   <h3 id=scoped-styles>Scoped Styles</h3>
-
-    By default all CSS is written from the global scope ('':root'', or the HTML element), and ''@media'' queries apply globally to all elements based on the conditions of the browser and media.
-
-    The idea of a scoped style is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as though it was '':root''.
-
-    Just like CSS already has ''@media'' queries which help define styles for different media conditions, this document describes functionality for an ''@element'' query syntax to define styles that target elements more specifically with conditions based on their own properties.
 
     To write a scoped style, write ''@element'', followed by any amount of whitespace. Wrap one or more comma-separated CSS <<selector>> in single (<code>'</code>) or double (<code>"</code>) quotes, followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).
 
@@ -71,7 +86,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         </pre>
       </div>
 
-    <h4 id=evaluating-the-scope>Evaluating the Scope</h4>
+    <h4 id=understanding-the-scope>Understanding the Scope</h4>
 
     Any element on the page that matches a selector will apply the rules contained inside its scope to the page. The following examples will illustrate how the scope applies.
 
@@ -138,7 +153,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     It is possible for an element to match more than one ''@element'' query.
 
-  <h3 id=element-queries>Element Queries</h3>
+  <h3 id=scoped-styles-with-repsonsive-conditions>Scoped Styles with Responsive Conditions</h3>
 
     An element query is a scoped style with one or more responsive conditions added.
 
@@ -281,6 +296,41 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
       In this example any element with a class of <code>.widget</code> that is equal to <code>400px</code> or wider will apply a rule setting the width of the same element to <code>200px</code>, which makes the following ''@element'' query valid. The second query sets a width of <code>500px</code> on the same element. In this case, even though the element now matches the responsive condition of the first query again, rather than get stuck in an infinite loop, we consider evaluation complete.
 
+<h2 id=syntax>Syntax</h3>
+
+  Informal descriptions of the element query syntax appear in the prose and railroad diagrams of the previous sections. The formal element query syntax is described in this section, with the rule/property gramma syntax defined in [[!CSS3SYN]] and [[!CSS3VAL]].
+  <pre>
+    <dfn dfn-type=at-rule>@element</dfn> = @element <<eq-prelude>> { <<stylesheet>> }
+
+    <dfn dfn-type=type>&lt;eq-prelude></dfn> = <<selector-list>> | <<selector-list>> <<eq-condition>>*
+
+    <dfn dfn-type=type>&lt;eq-condition></dfn> = and ( <<eq-name>> : <<eq-value>> )
+
+    <dfn dfn-type=type>&lt;eq-name></dfn> = min-width | max-width | min-height
+      | max-height | min-characters | max-characters
+      | min-lines | max-lines | min-children
+      | max-children | min-scroll-y | max-scroll-y
+      | min-scroll-x | max-scroll-x | orientation
+      | min-aspect-ratio | max-aspect-ratio
+
+    <dfn dfn-type=type>&lt;eq-value></dfn> = <<number>> | <<dimension>> | <<ratio>> | <<ident>>
+
+    <dfn dfn-type=selector>meta-selectors</dfn> = $this | $parent | $prev | $next | $it
+
+    <dfn dfn-type=dfn>eq-unit</dfn> = ew | eh | emin | emax
+
+    <dfn dfn-type=function>eval("")</dfn> = eval(" ''javascript-code'' ")
+  </pre>
+
+  <h3 id=evaluating-element-queries>Evaluating Element Queries</h3>
+
+  Each <<eq-condition>> is associated with a boolean result, the same as the result of evaluating the specified responsive condition.
+
+  If the result of any responsive condition is used in any context that expects a two-valued boolean, "unknown" must be converted to "false".
+
+  Note: This means that, for example, when an element query is used in an @element rule, if it resolves to "unknown" it is treated as "false" and fails to match.
+
+
 <h2 id=meta-selectors-in-css>Meta-Selectors</h2>
 
   With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined. These new selectors only work inside a scoped style or element query and are called ''meta-selectors''.
@@ -389,19 +439,19 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     </pre>
   </div>
 
-  <h3 id=min-width>Min-width</h3>
+  <h3 id=min-width>Width</h3>
 
     <pre class="descdef mq">
-      Name: min-width
+      Name: width
       Value: <<dimension>>
       For: @element
       Type: range
     </pre>
 
-    The <a class="property" data-link-type="propdesc" data-lt="min-width" for=@element>min-width</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) width to the specified value.
+    The <a class="property" data-link-type="propdesc" data-lt="width" for=@element>min-width</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) width to the specified value.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="min-width" for=@element>min-width</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="width" for=@element>min-width</a> element query
       <pre class=language-css>
         @element '.widget' and (min-width: 200px) {
           $this {
@@ -412,19 +462,10 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any element with a class of <code>.widget</code> that is at least <code>200px</code> or wider will have a green background.
     </div>
 
-  <h3 id=max-width>Max-width</h3>
-
-    <pre class="descdef mq">
-      Name: max-width
-      Value: <<dimension>>
-      For: @element
-      Type: range
-    </pre>
-
-    The <a class="property" data-link-type="propdesc" data-lt="max-width" for=@element>max-width</a> responsive condition applies to any scoped element that has lesser or equal (<code><=</code>) width to the specified value.
+    The <a class="property" data-link-type="propdesc" data-lt="width" for=@element>max-width</a> responsive condition applies to any scoped element that has lesser or equal (<code><=</code>) width to the specified value.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="max-width" for=@element>max-width</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="width" for=@element>max-width</a> element query
       <pre class=language-css>
         @element '.widget' and (max-width: 200) {
           $this {
@@ -435,19 +476,19 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any element with a class of <code>.widget</code> that <code>200px</code> or narrower will have a green background.
     </div>
 
-  <h3 id=min-height>Min-height</h3>
+  <h3 id=height>Height</h3>
 
     <pre class="descdef mq">
-      Name: min-height
+      Name: height
       Value: <<dimension>>
       For: @element
       Type: range
     </pre>
 
-    The <a class="property" data-link-type="propdesc" data-lt="min-height" for=@element>min-height</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) height to the specified value.
+    The <a class="property" data-link-type="propdesc" data-lt="height" for=@element>min-height</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) height to the specified value.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="min-height" for=@element>min-height</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="height" for=@element>min-height</a> element query
       <pre class=language-css>
         @element '.widget' and (min-height: 50px) {
           $this {
@@ -458,21 +499,12 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any element with a class of <code>.widget</code> that is at least <code>50px</code> or taller will have a green background.
     </div>
 
-  <h3 id=max-height>Max-height</h3>
-
-    <pre class="descdef mq">
-      Name: max-height
-      Value: <<dimension>>
-      For: @element
-      Type: range
-    </pre>
-
-    The <a class="property" data-link-type="propdesc" data-lt="max-height" for=@element>max-height</a> responsive condition applies to any scoped element that has lesser or equal (<code><=</code>) height to the specified value.
+    The <a class="property" data-link-type="propdesc" data-lt="height" for=@element>max-height</a> responsive condition applies to any scoped element that has lesser or equal (<code><=</code>) height to the specified value.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="max-height" for=@element>max-height</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="height" for=@element>max-height</a> element query
       <pre class=language-css>
-        @element '.widget' and (min-height: 50px) {
+        @element '.widget' and (max-height: 50px) {
           $this {
             background: lime;
           }
@@ -481,19 +513,19 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any element with a class of <code>.widget</code> that is at least <code>50px</code> or shorter will have a green background.
     </div>
 
-  <h3 id=min-characters>Min-characters</h3>
+  <h3 id=characters>Characters</h3>
 
     <pre class="descdef mq">
-      Name: min-characters
-      Value: <<number>>
+      Name: characters
+      Value: <<integer>>
       For: @element
       Type: range
     </pre>
 
-    The <a class="property" data-link-type="propdesc" data-lt="min-characters" for=@element>min-characters</a> responsive condition applies to any scoped element that contains a greater or equal (<code>>=</code>) number of characters.
+    The <a class="property" data-link-type="propdesc" data-lt="characters" for=@element>min-characters</a> responsive condition applies to any scoped element that contains a greater or equal (<code>>=</code>) number of characters.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="min-characters" for=@element>min-characters</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="characters" for=@element>min-characters</a> element query
       <pre class=language-css>
         @element 'input' and (min-characters: 5) {
           $this {
@@ -504,19 +536,10 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any input with 5 or more characters will have a green background.
     </div>
 
-  <h3 id=max-characters>Max-characters</h3>
-
-    <pre class="descdef mq">
-      Name: max-characters
-      Value: <<number>>
-      For: @element
-      Type: range
-    </pre>
-
-    The <a class="property" data-link-type="propdesc" data-lt="max-characters" for=@element>max-characters</a> responsive condition applies to any scoped element that contains lesser or equal (<code><=</code>) number of characters specified.
+    The <a class="property" data-link-type="propdesc" data-lt="characters" for=@element>max-characters</a> responsive condition applies to any scoped element that contains lesser or equal (<code><=</code>) number of characters specified.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="max-characters" for=@element>max-characters</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="characters" for=@element>max-characters</a> element query
       <pre class=language-css>
         @element 'input' and (max-characters: 5) {
           $this {
@@ -527,19 +550,19 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any input with 5 or fewer characters will have a green background.
     </div>
 
-  <h3 id=min-lines>Min-lines</h3>
+  <h3 id=lines>Lines</h3>
 
     <pre class="descdef mq">
-      Name: min-lines
+      Name: lines
       Value: <<number>>
       For: @element
       Type: range
     </pre>
 
-    The <a class="property" data-link-type="propdesc" data-lt="min-lines" for=@element>min-lines</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of specified lines of text.
+    The <a class="property" data-link-type="propdesc" data-lt="lines" for=@element>min-lines</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of specified lines of text.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="min-lines" for=@element>min-lines</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="lines" for=@element>min-lines</a> element query
       <pre class=language-css>
         @element 'textarea' and (min-lines: 3) {
           $this {
@@ -550,19 +573,10 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any textarea with 3 or more lines will have a green background.
     </div>
 
-  <h3 id=max-lines>Max-lines</h3>
-
-    <pre class="descdef mq">
-      Name: max-lines
-      Value: <<number>>
-      For: @element
-      Type: range
-    </pre>
-
-    The <a class="property" data-link-type="propdesc" data-lt="max-lines" for=@element>max-lines</a> responsive condition applies to any scoped element that contains lesser or equal (<code><=</code>) number of specified lines of text.
+    The <a class="property" data-link-type="propdesc" data-lt="lines" for=@element>max-lines</a> responsive condition applies to any scoped element that contains lesser or equal (<code><=</code>) number of specified lines of text.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="max-lines" for=@element>max-lines</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="lines" for=@element>max-lines</a> element query
       <pre class=language-css>
         @element 'textarea' and (max-lines: 3) {
           $this {
@@ -573,19 +587,19 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any textarea with 3 or fewer lines will have a green background.
     </div>
 
-  <h3 id=min-children>Min-children</h3>
+  <h3 id=children>Children</h3>
 
     <pre class="descdef mq">
-      Name: min-children
+      Name: children
       Value: <<number>>
       For: @element
       Type: range
     </pre>
 
-    The <a class="property" data-link-type="propdesc" data-lt="min-children" for=@element>min-children</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of child elements specified.
+    The <a class="property" data-link-type="propdesc" data-lt="children" for=@element>min-children</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of child elements specified.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="min-children" for=@element>min-children</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="children" for=@element>min-children</a> element query
       <pre class=language-css>
         @element '.social-icons' and (min-children: 5) {
           $this {
@@ -596,19 +610,10 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any element with a class of <code>.social-icons</code> that contains more 5 or more direct descendants will have a green background.
     </div>
 
-  <h3 id=max-children>Max-children</h3>
-
-    <pre class="descdef mq">
-      Name: max-children
-      Value: <<number>>
-      For: @element
-      Type: range
-    </pre>
-
-    The <a class="property" data-link-type="propdesc" data-lt="max-children" for=@element>max-children</a> responsive condition applies to any scoped element that contains lesser or equal (<code><=</code>) number of child elements specified.
+    The <a class="property" data-link-type="propdesc" data-lt="children" for=@element>max-children</a> responsive condition applies to any scoped element that contains lesser or equal (<code><=</code>) number of child elements specified.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="max-children" for=@element>max-children</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="children" for=@element>max-children</a> element query
       <pre class=language-css>
         @element '.social-icons' and (max-children: 5) {
           $this {
@@ -619,19 +624,19 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any element with a class of <code>.social-icons</code> that contains more 5 or fewer direct descendants will have a green background.
     </div>
 
-  <h3 id=min-scroll-y>Min-scroll-y</h3>
+  <h3 id=scroll-y>Scroll-Y</h3>
 
     <pre class="descdef mq">
-      Name: min-scroll-y
+      Name: scroll-y
       Value: <<dimension>>
       For: @element
       Type: range
     </pre>
 
-    The <a class="property" data-link-type="propdesc" data-lt="min-scroll-y" for=@element>min-scroll-y</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a vertical direction.
+    The <a class="property" data-link-type="propdesc" data-lt="scroll-y" for=@element>min-scroll-y</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a vertical direction.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="min-scroll-y" for=@element>min-scroll-y</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="scroll-y" for=@element>min-scroll-y</a> element query
       <pre class=language-css>
         @element '.feed' and (min-scroll-y: 100px) {
           $this {
@@ -642,19 +647,10 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any element with a class of <code>.feed</code> that has scrolled  <code>100px</code> or more vertical will have a green background.
     </div>
 
-  <h3 id=max-scroll-y>Max-scroll-y</h3>
-
-    <pre class="descdef mq">
-      Name: max-scroll-y
-      Value: <<dimension>>
-      For: @element
-      Type: range
-    </pre>
-
-    The <a class="property" data-link-type="propdesc" data-lt="max-scroll-y" for=@element>max-scroll-y</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code><=</code>) amount to the value specified in a vertical direction.
+    The <a class="property" data-link-type="propdesc" data-lt="scroll-y" for=@element>max-scroll-y</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code><=</code>) amount to the value specified in a vertical direction.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="max-scroll-y" for=@element>max-scroll-y</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="scroll-y" for=@element>max-scroll-y</a> element query
       <pre class=language-css>
         @element '.feed' and (max-scroll-y: 100px) {
           $this {
@@ -665,19 +661,19 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any element with a class of <code>.feed</code> that has scrolled  <code>100px</code> or less vertically will have a green background.
     </div>
 
-  <h3 id=min-scroll-x>Min-scroll-x</h3>
+  <h3 id=scroll-x>Scroll-X</h3>
 
     <pre class="descdef mq">
-      Name: min-scroll-x
+      Name: scroll-x
       Value: <<dimension>>
       For: @element
       Type: range
     </pre>
 
-    The <a class="property" data-link-type="propdesc" data-lt="min-scroll-x" for=@element>min-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a horizontal direction.
+    The <a class="property" data-link-type="propdesc" data-lt="scroll-x" for=@element>min-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a horizontal direction.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="min-scroll-x" for=@element>min-scroll-x</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="scroll-x" for=@element>min-scroll-x</a> element query
       <pre class=language-css>
         @element '.feed' and (min-scroll-x: 100px) {
           $this {
@@ -688,19 +684,10 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       In this case any element with a class of <code>.feed</code> that has scrolled  <code>100px</code> or more horizontally will have a green background.
     </div>
 
-  <h3 id=max-scroll-x>Max-scroll-x</h3>
-
-    <pre class="descdef mq">
-      Name: max-scroll-x
-      Value: <<dimension>>
-      For: @element
-      Type: range
-    </pre>
-
-    The <a class="property" data-link-type="propdesc" data-lt="max-scroll-x" for=@element>max-scroll-x</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code><=</code>) amount to the value specified in a horizontal direction.
+    The <a class="property" data-link-type="propdesc" data-lt="scroll-x" for=@element>max-scroll-x</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code><=</code>) amount to the value specified in a horizontal direction.
 
     <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="max-scroll-x" for=@element>max-scroll-x</a> element query
+      Example <a class="property" data-link-type="propdesc" data-lt="scroll-x" for=@element>max-scroll-x</a> element query
       <pre class=language-css>
         @element '.feed' and (max-scroll-x: 100px) {
           $this {
@@ -709,6 +696,43 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         }
       </pre>
       In this case any element with a class of <code>.feed</code> that has scrolled  <code>100px</code> or less horizontally will have a green background.
+    </div>
+
+  <h3 id=aspect-ratio>Aspect-Ratio</h3>
+
+    <pre class="descdef mq">
+      Name: aspect-ratio
+      Value: <<ratio>>
+      For: @element
+      Type: range
+    </pre>
+
+    The <a class="property" data-link-type="propdesc" data-lt="aspect-ratio" for=@element>min-aspect-ratio</a> responsive condition applies to any scoped element with a greater or equal (<code>>=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
+
+    <div class=example>
+      Example <a class="property" data-link-type="propdesc" data-lt="aspect-ratio" for=@element>min-aspect-ratio</a> element query
+      <pre class=language-css>
+        @element '.widget' and (min-aspect-ratio: 16/9) {
+          $this {
+            background: lime;
+          }
+        }
+      </pre>
+      In this case any element that had an aspect ratio of <code>16/9</code> or greater would have a green background.
+    </div>
+
+    The <a class="property" data-link-type="propdesc" data-lt="aspect-ratio" for=@element>max-aspect-ratio</a> responsive condition applies to any scoped element with a lesser or equal (<code><=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
+
+    <div class=example>
+      Example <a class="property" data-link-type="propdesc" data-lt="aspect-ratio" for=@element>max-aspect-ratio</a> element query
+      <pre class=language-css>
+        @element '.widget' and (max-aspect-ratio: 16/9) {
+          $this {
+            background: lime;
+          }
+        }
+      </pre>
+      In this case any element that had an aspect ratio of <code>16/9</code> or lesser would have a green background.
     </div>
 
   <h3 id=orientation>Orientation</h3>
@@ -778,52 +802,6 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         </pre>
         In this case any element with a class of <code>.widget</code> that is wider than it is tall will have a green background.
       </div>
-
-  <h3 id=min-aspect-ratio>Min-aspect-ratio</h3>
-
-    <pre class="descdef mq">
-      Name: min-aspect-ratio
-      Value: <<ratio>>
-      For: @element
-      Type: range
-    </pre>
-
-    The <a class="property" data-link-type="propdesc" data-lt="min-aspect-ratio" for=@element>min-aspect-ratio</a> responsive condition applies to any scoped element with a greater or equal (<code>>=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
-
-    <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="min-aspect-ratio" for=@element>min-aspect-ratio</a> element query
-      <pre class=language-css>
-        @element '.widget' and (min-aspect-ratio: 16/9) {
-          $this {
-            background: lime;
-          }
-        }
-      </pre>
-      In this case any element that had an aspect ratio of <code>16/9</code> or greater would have a green background.
-    </div>
-
-  <h3 id=max-aspect-ratio>Max-aspect-ratio</h3>
-
-    <pre class="descdef mq">
-      Name: max-aspect-ratio
-      Value: <<ratio>>
-      For: @element
-      Type: range
-    </pre>
-
-    The <a class="property" data-link-type="propdesc" data-lt="max-aspect-ratio" for=@element>max-aspect-ratio</a> responsive condition applies to any scoped element with a lesser or equal (<code><=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).
-
-    <div class=example>
-      Example <a class="property" data-link-type="propdesc" data-lt="max-aspect-ratio" for=@element>max-aspect-ratio</a> element query
-      <pre class=language-css>
-        @element '.widget' and (max-aspect-ratio: 16/9) {
-          $this {
-            background: lime;
-          }
-        }
-      </pre>
-      In this case any element that had an aspect ratio of <code>16/9</code> or lesser would have a green background.
-    </div>
 
 <h2 id=css-functions>CSS Functions</h2>
 
@@ -1150,7 +1128,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         }
       &lt;/style>
     </pre>
-    In this example we are able to apply styles based on whether there are zero or at least one characters inside any <code>input</code> element. CSS has the pseudo-class '':empty'', however it doesn't apply to all elements (like <code>input</code> elements) so by using 'max-characters' and 'min-characters' with element queries we are able to express and style a similar idea.
+    In this example we are able to apply styles based on whether there are zero or at least one characters inside any <code>input</code> element. CSS has the pseudo-class '':empty'', however it doesn't apply to all elements (like <code>input</code> elements) so by using <code>max-characters</code> and <code>min-characters</code> with element queries we are able to express and style a similar idea.
   </div>
 
 <h3 id=auto-expanding-textarea>Auto-expanding <code>textarea</code></h3>
@@ -1166,7 +1144,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         }
       &lt;/style>
     </pre>
-    In this example we are using <a>eval("")</a> to reset the 'height' value of our element and immediately set it to the scrollHeight of the element, ensuring that no matter how many lines of text it contains, it will always expand & contract to contain all of them.
+    In this example we are using <a>eval("")</a> to reset the height value of our element and immediately set it to the scrollHeight of the element, ensuring that no matter how many lines of text it contains, it will always expand & contract to contain all of them.
   </div>
 
 <h3 id=display-browser-dimensions>Display Browser Dimensions</h3>
