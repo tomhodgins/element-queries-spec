@@ -1425,7 +1425,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS Element Queries [Level 1]</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-01-17">17 January 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-01-20">20 January 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1439,7 +1439,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 17 January 2017,
+In addition, as of 20 January 2017,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1667,20 +1667,16 @@ Parts of this work may be from another specification document.  If so, those par
    <p>User agents must re-evaluate element queries in response to changes in the user environment that they’re aware of, for example resizing the browser, clicking, or scrolling, depending on which responsive conditions are being evaluated, and change the styles applied accordingly.</p>
    <h3 class="heading settled" data-level="2.1" id="scoped-styles"><span class="secno">2.1. </span><span class="content">Scoped Styles</span><a class="self-link" href="#scoped-styles"></a></h3>
    <p>To write a scoped style, write <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-2">@element</a>, followed by any amount of whitespace. Wrap one or more comma-separated CSS <a class="production css" data-link-type="type" href="https://www.w3.org/TR/selectors4/#ltselector">&lt;selector></a> in single (<code>'</code>) or double (<code>"</code>) quotes, followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).</p>
-   <div class="example" id="example-e356e460">
-    <a class="self-link" href="#example-e356e460"></a> Example scoped style 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'html'</span> <span class="p">{
-
-}</span>
+   <div class="example" id="example-f4c76520">
+    <a class="self-link" href="#example-f4c76520"></a> Example scoped style 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'html'</span> { ... <span class="p">}</span>
 </pre>
    </div>
    <h4 class="heading settled" data-level="2.1.1" id="multiple-selectors"><span class="secno">2.1.1. </span><span class="content">Multiple Selectors</span><a class="self-link" href="#multiple-selectors"></a></h4>
    <p>You can include multiple CSS selectors in your scoped style by separating them with a comma and any amount of whitespace.</p>
-   <div class="example" id="example-b29e395a">
-    <a class="self-link" href="#example-b29e395a"></a> Comma-separated selector list 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'ul, ol'</span> <span class="p">{
-
-}</span>
+   <div class="example" id="example-142b51c9">
+    <a class="self-link" href="#example-142b51c9"></a> Comma-separated selector list 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'ul, ol'</span> { ... <span class="p">}</span>
 </pre>
    </div>
    <h4 class="heading settled" data-level="2.1.2" id="understanding-the-scope"><span class="secno">2.1.2. </span><span class="content">Understanding the Scope</span><a class="self-link" href="#understanding-the-scope"></a></h4>
@@ -1938,6 +1934,88 @@ Parts of this work may be from another specification document.  If so, those par
    </dl>
    <h2 class="heading settled" data-level="5" id="responsive-conditions"><span class="secno">5. </span><span class="content">Responsive Conditions</span><a class="self-link" href="#responsive-conditions"></a></h2>
    <p>All responsive conditions for <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-12">@element</a> queries are formatted as a condition name and value, separated by a colon (<code>:</code>) character, surrounded by brackets (<code>()</code>).</p>
+   <div class="railroad">
+    <svg class="railroad-diagram" height="81" viewBox="0 0 581 81" width="581">
+     <g transform="translate(.5 .5)">
+      <path d="M 20 31 v 20 m 10 -20 v 20 m -10 -10 h 20.5" data-type="start" data-updown="10 10"></path>
+      <g data-type="choice" data-updown="21 20">
+       <path d="M40 41h0.0"></path>
+       <path d="M540.0 41h0.0"></path>
+       <path d="M40.0 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path>
+       <path d="M520.0 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path>
+       <g data-type="skip" data-updown="0 0">
+        <path d="M60.0 21h460"></path>
+       </g>
+       <path d="M40.0 41h20"></path>
+       <path d="M520.0 41h20"></path>
+       <g data-type="oneormore" data-updown="11 20">
+        <path d="M60.0 41h0.0"></path>
+        <path d="M520.0 41h0.0"></path>
+        <path d="M60.0 41h10"></path>
+        <path d="M510.0 41h10"></path>
+        <path d="M70.0 41a10 10 0 0 0 -10 10v0a10 10 0 0 0 10 10"></path>
+        <path d="M510.0 61a10 10 0 0 0 10 -10v0a10 10 0 0 0 -10 -10"></path>
+        <g data-type="sequence" data-updown="11 11">
+         <path d="M70.0 41h0.0"></path>
+         <path d="M510.0 41h0.0"></path>
+         <path d="M70.0 41h10"></path>
+         <path d="M124.0 41h10"></path>
+         <g data-type="terminal" data-updown="11 11">
+          <path d="M80.0 41h0.0"></path>
+          <path d="M124.0 41h0.0"></path>
+          <rect height="22" rx="10" ry="10" width="44" x="80.0" y="30"></rect>
+          <text x="102.0" y="45"> and</text>
+         </g>
+         <path d="M134.0 41h10"></path>
+         <path d="M172.0 41h10"></path>
+         <g data-type="terminal" data-updown="11 11">
+          <path d="M144.0 41h0.0"></path>
+          <path d="M172.0 41h0.0"></path>
+          <rect height="22" rx="10" ry="10" width="28" x="144.0" y="30"></rect>
+          <text x="158.0" y="45"> (</text>
+         </g>
+         <path d="M182.0 41h10"></path>
+         <path d="M324.0 41h10"></path>
+         <g data-type="non-terminal" data-updown="11 11">
+          <path d="M192.0 41h0.0"></path>
+          <path d="M324.0 41h0.0"></path>
+          <rect height="22" width="132" x="192.0" y="30"></rect>
+          <text x="258.0" y="45"> condition name</text>
+         </g>
+         <path d="M334.0 41h10"></path>
+         <path d="M372.0 41h10"></path>
+         <g data-type="terminal" data-updown="11 11">
+          <path d="M344.0 41h0.0"></path>
+          <path d="M372.0 41h0.0"></path>
+          <rect height="22" rx="10" ry="10" width="28" x="344.0" y="30"></rect>
+          <text x="358.0" y="45"> :</text>
+         </g>
+         <path d="M382.0 41h10"></path>
+         <path d="M452.0 41h10"></path>
+         <g data-type="non-terminal" data-updown="11 11">
+          <path d="M392.0 41h0.0"></path>
+          <path d="M452.0 41h0.0"></path>
+          <rect height="22" width="60" x="392.0" y="30"></rect>
+          <text x="422.0" y="45"> value</text>
+         </g>
+         <path d="M462.0 41h10"></path>
+         <path d="M500.0 41h10"></path>
+         <g data-type="terminal" data-updown="11 11">
+          <path d="M472.0 41h0.0"></path>
+          <path d="M500.0 41h0.0"></path>
+          <rect height="22" rx="10" ry="10" width="28" x="472.0" y="30"></rect>
+          <text x="486.0" y="45"> )</text>
+         </g>
+        </g>
+        <g data-type="skip" data-updown="0 0">
+         <path d="M70.0 61h440"></path>
+        </g>
+       </g>
+      </g>
+      <path d="M 540 41 h 20 m -10 -10 v 20 m 10 -20 v 20" data-type="end" data-updown="10 10"></path>
+     </g>
+    </svg>
+   </div>
    <p>The following examples are all valid as <a class="production css" data-link-type="type" href="#typedef-eq-condition" id="ref-for-typedef-eq-condition-3">&lt;eq-condition></a>:</p>
    <div class="example" id="example-806ba5e6">
     <a class="self-link" href="#example-806ba5e6"></a> 
@@ -2324,6 +2402,38 @@ Parts of this work may be from another specification document.  If so, those par
    <h3 class="heading settled" data-level="6.1" id="eval"><span class="secno">6.1. </span><span class="content">eval("")</span><a class="self-link" href="#eval"></a></h3>
    <p class="note" role="note">Note, Much of the functionality of this feature is similar to CSS variables, however being able to execute JavaScript from the vantage point of the element in the scope could perhaps be a way that CSS variables could be used a little differently inside scoped styles or element queries.</p>
    <p>The <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-1">eval("")</a> function can be used anywhere inside a scoped style or element query. It shares a scope with the element in the root of the scoped style.</p>
+   <div class="railroad">
+    <svg class="railroad-diagram" height="62" viewBox="0 0 345 62" width="345">
+     <g transform="translate(.5 .5)">
+      <path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5" data-type="start" data-updown="10 10"></path>
+      <path d="M40 31h10"></path>
+      <path d="M118 31h10"></path>
+      <g data-type="terminal" data-updown="11 11">
+       <path d="M50 31h0.0"></path>
+       <path d="M118.0 31h0.0"></path>
+       <rect height="22" rx="10" ry="10" width="68" x="50.0" y="20"></rect>
+       <text x="84.0" y="35"> eval("</text>
+      </g>
+      <path d="M128 31h10"></path>
+      <path d="M238 31h10"></path>
+      <g data-type="non-terminal" data-updown="11 11">
+       <path d="M138 31h0.0"></path>
+       <path d="M238.0 31h0.0"></path>
+       <rect height="22" width="100" x="138.0" y="20"></rect>
+       <text x="188.0" y="35"> javascript</text>
+      </g>
+      <path d="M248 31h10"></path>
+      <path d="M294 31h10"></path>
+      <g data-type="terminal" data-updown="11 11">
+       <path d="M258 31h0.0"></path>
+       <path d="M294.0 31h0.0"></path>
+       <rect height="22" rx="10" ry="10" width="36" x="258.0" y="20"></rect>
+       <text x="276.0" y="35"> ")</text>
+      </g>
+      <path d="M 304 31 h 20 m -10 -10 v 20 m 10 -20 v 20" data-type="end" data-updown="10 10"></path>
+     </g>
+    </svg>
+   </div>
    <p>When using <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-2">eval("")</a> you can write <code>eval</code>, followed by a pair of brackets (<code>(</code>,<code>)</code>) which contain JavaScript code, wrapped in either single (<code>'</code>) or double (<code>"</code>) quotes.</p>
    <p>This JavaScript can do something simple like reference the value of a variable, perform a simple calculation inline, or it can use the value return by a function.</p>
    <p class="note" role="note">Note, Unlike CSS variables, the <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-3">eval("")</a> function can be used anywhere in CSS: as a value, a property name, a selector, a '@media' query breakpoint - it can be used for anything, as long as it is inside of a scoped style.</p>

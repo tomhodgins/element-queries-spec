@@ -67,9 +67,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example scoped style</strong>
       <pre class=language-css>
-        @element 'html' {
-
-        }
+        @element 'html' { ... }
       </pre>
     </div>
 
@@ -80,9 +78,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Comma-separated selector list
         <pre class=language-css>
-          @element 'ul, ol' {
-
-          }
+          @element 'ul, ol' { ... }
         </pre>
       </div>
 
@@ -418,6 +414,17 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 <h2 id=responsive-conditions>Responsive Conditions</h2>
 
   All responsive conditions for ''@element'' queries are formatted as a condition name and value, separated by a colon (<code>:</code>) character, surrounded by brackets (<code>()</code>).
+
+  <pre class=railroad>
+    Star:
+      And:
+        T: and
+        T: (
+        N: condition name
+        T: :
+        N: value
+        T: )
+  </pre>
 
   The following examples are all valid as <<eq-condition>>:
 
@@ -810,6 +817,12 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     Note, Much of the functionality of this feature is similar to CSS variables, however being able to execute JavaScript from the vantage point of the element in the scope could perhaps be a way that CSS variables could be used a little differently inside scoped styles or element queries.
 
     The <a>eval("")</a> function can be used anywhere inside a scoped style or element query. It shares a scope with the element in the root of the scoped style.
+
+    <pre class=railroad>
+      T: eval("
+      N: javascript
+      T: ")
+    </pre>
 
     When using <a>eval("")</a> you can write <code>eval</code>, followed by a pair of brackets (<code>(</code>,<code>)</code>) which contain JavaScript code, wrapped in either single (<code>'</code>) or double (<code>"</code>) quotes.
 
