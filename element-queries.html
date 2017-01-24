@@ -1425,7 +1425,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS Element Queries [Level 1]</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-01-20">20 January 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-01-24">24 January 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1439,7 +1439,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 20 January 2017,
+In addition, as of 24 January 2017,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1843,7 +1843,7 @@ Parts of this work may be from another specification document.  If so, those par
    </div>
    <p>In this example any element with a class of <code>.widget</code> that is equal to <code>400px</code> or wider will apply a rule setting the width of the same element to <code>200px</code>, which makes the following <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-11">@element</a> query valid. The second query sets a width of <code>500px</code> on the same element. In this case, even though the element now matches the responsive condition of the first query again, rather than get stuck in an infinite loop, we consider evaluation complete.</p>
    <h2 class="heading settled" data-level="3" id="syntax"><span class="secno">3. </span><span class="content">Syntax</span><a class="self-link" href="#syntax"></a></h2>
-   <p>Informal descriptions of the element query syntax appear in the prose and railroad diagrams of the previous sections. The formal element query syntax is described in this section, with the rule/property gramma syntax defined in <a data-link-type="biblio" href="#biblio-css3syn">[CSS3SYN]</a> and <a data-link-type="biblio" href="#biblio-css3val">[CSS3VAL]</a>.</p>
+   <p>Informal descriptions of the element query syntax appear in the prose and railroad diagrams of the previous sections. The formal element query syntax is described in this section, with the rule/property grammar syntax defined in <a data-link-type="biblio" href="#biblio-css3syn">[CSS3SYN]</a> and <a data-link-type="biblio" href="#biblio-css3val">[CSS3VAL]</a>.</p>
 <pre><dfn class="dfn-paneled" data-dfn-type="at-rule" data-export="" id="at-ruledef-element">@element</dfn> = @element <a class="production" data-link-type="type" href="#typedef-eq-prelude" id="ref-for-typedef-eq-prelude-1">&lt;eq-prelude></a> { <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-syntax-3/#typedef-stylesheet">&lt;stylesheet></a> }
 
 <dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-prelude">&lt;eq-prelude></dfn> = <a class="production" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a> <a class="production" data-link-type="type" href="#typedef-eq-condition" id="ref-for-typedef-eq-condition-1">&lt;eq-condition></a>*
@@ -2499,8 +2499,8 @@ Parts of this work may be from another specification document.  If so, those par
     <p>This example would be equivalent to: <code>div { color: #07f; }</code></p>
    </div>
    <h4 class="heading settled" data-level="6.1.5" id="replacing-properties-in-css"><span class="secno">6.1.5. </span><span class="content">Replacing Properties in CSS</span><a class="self-link" href="#replacing-properties-in-css"></a></h4>
-   <div class="example" id="example-b4139501">
-    <a class="self-link" href="#example-b4139501"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-8">eval("")</a> being used as a property: 
+   <div class="example" id="example-631ca87a">
+    <a class="self-link" href="#example-631ca87a"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-8">eval("")</a> being used as a property: 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
   <span class="kd">var</span> browser <span class="o">=</span> <span class="sr">/Safari/</span><span class="p">.</span>test<span class="p">(</span>navigator<span class="p">.</span>userAgent<span class="p">)</span> <span class="o">?</span> <span class="s1">'-webkit-'</span><span class="o">:</span><span class="s1">''</span>
@@ -2514,7 +2514,7 @@ Parts of this work may be from another specification document.  If so, those par
   <span class="p">}</span>
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
 </pre>
-    <p>This example would use the property: <code>-webit-appearance</code> if the browser was Safari, otherwise would use: <code>appearance</code>.</p>
+    <p>This example would use the property: <code>-webkit-appearance</code> if the browser was Safari, otherwise would use: <code>appearance</code>.</p>
    </div>
    <h4 class="heading settled" data-level="6.1.6" id="replacing-selectors-in-css"><span class="secno">6.1.6. </span><span class="content">Replacing Selectors in CSS</span><a class="self-link" href="#replacing-selectors-in-css"></a></h4>
    <div class="example" id="example-82befd5f">

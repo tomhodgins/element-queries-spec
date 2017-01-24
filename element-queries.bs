@@ -294,7 +294,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
 <h2 id=syntax>Syntax</h3>
 
-  Informal descriptions of the element query syntax appear in the prose and railroad diagrams of the previous sections. The formal element query syntax is described in this section, with the rule/property gramma syntax defined in [[!CSS3SYN]] and [[!CSS3VAL]].
+  Informal descriptions of the element query syntax appear in the prose and railroad diagrams of the previous sections. The formal element query syntax is described in this section, with the rule/property grammar syntax defined in [[!CSS3SYN]] and [[!CSS3VAL]].
   <pre>
     <dfn dfn-type=at-rule>@element</dfn> = @element <<eq-prelude>> { <<stylesheet>> }
 
@@ -921,7 +921,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
             }
           &lt;/style>
         </pre>
-        This example would use the property: <code>-webit-appearance</code> if the browser was Safari, otherwise would use: <code>appearance</code>.
+        This example would use the property: <code>-webkit-appearance</code> if the browser was Safari, otherwise would use: <code>appearance</code>.
       </div>
 
     <h4 id=replacing-selectors-in-css>Replacing Selectors in CSS</h4>
