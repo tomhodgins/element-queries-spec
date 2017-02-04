@@ -84,3 +84,11 @@ At this stage the work on this spec is focused on taking the existing EQCSS synt
 In the future once the first version of this document is complete, there will be an opportunity to extend the features described.
 
 For now, the most productive way to provide input would be by contributing to the conversation in the [Gitter chat room for the EQCSS project](https://gitter.im/eqcss/eqcss)
+
+
+## Further Reading
+
+- [How Style Scoping Works with Element Queries](http://codepen.io/tomhodgins/post/how-style-scoping-works-with-element-queries)
+- [What the Heck are Element Queries & Container Queries?](http://codepen.io/tomhodgins/post/what-the-heck-are-element-queries-container-queries)
+- [Writing Element Queries Today Using EQCSS](https://www.sitepoint.com/eqcss-a-javascript-plugin-to-write-element-queries/)
+- [The Search For The Holy Grail: How I Ended Up With Element Queries, And How You Can Use Them Today](https://www.smashingmagazine.com/2016/07/how-i-ended-up-with-element-queries-and-how-you-can-use-them-today/)
