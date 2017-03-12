@@ -28,7 +28,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   The units used in element queries are the same as in other parts of CSS, as defined in [[!CSS3VAL]]. For example, the pixel unit represents CSS pixels and not physical pixels.
 
-  Additionally, new <a href=#element-based-units>element-based units</a> are defined in this document which relate to an element's own properties after styles have been applied to the document.
+  Additionally, new <a href=#element-percentage-units>element-percentage units</a> are defined in this document which relate to an element's own properties after styles have been applied to the document.
 
 
 <h2 id=element-queries>Element Queries</h2>
@@ -993,7 +993,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     </dl>
 
-<h2 id=element-based-units>Element-based Units</h2>
+<h2 id=element-percentage-units>Element-percentage Units</h2>
 
   Just as CSS has viewport-percentage units: ''vw'', ''vh'', ''vmin'', and ''vmax'' which represent a distance equal to 1% of the viewport width, height, shortest edge, and longest edge, in a similar way the following element-percentage units ''ew'', ''eh'', ''emin'', and ''emax'' represent a distance equal to 1% of the element's own width, height, shortest edge, and longest edge. When the width of height of the element changes, the value of these units scale accordingly.
 

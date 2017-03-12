@@ -1425,7 +1425,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS Element Queries [Level 1]</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-02-04">4 February 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-03-12">12 March 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1439,7 +1439,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 4 February 2017,
+In addition, as of 12 March 2017,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1522,7 +1522,7 @@ Parts of this work may be from another specification document.  If so, those par
         <li><a href="#it-selector"><span class="secno">6.1.7</span> <span class="content"><code>$it</code> selector</span></a>
        </ol>
      </ol>
-    <li><a href="#element-based-units"><span class="secno">7</span> <span class="content">Element-based Units</span></a>
+    <li><a href="#element-percentage-units"><span class="secno">7</span> <span class="content">Element-percentage Units</span></a>
     <li>
      <a href="#examples-of-element-queries"><span class="secno">8</span> <span class="content">Examples of Scoped Styles &amp; Element Queries</span></a>
      <ol class="toc">
@@ -1564,7 +1564,7 @@ Parts of this work may be from another specification document.  If so, those par
    <p>Value types not defined in this specification, such as <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a>, <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a>, <a class="production css" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a>, and <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a> are defined in <a data-link-type="biblio" href="#biblio-css3val">[CSS3VAL]</a>, and <a data-link-type="biblio" href="#biblio-mediaqueries-4">[MEDIAQUERIES-4]</a></p>
    <h3 class="heading settled" data-level="1.2" id="units"><span class="secno">1.2. </span><span class="content">Units</span><a class="self-link" href="#units"></a></h3>
    <p>The units used in element queries are the same as in other parts of CSS, as defined in <a data-link-type="biblio" href="#biblio-css3val">[CSS3VAL]</a>. For example, the pixel unit represents CSS pixels and not physical pixels.</p>
-   <p>Additionally, new <a href="#element-based-units">element-based units</a> are defined in this document which relate to an element’s own properties after styles have been applied to the document.</p>
+   <p>Additionally, new <a href="#element-percentage-units">element-percentage units</a> are defined in this document which relate to an element’s own properties after styles have been applied to the document.</p>
    <h2 class="heading settled" data-level="2" id="element-queries"><span class="secno">2. </span><span class="content">Element Queries</span><a class="self-link" href="#element-queries"></a></h2>
    <p>An <strong>element query</strong> is a method of testing certain aspects of an element and applying styles based on whether that test is true or false.</p>
    <p>The syntax of an element query consists of a <a class="production css" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a>, plus an optional list of zero or more responsive conditions, followed by one or more CSS rules:</p>
@@ -2571,7 +2571,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
      </div>
    </dl>
-   <h2 class="heading settled" data-level="7" id="element-based-units"><span class="secno">7. </span><span class="content">Element-based Units</span><a class="self-link" href="#element-based-units"></a></h2>
+   <h2 class="heading settled" data-level="7" id="element-percentage-units"><span class="secno">7. </span><span class="content">Element-percentage Units</span><a class="self-link" href="#element-percentage-units"></a></h2>
    <p>Just as CSS has viewport-percentage units: <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vw">vw</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vh">vh</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmin">vmin</a>, and <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmax">vmax</a> which represent a distance equal to 1% of the viewport width, height, shortest edge, and longest edge, in a similar way the following element-percentage units <a class="css" data-link-type="maybe" href="#ew" id="ref-for-ew-1">ew</a>, <a class="css" data-link-type="maybe" href="#eh" id="ref-for-eh-1">eh</a>, <a class="css" data-link-type="maybe" href="#emin" id="ref-for-emin-1">emin</a>, and <a class="css" data-link-type="maybe" href="#emax" id="ref-for-emax-1">emax</a> represent a distance equal to 1% of the element’s own width, height, shortest edge, and longest edge. When the width of height of the element changes, the value of these units scale accordingly.</p>
    <p class="note" role="note">Note, These new <a data-link-type="dfn" href="#eq-unit" id="ref-for-eq-unit-1">eq-unit</a> units always refer to the dimensions of the element in the scope, and can be used inside of a scoped style or element query to style other elements.</p>
    <dl>
@@ -3312,7 +3312,7 @@ Parts of this work may be from another specification document.  If so, those par
   <aside class="dfn-panel" data-for="eq-unit">
    <b><a href="#eq-unit">#eq-unit</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-eq-unit-1">7. Element-based Units</a>
+    <li><a href="#ref-for-eq-unit-1">7. Element-percentage Units</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="funcdef-eval">
@@ -3444,25 +3444,25 @@ Parts of this work may be from another specification document.  If so, those par
   <aside class="dfn-panel" data-for="ew">
    <b><a href="#ew">#ew</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-ew-1">7. Element-based Units</a>
+    <li><a href="#ref-for-ew-1">7. Element-percentage Units</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="eh">
    <b><a href="#eh">#eh</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-eh-1">7. Element-based Units</a>
+    <li><a href="#ref-for-eh-1">7. Element-percentage Units</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="emin">
    <b><a href="#emin">#emin</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-emin-1">7. Element-based Units</a>
+    <li><a href="#ref-for-emin-1">7. Element-percentage Units</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="emax">
    <b><a href="#emax">#emax</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-emax-1">7. Element-based Units</a>
+    <li><a href="#ref-for-emax-1">7. Element-percentage Units</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
