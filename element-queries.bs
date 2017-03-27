@@ -62,12 +62,12 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=scoped-styles>Scoped Styles</h3>
 
-    To write a scoped style, write ''@element'', followed by any amount of whitespace. Wrap one or more comma-separated CSS <<selector>> in single (<code>'</code>) or double (<code>"</code>) quotes, followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).
+    To write a scoped style, write ''@element'', followed by any amount of whitespace. Wrap one or more comma-separated CSS <<selector>> (optionally wrapped in single (<code>'</code>) or double (<code>"</code>) quotes), followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).
 
     <div class=example>
       Example scoped style</strong>
       <pre class=language-css>
-        @element 'html' { ... }
+        @element html { ... }
       </pre>
     </div>
 
@@ -78,7 +78,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Comma-separated selector list
         <pre class=language-css>
-          @element 'ul, ol' { ... }
+          @element ul, ol { ... }
         </pre>
       </div>
 
@@ -94,7 +94,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <div class=example>
       <pre class=language-css>
-        @element 'div' {
+        @element div {
           div {
             background: lime;
           }
@@ -105,7 +105,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <div class=example>
       <pre class=language-css>
-        @element '.demo' {
+        @element .demo {
           div {
             background: lime;
           }
@@ -116,7 +116,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <div class=example>
       <pre class=language-css>
-        @element '.demo' {
+        @element .demo {
           .demo {
             background: lime;
           }
@@ -127,7 +127,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <div class=example>
       <pre class=language-css>
-        @element 'div' {
+        @element div {
           .demo {
             background: lime;
           }
@@ -138,7 +138,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <div class=example>
       <pre class=language-css>
-        @element 'select' {
+        @element select {
           .demo {
             background: lime;
           }
@@ -167,7 +167,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example scoped style
       <pre class=language-css>
-        @element 'html' {
+        @element html {
           body {
             background: lime;
           }
@@ -183,7 +183,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example Element Query with Responsive Condition
 
       <pre class=language-css>
-        @element 'html' and (min-width: 500px) {
+        @element html and (min-width: 500px) {
           body {
             background: lime;
           }
@@ -211,7 +211,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Element query with multiple responsive conditions
         <pre class=language-css>
-          @element 'html' and (min-width: 500px) and (max-width: 1000px) {
+          @element html and (min-width: 500px) and (max-width: 1000px) {
             body {
               background: lime;
             }
@@ -241,7 +241,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Nesting a media query inside an element query
         <pre class=language-css>
-          @element '#headline' and (min-characters: 20) {
+          @element #headline and (min-characters: 20) {
             @media print {
               #headline {
                 border: 1px solid black;
@@ -261,7 +261,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
       <div class=example>
         <pre class=language-css>
-          @element '.widget' and (min‐width: 300px) {
+          @element .widget and (min‐width: 300px) {
             $this {
               width: 200px;
             }
@@ -277,12 +277,12 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
       <div class=example>
         <pre class=language-css>
-          @element '.widget' and (min‐width: 400px) {
+          @element .widget and (min‐width: 400px) {
             $this {
               width: 200px;
             }
           }
-          @element '.widget' and (max‐width: 300px) {
+          @element .widget and (max‐width: 300px) {
             $this {
               width: 500px;
             }
@@ -350,7 +350,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Example of <a selector>$this</a> meta-selector
         <pre class=language-css>
-          @element '.widget' and (min-width: 200px) {
+          @element .widget and (min-width: 200px) {
             $this {
               background: lime;
             }
@@ -366,7 +366,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Example of <a selector>$parent</a> meta-selector
         <pre class=language-css>
-          @element '.widget' and (min-width: 200px) {
+          @element .widget and (min-width: 200px) {
             $parent {
               background: lime;
             }
@@ -382,7 +382,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Example of <a selector>$prev</a> meta-selector
         <pre class=language-css>
-          @element '.widget' {
+          @element .widget {
             $prev {
               background: lime;
             }
@@ -398,7 +398,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Example of <a selector>$next</a> meta-selector
         <pre class=language-css>
-          @element '.widget' {
+          @element .widget {
             $next {
               background: lime;
             }
@@ -460,7 +460,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="width" for=@element>min-width</a> element query
       <pre class=language-css>
-        @element '.widget' and (min-width: 200px) {
+        @element .widget and (min-width: 200px) {
           $this {
             background: lime;
           }
@@ -474,7 +474,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="width" for=@element>max-width</a> element query
       <pre class=language-css>
-        @element '.widget' and (max-width: 200) {
+        @element .widget and (max-width: 200) {
           $this {
             background: lime;
           }
@@ -497,7 +497,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="height" for=@element>min-height</a> element query
       <pre class=language-css>
-        @element '.widget' and (min-height: 50px) {
+        @element .widget and (min-height: 50px) {
           $this {
             background: lime;
           }
@@ -511,7 +511,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="height" for=@element>max-height</a> element query
       <pre class=language-css>
-        @element '.widget' and (max-height: 50px) {
+        @element .widget and (max-height: 50px) {
           $this {
             background: lime;
           }
@@ -534,7 +534,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="characters" for=@element>min-characters</a> element query
       <pre class=language-css>
-        @element 'input' and (min-characters: 5) {
+        @element input and (min-characters: 5) {
           $this {
             background: lime;
           }
@@ -548,7 +548,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="characters" for=@element>max-characters</a> element query
       <pre class=language-css>
-        @element 'input' and (max-characters: 5) {
+        @element input and (max-characters: 5) {
           $this {
             background: lime;
           }
@@ -571,7 +571,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="lines" for=@element>min-lines</a> element query
       <pre class=language-css>
-        @element 'textarea' and (min-lines: 3) {
+        @element textarea and (min-lines: 3) {
           $this {
             background: lime;
           }
@@ -585,7 +585,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="lines" for=@element>max-lines</a> element query
       <pre class=language-css>
-        @element 'textarea' and (max-lines: 3) {
+        @element textarea and (max-lines: 3) {
           $this {
             background: lime;
           }
@@ -608,7 +608,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="children" for=@element>min-children</a> element query
       <pre class=language-css>
-        @element '.social-icons' and (min-children: 5) {
+        @element .social-icons and (min-children: 5) {
           $this {
             background: lime;
           }
@@ -622,7 +622,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="children" for=@element>max-children</a> element query
       <pre class=language-css>
-        @element '.social-icons' and (max-children: 5) {
+        @element .social-icons and (max-children: 5) {
           $this {
             background: lime;
           }
@@ -645,7 +645,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="scroll-y" for=@element>min-scroll-y</a> element query
       <pre class=language-css>
-        @element '.feed' and (min-scroll-y: 100px) {
+        @element .feed and (min-scroll-y: 100px) {
           $this {
             background: lime;
           }
@@ -659,7 +659,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="scroll-y" for=@element>max-scroll-y</a> element query
       <pre class=language-css>
-        @element '.feed' and (max-scroll-y: 100px) {
+        @element .feed and (max-scroll-y: 100px) {
           $this {
             background: lime;
           }
@@ -682,7 +682,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="scroll-x" for=@element>min-scroll-x</a> element query
       <pre class=language-css>
-        @element '.feed' and (min-scroll-x: 100px) {
+        @element .feed and (min-scroll-x: 100px) {
           $this {
             background: lime;
           }
@@ -696,7 +696,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="scroll-x" for=@element>max-scroll-x</a> element query
       <pre class=language-css>
-        @element '.feed' and (max-scroll-x: 100px) {
+        @element .feed and (max-scroll-x: 100px) {
           $this {
             background: lime;
           }
@@ -719,7 +719,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="aspect-ratio" for=@element>min-aspect-ratio</a> element query
       <pre class=language-css>
-        @element '.widget' and (min-aspect-ratio: 16/9) {
+        @element .widget and (min-aspect-ratio: 16/9) {
           $this {
             background: lime;
           }
@@ -733,7 +733,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <div class=example>
       Example <a class="property" data-link-type="propdesc" data-lt="aspect-ratio" for=@element>max-aspect-ratio</a> element query
       <pre class=language-css>
-        @element '.widget' and (max-aspect-ratio: 16/9) {
+        @element .widget and (max-aspect-ratio: 16/9) {
           $this {
             background: lime;
           }
@@ -763,7 +763,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Element query for ''portrait'' orientation</strong>
         <pre class=language-css>
-          @element '.widget' and (orientation: portrait) {
+          @element .widget and (orientation: portrait) {
             $this {
               background: lime;
             }
@@ -782,7 +782,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Element query for <a class="css" data-link-type="maybe" data-lt="square" for=@element/orientation>square</a> orientation</strong>
         <pre class=language-css>
-          @element '.widget' and (orientation: square) {
+          @element .widget and (orientation: square) {
             $this {
               background: lime;
             }
@@ -801,7 +801,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Element query for ''landscape'' orientation</strong>
         <pre class=language-css>
-          @element '.widget' and (orientation: landscape) {
+          @element .widget and (orientation: landscape) {
             $this {
               background: lime;
             }
@@ -840,7 +840,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
           &lt;/script>
 
           &lt;style>
-            @element '.widget' {
+            @element .widget {
               $this {
                 background: eval("brandColor");
               }
@@ -855,7 +855,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Evaluating JavaScript Inline with <a>eval("")</a>
         <pre class=language-css>
-          @element '.widget' {
+          @element .widget {
             font-size: eval("10 * 2")px;
           }
         </pre>
@@ -875,7 +875,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
           &lt;/script>
 
           &lt;style>
-            @element '.widget' {
+            @element .widget {
               font-size: eval("addTen(15)")px;
             }
           &lt;/style>
@@ -893,7 +893,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
           &lt;/script>
 
           &lt;style>
-            @element 'div' {
+            @element div {
               $this {
                 color: eval("blue");
               }
@@ -914,7 +914,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
           &lt;/script>
 
           &lt;style>
-            @element 'input' {
+            @element input {
               $this {
                 eval('browser')appearance: none;
               }
@@ -934,7 +934,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
           &lt;/script>
 
           &lt;style>
-            @element 'html' {
+            @element html {
               eval('buttonish') {
                 appearance: none;
                 color: black;
@@ -964,12 +964,12 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <dt><dfn>$it</dfn>
     <dd>
-      By default the inline evaluation of <a>eval("")</a> shares the same scope in JavaScript as the scoped element. This means for a scoped style like <code>@element '.widget' {}</code>, things like <code>innerHTML</code> represent the <code>innerHTML</code> of the elements with <code>.widget</code>. This would also apply individually to each element if more than one element on the page matches that selector. In this example we can use <code>parentNode</code> inside of <a>eval("")</a> to check how many child elements the parent element holding any <code>.widget</code> element contains.
+      By default the inline evaluation of <a>eval("")</a> shares the same scope in JavaScript as the scoped element. This means for a scoped style like <code>@element .widget {}</code>, things like <code>innerHTML</code> represent the <code>innerHTML</code> of the elements with <code>.widget</code>. This would also apply individually to each element if more than one element on the page matches that selector. In this example we can use <code>parentNode</code> inside of <a>eval("")</a> to check how many child elements the parent element holding any <code>.widget</code> element contains.
 
       <div class=example>
         Example of ''eval("")'' with Implicit Context
         <pre class=language-css>
-          @element '.widget' {
+          @element .widget {
             $this:before {
               content: 'eval("parentNode.children.length")';
             }
@@ -983,7 +983,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Example of <a>eval("")</a> with the <a selector>$it</a> Selector
         <pre class=language-css>
-          @element '.widget' {
+          @element .widget {
             $this:before {
               content: 'eval("$it.parentNode.children.length")';
             }
@@ -1008,7 +1008,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Example of ew Units Inside a Scoped Style
         <pre class=language-css>
-          @element '.widget' {
+          @element .widget {
             $this {
               font-size: 10ew;
             }
@@ -1026,7 +1026,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         Example of eh Units Inside a Scoped Style
         <pre class=language-css>
-          @element '.widget' {
+          @element .widget {
             $this {
               font-size: 10eh;
             }
@@ -1039,12 +1039,12 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <dt><dfn id=emin lt=emin>emin unit</dfn>
     <dd>
-      Equal to the smaller of ew or eh
+      Equal to the smaller of 1ew or 1eh
 
       <div class=example>
         Example of emin Units Inside a Scoped Style
         <pre class=language-css>
-          @element '.widget' {
+          @element .widget {
             $this {
               font-size: 10emin;
             }
@@ -1057,12 +1057,12 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <dt><dfn id=emax lt=emax>emax unit</dfn>
     <dd>
-      Equal to the larger of ew or eh
+      Equal to the larger of 1ew or 1eh
 
       <div class=example>
         Example of emax Units Inside a Scoped Style
         <pre class=language-css>
-          @element '.widget' {
+          @element .widget {
             $this {
               font-size: 10emax;
             }
@@ -1081,25 +1081,25 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <div class=example>
     <pre class=language-css>
-      @element 'div' {}
+      @element div {}
     </pre>
   </div>
 
   <div class=example>
     <pre class=language-css>
-      @element 'div, span' {}
+      @element div, span {}
     </pre>
   </div>
 
   <div class=example>
     <pre class=language-css>
-      @element 'div' and (min-width: 500px) {}
+      @element div and (min-width: 500px) {}
     </pre>
   </div>
 
   <div class=example>
     <pre class=language-css>
-      @element 'div' and (min-width: 500px) and (min-lines: 3) {}
+      @element div and (min-width: 500px) and (min-lines: 3) {}
     </pre>
   </div>
 
@@ -1110,7 +1110,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <pre class=language-html>
       &lt;iframe width="640" height="360">&lt;/iframe>
       &lt;style>
-        @element 'iframe' {
+        @element iframe {
           $this {
             width: 100%;
             height: eval('offsetWidth / (width / height)')px;
@@ -1128,13 +1128,13 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       &lt;input>
       &lt;style>
         /* input:empty */
-        @element 'input' and (max-characters: 0) {
+        @element input and (max-characters: 0) {
           $this {
             background: red;
           }
         }
         /* input:not(:empty) */
-        @element 'input' and (min-characters: 1) {
+        @element input and (min-characters: 1) {
           $this {
             background: lime;
           }
@@ -1150,7 +1150,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     <pre class=language-html>
       &lt;textarea>&lt;/textarea>
       &lt;style>
-        @element 'textarea' {
+        @element textarea {
           $this {
             height: eval("style.height='inherit';style.height=scrollHeight+'px'");
           }
@@ -1165,7 +1165,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
   <div class=example>
     <pre class=language-html>
       &lt;style>
-        @element ':root' {
+        @element :root {
           $this:before {
             content: 'eval("window.innerWidth") × eval("window.innerHeight")';
             position: fixed;
@@ -1223,7 +1223,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
           border: 5px solid white;
         }
         /* Element Query Grid */
-        @element '[data-grid]' {
+        @element [data-grid] {
           $this,
           $this * {
             box-sizing: border-box;
@@ -1257,7 +1257,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
           $this [class^=split-9] { width: calc(100%/9); }
           $this [class^=split-10] { width: calc(100%/10); }
         }
-        @element '[data-grid]' and (max-width: 400px) {
+        @element [data-grid] and (max-width: 400px) {
           $this [class*=small-col-1] { width: 10%; }
           $this [class*=small-col-2] { width: 20%; }
           $this [class*=small-col-3] { width: 30%; }
@@ -1280,7 +1280,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
           $this [class*=small-split-10] { width: calc(100%/10); }
           $this [class*=hide-small] { display: none; }
         }
-        @element '[data-grid]' and (min-width: 400px) and (max-width: 800px) {
+        @element [data-grid] and (min-width: 400px) and (max-width: 800px) {
           $this [class*=medium-col-1] { width: 10%; }
           $this [class*=medium-col-2] { width: 20%; }
           $this [class*=medium-col-3] { width: 30%; }
@@ -1303,7 +1303,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
           $this [class*=medium-split-10] { width: calc(100%/10); }
           $this [class*=hide-medium] { display: none; }
         }
-        @element '[data-grid]' and (min-width: 800px) {
+        @element [data-grid] and (min-width: 800px) {
           $this [class*=large-col-1] { width: 10%; }
           $this [class*=large-col-2] { width: 20%; }
           $this [class*=large-col-3] { width: 30%; }
@@ -1368,7 +1368,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       &lt;/script>
       &lt;style>
         /* set width for most inputs */
-        @element ':root' {
+        @element :root {
           /* Style all selectors in 'textish' array */
           eval('textish') {
             display: block;
@@ -1399,7 +1399,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         }
       &lt;/script>
       &lt;style>
-        @element 'h1' {
+        @element h1 {
           $this {
             font-size: eval('clamp(50,innerWidth/10,100)')px;
           }
@@ -1408,3 +1408,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     </pre>
     In this example our font size prefers to be equal to <code>window.innerWidth/10</code> pixels wide, but our JavaScript function will clamp that value for us, ensuring that if <code>innerWidth/10</code> is less than 50, our font size will go no lower than <code>50px</code>, and if <code>innerWidth/10</code> is greater than 100, our font size will grow no larger than <code>100px</code>.
   </div>
+
+<h2 id=requirements>Requirements</h2>
+
+- The solution must allow authors the ability to target elements on the page based on the existence, and properties of elements on the page.

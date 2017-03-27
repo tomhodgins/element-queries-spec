@@ -1425,7 +1425,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS Element Queries [Level 1]</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-03-12">12 March 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-03-27">27 March 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1439,7 +1439,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 12 March 2017,
+In addition, as of 27 March 2017,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1535,6 +1535,7 @@ Parts of this work may be from another specification document.  If so, those par
       <li><a href="#using-variables-as-selectors"><span class="secno">8.7</span> <span class="content">Using Variables as Selectors</span></a>
       <li><a href="#clamped-numbers-in-CSS"><span class="secno">8.8</span> <span class="content">Clamped Numbers in CSS</span></a>
      </ol>
+    <li><a href="#requirements"><span class="secno">9</span> <span class="content">Requirements</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
@@ -1666,17 +1667,17 @@ Parts of this work may be from another specification document.  If so, those par
    </ul>
    <p>User agents must re-evaluate element queries in response to changes in the user environment that they’re aware of, for example resizing the browser, clicking, or scrolling, depending on which responsive conditions are being evaluated, and change the styles applied accordingly.</p>
    <h3 class="heading settled" data-level="2.1" id="scoped-styles"><span class="secno">2.1. </span><span class="content">Scoped Styles</span><a class="self-link" href="#scoped-styles"></a></h3>
-   <p>To write a scoped style, write <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-2">@element</a>, followed by any amount of whitespace. Wrap one or more comma-separated CSS <a class="production css" data-link-type="type" href="https://www.w3.org/TR/selectors4/#ltselector">&lt;selector></a> in single (<code>'</code>) or double (<code>"</code>) quotes, followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).</p>
-   <div class="example" id="example-f4c76520">
-    <a class="self-link" href="#example-f4c76520"></a> Example scoped style 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'html'</span> { ... <span class="p">}</span>
+   <p>To write a scoped style, write <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-2">@element</a>, followed by any amount of whitespace. Wrap one or more comma-separated CSS <a class="production css" data-link-type="type" href="https://www.w3.org/TR/selectors4/#ltselector">&lt;selector></a> (optionally wrapped in single (<code>'</code>) or double (<code>"</code>) quotes), followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).</p>
+   <div class="example" id="example-806edaa1">
+    <a class="self-link" href="#example-806edaa1"></a> Example scoped style 
+<pre class="language-css highlight"><span class="n">@element</span> html { ... <span class="p">}</span>
 </pre>
    </div>
    <h4 class="heading settled" data-level="2.1.1" id="multiple-selectors"><span class="secno">2.1.1. </span><span class="content">Multiple Selectors</span><a class="self-link" href="#multiple-selectors"></a></h4>
    <p>You can include multiple CSS selectors in your scoped style by separating them with a comma and any amount of whitespace.</p>
-   <div class="example" id="example-142b51c9">
-    <a class="self-link" href="#example-142b51c9"></a> Comma-separated selector list 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'ul, ol'</span> { ... <span class="p">}</span>
+   <div class="example" id="example-392319b2">
+    <a class="self-link" href="#example-392319b2"></a> Comma-separated selector list 
+<pre class="language-css highlight"><span class="n">@element</span> ul<span class="p">,</span> ol { ... <span class="p">}</span>
 </pre>
    </div>
    <h4 class="heading settled" data-level="2.1.2" id="understanding-the-scope"><span class="secno">2.1.2. </span><span class="content">Understanding the Scope</span><a class="self-link" href="#understanding-the-scope"></a></h4>
@@ -1685,9 +1686,9 @@ Parts of this work may be from another specification document.  If so, those par
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">div</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">demo</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">div</span><span class="p">></span>
 </pre>
-   <div class="example" id="example-6857413d">
-    <a class="self-link" href="#example-6857413d"></a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'div'</span> <span class="p">{</span>
+   <div class="example" id="example-b9546002">
+    <a class="self-link" href="#example-b9546002"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> div <span class="p">{</span>
   <span class="nt">div </span><span class="p">{</span>
     <span class="k">background</span><span class="p">:</span> lime<span class="p">;</span>
   <span class="p">}</span>
@@ -1695,29 +1696,29 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this example, because there are two <code>div</code> elements, both will match our scope and apply a rule saying all <code>div</code> elements have a green background.</p>
    </div>
-   <div class="example" id="example-60bd79b7">
-    <a class="self-link" href="#example-60bd79b7"></a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.demo'</span> <span class="p">{</span>
-  <span class="nt">div </span><span class="p">{</span>
-    <span class="k">background</span><span class="p">:</span> lime<span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+   <div class="example" id="example-0fd31efe">
+    <a class="self-link" href="#example-0fd31efe"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.demo </span><span class="p">{</span>
+  div {
+    background: lime;
+  }
+}
 </pre>
     <p>In this example we have one element in our HTML with a class of <code>.demo</code>. Because of this, the rule applying to all <code>div</code> elements applies to both of the <code>div</code> elements in our HTML turning their background green.</p>
    </div>
-   <div class="example" id="example-56ac8c36">
-    <a class="self-link" href="#example-56ac8c36"></a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.demo'</span> <span class="p">{</span>
-  <span class="nt">.demo </span><span class="p">{</span>
-    <span class="k">background</span><span class="p">:</span> lime<span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+   <div class="example" id="example-fc73436d">
+    <a class="self-link" href="#example-fc73436d"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.demo </span><span class="p">{</span>
+  .demo {
+    background: lime;
+  }
+}
 </pre>
     <p>In this example we have one element in our HTML with a class of <code>.demo</code>. Because of this, the rule applying to any elements with a class of <code>.demo</code> applies and turns the background of our <code>.demo</code> element green, leaving the other <code>div</code> untouched.</p>
    </div>
-   <div class="example" id="example-77910dd8">
-    <a class="self-link" href="#example-77910dd8"></a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'div'</span> <span class="p">{</span>
+   <div class="example" id="example-d2bac13d">
+    <a class="self-link" href="#example-d2bac13d"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> div <span class="p">{</span>
   <span class="nt">.demo </span><span class="p">{</span>
     <span class="k">background</span><span class="p">:</span> lime<span class="p">;</span>
   <span class="p">}</span>
@@ -1725,9 +1726,9 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this example, because there are two <code>div</code> elements, both will match our scope and apply a rule saying any element with a class of <code>.demo</code> will have a green background. This makes one of our <code>div</code> elements green and leaves the other untouched.</p>
    </div>
-   <div class="example" id="example-9174342c">
-    <a class="self-link" href="#example-9174342c"></a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'select'</span> <span class="p">{</span>
+   <div class="example" id="example-188c169c">
+    <a class="self-link" href="#example-188c169c"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> select <span class="p">{</span>
   <span class="nt">.demo </span><span class="p">{</span>
     <span class="k">background</span><span class="p">:</span> lime<span class="p">;</span>
   <span class="p">}</span>
@@ -1746,9 +1747,9 @@ Parts of this work may be from another specification document.  If so, those par
 <span class="p">}</span>
 </pre>
    </div>
-   <div class="example" id="example-cf76a911">
-    <a class="self-link" href="#example-cf76a911"></a> Example scoped style 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'html'</span> <span class="p">{</span>
+   <div class="example" id="example-a0c4dace">
+    <a class="self-link" href="#example-a0c4dace"></a> Example scoped style 
+<pre class="language-css highlight"><span class="n">@element</span> html <span class="p">{</span>
   <span class="nt">body </span><span class="p">{</span>
     <span class="k">background</span><span class="p">:</span> lime<span class="p">;</span>
   <span class="p">}</span>
@@ -1757,9 +1758,9 @@ Parts of this work may be from another specification document.  If so, those par
    </div>
    <p>In both cases, as long as there is a <code>body</code> element inside of our <code>html</code>, it will have a lime background.</p>
    <p>We can also add a responsive conditions to our scoped styles. To do this, write <code>and </code> followed by a responsive condition and value, separated by a colon (<code>:</code>) and wrapped in brackets (<code>(</code>,<code>)</code>).</p>
-   <div class="example" id="example-fbb0cdc4">
-    <a class="self-link" href="#example-fbb0cdc4"></a> Example Element Query with Responsive Condition 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'html'</span> and <span class="p">(</span>min-width<span class="nt">: 500px) </span><span class="p">{</span>
+   <div class="example" id="example-9da8a779">
+    <a class="self-link" href="#example-9da8a779"></a> Example Element Query with Responsive Condition 
+<pre class="language-css highlight"><span class="n">@element</span> html and <span class="p">(</span>min-width<span class="nt">: 500px) </span><span class="p">{</span>
   body {
     background: lime;
   }
@@ -1778,9 +1779,9 @@ Parts of this work may be from another specification document.  If so, those par
    </div>
    <h4 class="heading settled" data-level="2.2.1" id="multiple-conditions"><span class="secno">2.2.1. </span><span class="content">Multiple Conditions</span><a class="self-link" href="#multiple-conditions"></a></h4>
    <p>You can add more than one responsive conditions to your element query. For this, include another <code>and</code>, followed by another responsive condition as before.</p>
-   <div class="example" id="example-7f252543">
-    <a class="self-link" href="#example-7f252543"></a> Element query with multiple responsive conditions 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'html'</span> and <span class="p">(</span>min-width<span class="nt">: 500px) and (max-width: 1000px) </span><span class="p">{</span>
+   <div class="example" id="example-77947354">
+    <a class="self-link" href="#example-77947354"></a> Element query with multiple responsive conditions 
+<pre class="language-css highlight"><span class="n">@element</span> html and <span class="p">(</span>min-width<span class="nt">: 500px) and (max-width: 1000px) </span><span class="p">{</span>
   body {
     background: lime;
   }
@@ -1800,9 +1801,9 @@ Parts of this work may be from another specification document.  If so, those par
    <p>In both cases when our <code>html</code> is between the sizes of <code>500px</code> and <code>1000px</code>, our <code>body</code> will have a lime background.</p>
    <h4 class="heading settled" data-level="2.2.2" id="combining-element-and-media-queries"><span class="secno">2.2.2. </span><span class="content">Combining <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-4">@element</a> and <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a> queries</span><a class="self-link" href="#combining-element-and-media-queries"></a></h4>
    <p>It’s possible to combine the use of scoped styles or element queries with media queries. Most of the time we combine them we want to include the media query on the inside of the element query. This will mean any time the element query is true, that media query will be visible to the browser and apply.</p>
-   <div class="example" id="example-f47b1458">
-    <a class="self-link" href="#example-f47b1458"></a> Nesting a media query inside an element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'#headline'</span> and <span class="p">(</span>min-characters<span class="nt">: 20) </span><span class="p">{</span>
+   <div class="example" id="example-90ab7b4a">
+    <a class="self-link" href="#example-90ab7b4a"></a> Nesting a media query inside an element query 
+<pre class="language-css highlight"><span class="n">@element</span> #headline and <span class="p">(</span>min-characters<span class="nt">: 20) </span><span class="p">{</span>
   <span class="n">@media</span> print <span class="p">{</span>
     <span class="nt">#headline </span><span class="p">{</span>
       <span class="k">border</span><span class="p">:</span> <span class="m">1</span><span class="l">px</span> solid black<span class="p">;</span>
@@ -1815,9 +1816,9 @@ Parts of this work may be from another specification document.  If so, those par
    <h4 class="heading settled" data-level="2.2.3" id="self-referential-element-queries"><span class="secno">2.2.3. </span><span class="content">Self-Referential <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-5">@element</a> queries</span><a class="self-link" href="#self-referential-element-queries"></a></h4>
    <p>With element queries comes the new possibility that the rules you are applying when your responsive conditions are met will conflict with the responsive condition in your element query. In this situation we should not attempt to detect or handle these cases by ignoring certain styles, or checking whether any of the rules affect the validity of the responsive condition. It is best to apply the rule naïvely and allow the conflict to occur.</p>
    <p class="note" role="note">Note, The responsibility lies with the author to write <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-6">@element</a> queries which can be interpreted logically.</p>
-   <div class="example" id="example-e9755d1c">
-    <a class="self-link" href="#example-e9755d1c"></a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>min<span class="nt">‐width: 300px) </span><span class="p">{</span>
+   <div class="example" id="example-530f03fb">
+    <a class="self-link" href="#example-530f03fb"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min‐width: 300px) </span><span class="p">{</span>
   $this {
     width: 200px;
   }
@@ -1827,14 +1828,14 @@ Parts of this work may be from another specification document.  If so, those par
    <p>In this example the query will only apply to elements with a class of <code>.widget</code> that are equal or wider than <code>300px</code>, and the rule sets a width on the same element which would make the rule no longer apply. Rather than trying to detect or intercept this behaviour and prevent it from happening, when the <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-7">@element</a> query applies to the document it will set the width to <code>200px</code>.</p>
    <h4 class="heading settled" data-level="2.2.4" id="circular-referential-element-queries"><span class="secno">2.2.4. </span><span class="content">Circular Referential <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-8">@element</a> queries</span><a class="self-link" href="#circular-referential-element-queries"></a></h4>
    <p>Another new possibility with element queries is having two or more queries that apply styles that match each others responsive condition. Just as with a self-referential <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-9">@element</a> query, we should not try to detect or ignore styles in this situation, and instead should compute the <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-10">@element</a> queries in the order they appear and apply the rules using normal CSS specificity.</p>
-   <div class="example" id="example-b427f96a">
-    <a class="self-link" href="#example-b427f96a"></a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>min<span class="nt">‐width: 400px) </span><span class="p">{</span>
+   <div class="example" id="example-422638bf">
+    <a class="self-link" href="#example-422638bf"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min‐width: 400px) </span><span class="p">{</span>
   $this {
     width: 200px;
   }
 }
-@element '.widget' and (max‐width: 300px) {
+@element .widget and (max‐width: 300px) {
   $this {
     width: 500px;
   }
@@ -1881,9 +1882,9 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-this">$this</dfn> 
     <dd>
       The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-4">$this</a> meta-selector refers each element at the root of our scoped style when it matches the responsive condition. 
-     <div class="example" id="example-efd7d215">
-      <a class="self-link" href="#example-efd7d215"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-5">$this</a> meta-selector 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>min-width<span class="nt">: 200px) </span><span class="p">{</span>
+     <div class="example" id="example-07525ff0">
+      <a class="self-link" href="#example-07525ff0"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-5">$this</a> meta-selector 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min-width: 200px) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -1894,9 +1895,9 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-parent">$parent</dfn> 
     <dd>
       The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-3">$parent</a> meta-selector refers to the element containing the element(s) in the scope of our scoped style or element query. 
-     <div class="example" id="example-9cc20eb3">
-      <a class="self-link" href="#example-9cc20eb3"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-4">$parent</a> meta-selector 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>min-width<span class="nt">: 200px) </span><span class="p">{</span>
+     <div class="example" id="example-036a9802">
+      <a class="self-link" href="#example-036a9802"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-4">$parent</a> meta-selector 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min-width: 200px) </span><span class="p">{</span>
   $parent {
     background: lime;
   }
@@ -1907,26 +1908,26 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-prev">$prev</dfn> 
     <dd>
       The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-3">$prev</a> meta-selector refers to the sibling directly above the element at the root of our scoped style or element query. 
-     <div class="example" id="example-c467d3b0">
-      <a class="self-link" href="#example-c467d3b0"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-4">$prev</a> meta-selector 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> <span class="p">{</span>
-  <span class="nt">$prev </span><span class="p">{</span>
-    <span class="k">background</span><span class="p">:</span> lime<span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+     <div class="example" id="example-a1fca326">
+      <a class="self-link" href="#example-a1fca326"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-4">$prev</a> meta-selector 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
+  $prev {
+    background: lime;
+  }
+}
 </pre>
       <p>In this case, any sibling coming directly before any element with a class of <code>.widget</code> will have a green background.</p>
      </div>
     <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-next">$next</dfn> 
     <dd>
       The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-3">$next</a> meta-selector refers to the sibling directly below the element at the root of our scoped style or element query. 
-     <div class="example" id="example-f955cb3d">
-      <a class="self-link" href="#example-f955cb3d"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-4">$next</a> meta-selector 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> <span class="p">{</span>
-  <span class="nt">$next </span><span class="p">{</span>
-    <span class="k">background</span><span class="p">:</span> lime<span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+     <div class="example" id="example-9162bfe8">
+      <a class="self-link" href="#example-9162bfe8"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-4">$next</a> meta-selector 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
+  $next {
+    background: lime;
+  }
+}
 </pre>
       <p>In this case, any sibling coming directly after any element with a class of <code>.widget</code> will have a green background.</p>
      </div>
@@ -2049,9 +2050,9 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-1">min-width</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) width to the specified value.</p>
-   <div class="example" id="example-e7b50074">
-    <a class="self-link" href="#example-e7b50074"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-2">min-width</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>min-width<span class="nt">: 200px) </span><span class="p">{</span>
+   <div class="example" id="example-b5c32be5">
+    <a class="self-link" href="#example-b5c32be5"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-2">min-width</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min-width: 200px) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2060,9 +2061,9 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element with a class of <code>.widget</code> that is at least <code>200px</code> or wider will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-3">max-width</a> responsive condition applies to any scoped element that has lesser or equal (<code>&lt;=</code>) width to the specified value.</p>
-   <div class="example" id="example-cc25b3e5">
-    <a class="self-link" href="#example-cc25b3e5"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-4">max-width</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>max-width<span class="nt">: 200) </span><span class="p">{</span>
+   <div class="example" id="example-47345878">
+    <a class="self-link" href="#example-47345878"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-4">max-width</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (max-width: 200) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2087,9 +2088,9 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-1">min-height</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) height to the specified value.</p>
-   <div class="example" id="example-31d6cfca">
-    <a class="self-link" href="#example-31d6cfca"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-2">min-height</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>min-height<span class="nt">: 50px) </span><span class="p">{</span>
+   <div class="example" id="example-2eef479e">
+    <a class="self-link" href="#example-2eef479e"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-2">min-height</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min-height: 50px) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2098,9 +2099,9 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element with a class of <code>.widget</code> that is at least <code>50px</code> or taller will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-3">max-height</a> responsive condition applies to any scoped element that has lesser or equal (<code>&lt;=</code>) height to the specified value.</p>
-   <div class="example" id="example-04650ccd">
-    <a class="self-link" href="#example-04650ccd"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-4">max-height</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>max-height<span class="nt">: 50px) </span><span class="p">{</span>
+   <div class="example" id="example-dbc313df">
+    <a class="self-link" href="#example-dbc313df"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-4">max-height</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (max-height: 50px) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2125,9 +2126,9 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-1">min-characters</a> responsive condition applies to any scoped element that contains a greater or equal (<code>>=</code>) number of characters.</p>
-   <div class="example" id="example-e35566e6">
-    <a class="self-link" href="#example-e35566e6"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-2">min-characters</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'input'</span> and <span class="p">(</span>min-characters<span class="nt">: 5) </span><span class="p">{</span>
+   <div class="example" id="example-88f74a51">
+    <a class="self-link" href="#example-88f74a51"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-2">min-characters</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> input and <span class="p">(</span>min-characters<span class="nt">: 5) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2136,9 +2137,9 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any input with 5 or more characters will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-3">max-characters</a> responsive condition applies to any scoped element that contains lesser or equal (<code>&lt;=</code>) number of characters specified.</p>
-   <div class="example" id="example-912b420b">
-    <a class="self-link" href="#example-912b420b"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-4">max-characters</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'input'</span> and <span class="p">(</span>max-characters<span class="nt">: 5) </span><span class="p">{</span>
+   <div class="example" id="example-bdb00fbf">
+    <a class="self-link" href="#example-bdb00fbf"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-4">max-characters</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> input and <span class="p">(</span>max-characters<span class="nt">: 5) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2163,9 +2164,9 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-1">min-lines</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of specified lines of text.</p>
-   <div class="example" id="example-67f15d26">
-    <a class="self-link" href="#example-67f15d26"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-2">min-lines</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'textarea'</span> and <span class="p">(</span>min-lines<span class="nt">: 3) </span><span class="p">{</span>
+   <div class="example" id="example-6581b47e">
+    <a class="self-link" href="#example-6581b47e"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-2">min-lines</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> textarea and <span class="p">(</span>min-lines<span class="nt">: 3) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2174,9 +2175,9 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any textarea with 3 or more lines will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-3">max-lines</a> responsive condition applies to any scoped element that contains lesser or equal (<code>&lt;=</code>) number of specified lines of text.</p>
-   <div class="example" id="example-84774634">
-    <a class="self-link" href="#example-84774634"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-4">max-lines</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'textarea'</span> and <span class="p">(</span>max-lines<span class="nt">: 3) </span><span class="p">{</span>
+   <div class="example" id="example-5416ef22">
+    <a class="self-link" href="#example-5416ef22"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-4">max-lines</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> textarea and <span class="p">(</span>max-lines<span class="nt">: 3) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2201,9 +2202,9 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-1">min-children</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of child elements specified.</p>
-   <div class="example" id="example-c4b5f634">
-    <a class="self-link" href="#example-c4b5f634"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-2">min-children</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.social-icons'</span> and <span class="p">(</span>min-children<span class="nt">: 5) </span><span class="p">{</span>
+   <div class="example" id="example-2052b6a6">
+    <a class="self-link" href="#example-2052b6a6"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-2">min-children</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.social-icons and (min-children: 5) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2212,9 +2213,9 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element with a class of <code>.social-icons</code> that contains more 5 or more direct descendants will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-3">max-children</a> responsive condition applies to any scoped element that contains lesser or equal (<code>&lt;=</code>) number of child elements specified.</p>
-   <div class="example" id="example-2d81e055">
-    <a class="self-link" href="#example-2d81e055"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-4">max-children</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.social-icons'</span> and <span class="p">(</span>max-children<span class="nt">: 5) </span><span class="p">{</span>
+   <div class="example" id="example-022863f4">
+    <a class="self-link" href="#example-022863f4"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-4">max-children</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.social-icons and (max-children: 5) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2239,9 +2240,9 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-1">min-scroll-y</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a vertical direction.</p>
-   <div class="example" id="example-2a76b37c">
-    <a class="self-link" href="#example-2a76b37c"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-2">min-scroll-y</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.feed'</span> and <span class="p">(</span>min-scroll-y<span class="nt">: 100px) </span><span class="p">{</span>
+   <div class="example" id="example-c9782ad2">
+    <a class="self-link" href="#example-c9782ad2"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-2">min-scroll-y</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.feed and (min-scroll-y: 100px) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2250,9 +2251,9 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element with a class of <code>.feed</code> that has scrolled <code>100px</code> or more vertical will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-3">max-scroll-y</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code>&lt;=</code>) amount to the value specified in a vertical direction.</p>
-   <div class="example" id="example-cdca554e">
-    <a class="self-link" href="#example-cdca554e"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-4">max-scroll-y</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.feed'</span> and <span class="p">(</span>max-scroll-y<span class="nt">: 100px) </span><span class="p">{</span>
+   <div class="example" id="example-af7382fc">
+    <a class="self-link" href="#example-af7382fc"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-4">max-scroll-y</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.feed and (max-scroll-y: 100px) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2277,9 +2278,9 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-1">min-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a horizontal direction.</p>
-   <div class="example" id="example-37d530df">
-    <a class="self-link" href="#example-37d530df"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-2">min-scroll-x</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.feed'</span> and <span class="p">(</span>min-scroll-x<span class="nt">: 100px) </span><span class="p">{</span>
+   <div class="example" id="example-c4342bc3">
+    <a class="self-link" href="#example-c4342bc3"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-2">min-scroll-x</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.feed and (min-scroll-x: 100px) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2288,9 +2289,9 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element with a class of <code>.feed</code> that has scrolled <code>100px</code> or more horizontally will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-3">max-scroll-x</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code>&lt;=</code>) amount to the value specified in a horizontal direction.</p>
-   <div class="example" id="example-1771fa3e">
-    <a class="self-link" href="#example-1771fa3e"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-4">max-scroll-x</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.feed'</span> and <span class="p">(</span>max-scroll-x<span class="nt">: 100px) </span><span class="p">{</span>
+   <div class="example" id="example-0ebc8650">
+    <a class="self-link" href="#example-0ebc8650"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-4">max-scroll-x</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.feed and (max-scroll-x: 100px) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2315,9 +2316,9 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-1">min-aspect-ratio</a> responsive condition applies to any scoped element with a greater or equal (<code>>=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).</p>
-   <div class="example" id="example-6bfccd88">
-    <a class="self-link" href="#example-6bfccd88"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-2">min-aspect-ratio</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>min-aspect-ratio<span class="nt">: 16/9) </span><span class="p">{</span>
+   <div class="example" id="example-f9995647">
+    <a class="self-link" href="#example-f9995647"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-2">min-aspect-ratio</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min-aspect-ratio: 16/9) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2326,9 +2327,9 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element that had an aspect ratio of <code>16/9</code> or greater would have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-3">max-aspect-ratio</a> responsive condition applies to any scoped element with a lesser or equal (<code>&lt;=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).</p>
-   <div class="example" id="example-fa4f4e88">
-    <a class="self-link" href="#example-fa4f4e88"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-4">max-aspect-ratio</a> element query 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>max-aspect-ratio<span class="nt">: 16/9) </span><span class="p">{</span>
+   <div class="example" id="example-f61bf24e">
+    <a class="self-link" href="#example-f61bf24e"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-4">max-aspect-ratio</a> element query 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (max-aspect-ratio: 16/9) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2358,9 +2359,9 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="@element/orientation" data-dfn-type="value" data-export="" id="valdef-element-orientation-portrait">portrait</dfn> 
     <dd>The <a class="property" data-link-type="propdesc" href="#descdef-element-orientation" id="ref-for-descdef-element-orientation-2">orientation</a> is <a class="css" data-link-type="maybe" href="#valdef-element-orientation-portrait" id="ref-for-valdef-element-orientation-portrait-2">portrait</a> if the scoped element has a greater (<code>></code>) height than width 
    </dl>
-   <div class="example" id="example-fac58591">
-    <a class="self-link" href="#example-fac58591"></a> Element query for <a class="css" data-link-type="maybe" href="#valdef-element-orientation-portrait" id="ref-for-valdef-element-orientation-portrait-3">portrait</a> orientation 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>orientation<span class="nt">: portrait) </span><span class="p">{</span>
+   <div class="example" id="example-3bce34e6">
+    <a class="self-link" href="#example-3bce34e6"></a> Element query for <a class="css" data-link-type="maybe" href="#valdef-element-orientation-portrait" id="ref-for-valdef-element-orientation-portrait-3">portrait</a> orientation 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (orientation: portrait) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2373,9 +2374,9 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="@element/orientation" data-dfn-type="value" data-export="" id="valdef-element-orientation-square">square</dfn> 
     <dd>The <a class="property" data-link-type="propdesc" href="#descdef-element-orientation" id="ref-for-descdef-element-orientation-3">orientation</a> is <a class="css" data-link-type="maybe" href="#valdef-element-orientation-square" id="ref-for-valdef-element-orientation-square-2">square</a> if the scoped element has an equal (<code>=</code>) height and width 
    </dl>
-   <div class="example" id="example-36810f23">
-    <a class="self-link" href="#example-36810f23"></a> Element query for <a class="css" data-link-type="maybe" href="#valdef-element-orientation-square" id="ref-for-valdef-element-orientation-square-3">square</a> orientation 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>orientation<span class="nt">: square) </span><span class="p">{</span>
+   <div class="example" id="example-5dd261ee">
+    <a class="self-link" href="#example-5dd261ee"></a> Element query for <a class="css" data-link-type="maybe" href="#valdef-element-orientation-square" id="ref-for-valdef-element-orientation-square-3">square</a> orientation 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (orientation: square) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2388,9 +2389,9 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="@element/orientation" data-dfn-type="value" data-export="" id="valdef-element-orientation-landscape">landscape</dfn> 
     <dd>The <a class="property" data-link-type="propdesc" href="#descdef-element-orientation" id="ref-for-descdef-element-orientation-4">orientation</a> is <a class="css" data-link-type="maybe" href="#valdef-element-orientation-landscape" id="ref-for-valdef-element-orientation-landscape-2">landscape</a> if the scoped element has a greater (<code>></code>) width than height 
    </dl>
-   <div class="example" id="example-e53cedbf">
-    <a class="self-link" href="#example-e53cedbf"></a> Element query for <a class="css" data-link-type="maybe" href="#valdef-element-orientation-landscape" id="ref-for-valdef-element-orientation-landscape-3">landscape</a> orientation 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> and <span class="p">(</span>orientation<span class="nt">: landscape) </span><span class="p">{</span>
+   <div class="example" id="example-0196f9e6">
+    <a class="self-link" href="#example-0196f9e6"></a> Element query for <a class="css" data-link-type="maybe" href="#valdef-element-orientation-landscape" id="ref-for-valdef-element-orientation-landscape-3">landscape</a> orientation 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (orientation: landscape) </span><span class="p">{</span>
   $this {
     background: lime;
   }
@@ -2438,14 +2439,14 @@ Parts of this work may be from another specification document.  If so, those par
    <p>This JavaScript can do something simple like reference the value of a variable, perform a simple calculation inline, or it can use the value return by a function.</p>
    <p class="note" role="note">Note, Unlike CSS variables, the <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-3">eval("")</a> function can be used anywhere in CSS: as a value, a property name, a selector, a '@media' query breakpoint - it can be used for anything, as long as it is inside of a scoped style.</p>
    <h4 class="heading settled" data-level="6.1.1" id="using-js-variables-in-css"><span class="secno">6.1.1. </span><span class="content">Using JavaScript Variables in CSS</span><a class="self-link" href="#using-js-variables-in-css"></a></h4>
-   <div class="example" id="example-a50be6c9">
-    <a class="self-link" href="#example-a50be6c9"></a> Accessing a JavaScript variable with <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-4">eval("")</a> 
+   <div class="example" id="example-66ea7b86">
+    <a class="self-link" href="#example-66ea7b86"></a> Accessing a JavaScript variable with <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-4">eval("")</a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
   <span class="kd">var</span> brandColor <span class="o">=</span> <span class="s1">'lime'</span>
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
 
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="s1">'.widget'</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="nc">.widget</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
       background<span class="o">:</span> <span class="n">eval</span><span class="p">(</span><span class="s2">"brandColor"</span><span class="p">);</span>
     <span class="p">}</span>
@@ -2455,17 +2456,17 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element with a class of <code>.widget</code> will have a green background.</p>
    </div>
    <h4 class="heading settled" data-level="6.1.2" id="writing-js-in-css"><span class="secno">6.1.2. </span><span class="content">Writing JavaScript in CSS</span><a class="self-link" href="#writing-js-in-css"></a></h4>
-   <div class="example" id="example-8f0b14c9">
-    <a class="self-link" href="#example-8f0b14c9"></a> Evaluating JavaScript Inline with <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-5">eval("")</a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> <span class="p">{</span>
+   <div class="example" id="example-b9b41852">
+    <a class="self-link" href="#example-b9b41852"></a> Evaluating JavaScript Inline with <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-5">eval("")</a> 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
   <span class="k">font-size</span><span class="p">:</span> <span class="nf">eval</span><span class="p">(</span><span class="s">"10 * 2"</span><span class="p">)</span>px<span class="p">;</span>
 <span class="p">}</span>
 </pre>
     <p>In this case our inline JavaScript (<code>10 * 2</code>) evaluates in place, leaving us with a font size of <code>20px</code>.</p>
    </div>
    <h4 class="heading settled" data-level="6.1.3" id="using-js-functions-in-css"><span class="secno">6.1.3. </span><span class="content">Using JavaScript Functions in CSS</span><a class="self-link" href="#using-js-functions-in-css"></a></h4>
-   <div class="example" id="example-78004bc6">
-    <a class="self-link" href="#example-78004bc6"></a> Using Values Returned from Functions with <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-6">eval("")</a> 
+   <div class="example" id="example-b8d52fdb">
+    <a class="self-link" href="#example-b8d52fdb"></a> Using Values Returned from Functions with <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-6">eval("")</a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
   <span class="kd">function</span> addTen<span class="p">(</span>number<span class="p">)</span><span class="p">{</span>
     <span class="kd">var</span> number <span class="o">=</span> parseInt<span class="p">(</span>number<span class="p">)</span> <span class="o">||</span> <span class="mi">0</span>
@@ -2474,7 +2475,7 @@ Parts of this work may be from another specification document.  If so, those par
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
 
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="s1">'.widget'</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="nc">.widget</span> <span class="p">{</span>
     <span class="nt">font-size</span><span class="o">:</span> <span class="nt">eval</span><span class="o">(</span><span class="s2">"addTen(15)"</span><span class="o">)</span><span class="nt">px</span><span class="o">;</span>
   <span class="p">}</span>
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
@@ -2482,14 +2483,14 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element with a class of <code>.widget</code> will have a font size of <code>25px</code>.</p>
    </div>
    <h4 class="heading settled" data-level="6.1.4" id="replacing-values-in-css"><span class="secno">6.1.4. </span><span class="content">Replacing Values in CSS</span><a class="self-link" href="#replacing-values-in-css"></a></h4>
-   <div class="example" id="example-235e7786">
-    <a class="self-link" href="#example-235e7786"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-7">eval("")</a> being used as a value: 
+   <div class="example" id="example-320ce79c">
+    <a class="self-link" href="#example-320ce79c"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-7">eval("")</a> being used as a value: 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
   <span class="kd">var</span> blue <span class="o">=</span> <span class="s1">'#07f'</span>
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
 
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="s1">'div'</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="nt">div</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
       color<span class="o">:</span> <span class="n">eval</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">);</span>
     <span class="p">}</span>
@@ -2499,15 +2500,15 @@ Parts of this work may be from another specification document.  If so, those par
     <p>This example would be equivalent to: <code>div { color: #07f; }</code></p>
    </div>
    <h4 class="heading settled" data-level="6.1.5" id="replacing-properties-in-css"><span class="secno">6.1.5. </span><span class="content">Replacing Properties in CSS</span><a class="self-link" href="#replacing-properties-in-css"></a></h4>
-   <div class="example" id="example-631ca87a">
-    <a class="self-link" href="#example-631ca87a"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-8">eval("")</a> being used as a property: 
+   <div class="example" id="example-f590018b">
+    <a class="self-link" href="#example-f590018b"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-8">eval("")</a> being used as a property: 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
   <span class="kd">var</span> browser <span class="o">=</span> <span class="sr">/Safari/</span><span class="p">.</span>test<span class="p">(</span>navigator<span class="p">.</span>userAgent<span class="p">)</span> <span class="o">?</span> <span class="s1">'-webkit-'</span><span class="o">:</span><span class="s1">''</span>
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
 
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="s1">'input'</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="nt">input</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
       <span class="n">eval</span><span class="p">(</span><span class="s1">'browser'</span><span class="p">)</span><span class="n">appearance</span><span class="o">:</span> none<span class="p">;</span>
     <span class="p">}</span>
@@ -2517,14 +2518,14 @@ Parts of this work may be from another specification document.  If so, those par
     <p>This example would use the property: <code>-webkit-appearance</code> if the browser was Safari, otherwise would use: <code>appearance</code>.</p>
    </div>
    <h4 class="heading settled" data-level="6.1.6" id="replacing-selectors-in-css"><span class="secno">6.1.6. </span><span class="content">Replacing Selectors in CSS</span><a class="self-link" href="#replacing-selectors-in-css"></a></h4>
-   <div class="example" id="example-82befd5f">
-    <a class="self-link" href="#example-82befd5f"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-9">eval("")</a> replacing a list of selectors: 
+   <div class="example" id="example-61d13c99">
+    <a class="self-link" href="#example-61d13c99"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-9">eval("")</a> replacing a list of selectors: 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
   <span class="kd">var</span> buttonish <span class="o">=</span> <span class="s1">'[type=button], [type=submit], [type=reset], button'</span>
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
 
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="s1">'html'</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="nt">html</span> <span class="p">{</span>
     <span class="nt">eval</span><span class="o">(</span><span class="s1">'buttonish'</span><span class="o">)</span> <span class="p">{</span>
       <span class="n">appearance</span><span class="o">:</span> none<span class="p">;</span>
       color<span class="o">:</span> black<span class="p">;</span>
@@ -2549,25 +2550,25 @@ Parts of this work may be from another specification document.  If so, those par
    <dl>
     <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-it">$it</dfn> 
     <dd>
-      By default the inline evaluation of <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-11">eval("")</a> shares the same scope in JavaScript as the scoped element. This means for a scoped style like <code>@element '.widget' {}</code>, things like <code>innerHTML</code> represent the <code>innerHTML</code> of the elements with <code>.widget</code>. This would also apply individually to each element if more than one element on the page matches that selector. In this example we can use <code>parentNode</code> inside of <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-12">eval("")</a> to check how many child elements the parent element holding any <code>.widget</code> element contains. 
-     <div class="example" id="example-a827d451">
-      <a class="self-link" href="#example-a827d451"></a> Example of <span class="css">eval("")</span> with Implicit Context 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> <span class="p">{</span>
-  <span class="nt">$this:before </span><span class="p">{</span>
-    <span class="k">content</span><span class="p">:</span> <span class="s">'eval("parentNode.children.length")'</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+      By default the inline evaluation of <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-11">eval("")</a> shares the same scope in JavaScript as the scoped element. This means for a scoped style like <code>@element .widget {}</code>, things like <code>innerHTML</code> represent the <code>innerHTML</code> of the elements with <code>.widget</code>. This would also apply individually to each element if more than one element on the page matches that selector. In this example we can use <code>parentNode</code> inside of <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-12">eval("")</a> to check how many child elements the parent element holding any <code>.widget</code> element contains. 
+     <div class="example" id="example-ad60e265">
+      <a class="self-link" href="#example-ad60e265"></a> Example of <span class="css">eval("")</span> with Implicit Context 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
+  $this:before {
+    content: 'eval("parentNode.children.length")';
+  }
+}
 </pre>
       <p>In this case the pseudo-element <code>:before</code> the content of any element with a class of <code>.widget</code> will contain text of the number of child elements inside the parent element of our <code>.widget</code> element.</p>
      </div>
      <p>The meta-selector <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-it" id="ref-for-selectordef-meta-selectors-it-1">$it</a> works inside <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-13">eval("")</a> as a placeholder for the scoped element. The following example is functionally equivalent to the last example:</p>
-     <div class="example" id="example-4881b5ba">
-      <a class="self-link" href="#example-4881b5ba"></a> Example of <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-14">eval("")</a> with the <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-it" id="ref-for-selectordef-meta-selectors-it-2">$it</a> Selector 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> <span class="p">{</span>
-  <span class="nt">$this:before </span><span class="p">{</span>
-    <span class="k">content</span><span class="p">:</span> <span class="s">'eval("$it.parentNode.children.length")'</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+     <div class="example" id="example-b23dd32e">
+      <a class="self-link" href="#example-b23dd32e"></a> Example of <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-14">eval("")</a> with the <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-it" id="ref-for-selectordef-meta-selectors-it-2">$it</a> Selector 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
+  $this:before {
+    content: 'eval("$it.parentNode.children.length")';
+  }
+}
 </pre>
      </div>
    </dl>
@@ -2578,13 +2579,13 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="eq-unit" data-dfn-type="value" data-export="" data-lt="ew" id="ew">ew unit</dfn> 
     <dd>
       Equal to 1% of the width of the scoped element 
-     <div class="example" id="example-8ec51de7">
-      <a class="self-link" href="#example-8ec51de7"></a> Example of ew Units Inside a Scoped Style 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> <span class="p">{</span>
-  <span class="nt">$this </span><span class="p">{</span>
-    <span class="k">font-size</span><span class="p">:</span> <span class="m">10</span><span class="l">ew</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+     <div class="example" id="example-9ad46d35">
+      <a class="self-link" href="#example-9ad46d35"></a> Example of ew Units Inside a Scoped Style 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
+  $this {
+    font-size: 10ew;
+  }
+}
 </pre>
       <p>In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element’s width.</p>
      </div>
@@ -2592,41 +2593,41 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="eq-unit" data-dfn-type="value" data-export="" data-lt="eh" id="eh">eh unit</dfn> 
     <dd>
       Equal to 1% of the height of the scoped element 
-     <div class="example" id="example-55e98baa">
-      <a class="self-link" href="#example-55e98baa"></a> Example of eh Units Inside a Scoped Style 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> <span class="p">{</span>
-  <span class="nt">$this </span><span class="p">{</span>
-    <span class="k">font-size</span><span class="p">:</span> <span class="m">10</span><span class="l">eh</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+     <div class="example" id="example-47c40838">
+      <a class="self-link" href="#example-47c40838"></a> Example of eh Units Inside a Scoped Style 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
+  $this {
+    font-size: 10eh;
+  }
+}
 </pre>
       <p>In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element’s height.</p>
      </div>
      <p class="note" role="note">Note, This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vh">vh</a> viewport unit, but based on the scoped element’s dimensions.</p>
     <dt><dfn class="dfn-paneled css" data-dfn-for="eq-unit" data-dfn-type="value" data-export="" data-lt="emin" id="emin">emin unit</dfn> 
     <dd>
-      Equal to the smaller of ew or eh 
-     <div class="example" id="example-84d58a8e">
-      <a class="self-link" href="#example-84d58a8e"></a> Example of emin Units Inside a Scoped Style 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> <span class="p">{</span>
-  <span class="nt">$this </span><span class="p">{</span>
-    <span class="k">font-size</span><span class="p">:</span> <span class="m">10</span><span class="l">emin</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+      Equal to the smaller of 1ew or 1eh 
+     <div class="example" id="example-a386ef2b">
+      <a class="self-link" href="#example-a386ef2b"></a> Example of emin Units Inside a Scoped Style 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
+  $this {
+    font-size: 10emin;
+  }
+}
 </pre>
       <p>In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element’s shortest edge.</p>
      </div>
      <p class="note" role="note">Note, This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmin">vmin</a> viewport unit, but based on the scoped element’s dimensions.</p>
     <dt><dfn class="dfn-paneled css" data-dfn-for="eq-unit" data-dfn-type="value" data-export="" data-lt="emax" id="emax">emax unit</dfn> 
     <dd>
-      Equal to the larger of ew or eh 
-     <div class="example" id="example-ea2b3e97">
-      <a class="self-link" href="#example-ea2b3e97"></a> Example of emax Units Inside a Scoped Style 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'.widget'</span> <span class="p">{</span>
-  <span class="nt">$this </span><span class="p">{</span>
-    <span class="k">font-size</span><span class="p">:</span> <span class="m">10</span><span class="l">emax</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+      Equal to the larger of 1ew or 1eh 
+     <div class="example" id="example-e1505f84">
+      <a class="self-link" href="#example-e1505f84"></a> Example of emax Units Inside a Scoped Style 
+<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
+  $this {
+    font-size: 10emax;
+  }
+}
 </pre>
       <p>In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element’s longest edge.</p>
      </div>
@@ -2634,32 +2635,32 @@ Parts of this work may be from another specification document.  If so, those par
    </dl>
    <h2 class="heading settled" data-level="8" id="examples-of-element-queries"><span class="secno">8. </span><span class="content">Examples of Scoped Styles &amp; Element Queries</span><a class="self-link" href="#examples-of-element-queries"></a></h2>
    <h3 class="heading settled" data-level="8.1" id="example-scoped-styles"><span class="secno">8.1. </span><span class="content">Examples of valid scoped styles</span><a class="self-link" href="#example-scoped-styles"></a></h3>
-   <div class="example" id="example-950901a4">
-    <a class="self-link" href="#example-950901a4"></a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'div'</span> <span class="p">{}</span>
+   <div class="example" id="example-8b47030f">
+    <a class="self-link" href="#example-8b47030f"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> div <span class="p">{}</span>
 </pre>
    </div>
-   <div class="example" id="example-4e71e53b">
-    <a class="self-link" href="#example-4e71e53b"></a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'div, span'</span> <span class="p">{}</span>
+   <div class="example" id="example-017be57d">
+    <a class="self-link" href="#example-017be57d"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> div<span class="p">,</span> span <span class="p">{}</span>
 </pre>
    </div>
-   <div class="example" id="example-b0263c7e">
-    <a class="self-link" href="#example-b0263c7e"></a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'div'</span> and <span class="p">(</span>min-width<span class="nt">: 500px) </span><span class="p">{</span><span class="p">}</span>
+   <div class="example" id="example-4541b4fc">
+    <a class="self-link" href="#example-4541b4fc"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> div and <span class="p">(</span>min-width<span class="nt">: 500px) </span><span class="p">{</span><span class="p">}</span>
 </pre>
    </div>
-   <div class="example" id="example-a3e255ae">
-    <a class="self-link" href="#example-a3e255ae"></a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="s">'div'</span> and <span class="p">(</span>min-width<span class="nt">: 500px) and (min-lines: 3) </span><span class="p">{</span><span class="p">}</span>
+   <div class="example" id="example-c56eba64">
+    <a class="self-link" href="#example-c56eba64"></a> 
+<pre class="language-css highlight"><span class="n">@element</span> div and <span class="p">(</span>min-width<span class="nt">: 500px) and (min-lines: 3) </span><span class="p">{</span><span class="p">}</span>
 </pre>
    </div>
    <h3 class="heading settled" data-level="8.2" id="wrapper-free-responsive-iframe"><span class="secno">8.2. </span><span class="content">Wrapper-free responsive iframe resize</span><a class="self-link" href="#wrapper-free-responsive-iframe"></a></h3>
-   <div class="example" id="example-e3f9465f">
-    <a class="self-link" href="#example-e3f9465f"></a> 
+   <div class="example" id="example-b3c79697">
+    <a class="self-link" href="#example-b3c79697"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">width</span><span class="o">=</span><span class="s">"640"</span> <span class="na">height</span><span class="o">=</span><span class="s">"360"</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">iframe</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="s1">'iframe'</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="nt">iframe</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
       width<span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
       height<span class="o">:</span> <span class="n">eval</span><span class="p">(</span><span class="s1">'offsetWidth / (width / height)'</span><span class="p">)</span>px<span class="p">;</span>
@@ -2670,18 +2671,18 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this example the <code>iframe</code> element has a <code>width=""</code> and <code>height=""</code> attribute supplied in HTML which is being accessed from CSS using <code>$it.width</code> and <code>$it.height</code> inside our <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-15">eval("")</a> function. Because we are able to compute the HTML attributes directly, this one rule will make multiple <code>iframe</code> elements with <em>different</em> attribute values on the same page responsive, as it computes each iframe separately as <code>$this</code>.</p>
    </div>
    <h3 class="heading settled" data-level="8.3" id="faking-input-empty"><span class="secno">8.3. </span><span class="content">Faking <code>input:empty</code></span><a class="self-link" href="#faking-input-empty"></a></h3>
-   <div class="example" id="example-baf82963">
-    <a class="self-link" href="#example-baf82963"></a> 
+   <div class="example" id="example-3af08ad2">
+    <a class="self-link" href="#example-3af08ad2"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
   <span class="c">/* input:empty */</span>
-  <span class="k">@element</span> <span class="s1">'input'</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-characters</span><span class="o">:</span> <span class="nt">0</span><span class="o">)</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="nt">input</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-characters</span><span class="o">:</span> <span class="nt">0</span><span class="o">)</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
       background<span class="o">:</span> red<span class="p">;</span>
     <span class="p">}</span>
   <span class="p">}</span>
   <span class="c">/* input:not(:empty) */</span>
-  <span class="k">@element</span> <span class="s1">'input'</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-characters</span><span class="o">:</span> <span class="nt">1</span><span class="o">)</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="nt">input</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-characters</span><span class="o">:</span> <span class="nt">1</span><span class="o">)</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
       background<span class="o">:</span> lime<span class="p">;</span>
     <span class="p">}</span>
@@ -2691,11 +2692,11 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this example we are able to apply styles based on whether there are zero or at least one characters inside any <code>input</code> element. CSS has the pseudo-class <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#empty-pseudo">:empty</a>, however it doesn’t apply to all elements (like <code>input</code> elements) so by using <code>max-characters</code> and <code>min-characters</code> with element queries we are able to express and style a similar idea.</p>
    </div>
    <h3 class="heading settled" data-level="8.4" id="auto-expanding-textarea"><span class="secno">8.4. </span><span class="content">Auto-expanding <code>textarea</code></span><a class="self-link" href="#auto-expanding-textarea"></a></h3>
-   <div class="example" id="example-fda853eb">
-    <a class="self-link" href="#example-fda853eb"></a> 
+   <div class="example" id="example-f69263b3">
+    <a class="self-link" href="#example-f69263b3"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">textarea</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">textarea</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="s1">'textarea'</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="nt">textarea</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
       height<span class="o">:</span> <span class="n">eval</span><span class="p">(</span><span class="s2">"style.height='inherit';style.height=scrollHeight+'px'"</span><span class="p">);</span>
     <span class="p">}</span>
@@ -2705,10 +2706,10 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this example we are using <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-16">eval("")</a> to reset the height value of our element and immediately set it to the scrollHeight of the element, ensuring that no matter how many lines of text it contains, it will always expand &amp; contract to contain all of them.</p>
    </div>
    <h3 class="heading settled" data-level="8.5" id="display-browser-dimensions"><span class="secno">8.5. </span><span class="content">Display Browser Dimensions</span><a class="self-link" href="#display-browser-dimensions"></a></h3>
-   <div class="example" id="example-66971180">
-    <a class="self-link" href="#example-66971180"></a> 
+   <div class="example" id="example-1a60d540">
+    <a class="self-link" href="#example-1a60d540"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="s1">':root'</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="nd">:root</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span><span class="nd">:before</span> <span class="p">{</span>
       content<span class="o">:</span> <span class="s1">'eval("window.innerWidth") × eval("window.innerHeight")'</span><span class="p">;</span>
       position<span class="o">:</span> fixed<span class="p">;</span>
@@ -2721,8 +2722,8 @@ Parts of this work may be from another specification document.  If so, those par
     <p>This example will create a new pseudo-element on our ':root' element (the HTML element) and uses <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-17">eval("")</a> to display the <code>innerWidth</code> and <code>innerHeight</code> values of our <code>window</code>.</p>
    </div>
    <h3 class="heading settled" data-level="8.6" id="self-responsive-grid"><span class="secno">8.6. </span><span class="content">Self-responsive Grid</span><a class="self-link" href="#self-responsive-grid"></a></h3>
-   <div class="example" id="example-2beb31a9">
-    <a class="self-link" href="#example-2beb31a9"></a> 
+   <div class="example" id="example-fa975eeb">
+    <a class="self-link" href="#example-fa975eeb"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">h2</span><span class="p">></span>Responsive Grid<span class="p">&lt;</span><span class="p">/</span><span class="nt">h2</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">p</span><span class="p">></span>Small = full width, Medium = thirds, Large = sixths.<span class="p">&lt;</span><span class="p">/</span><span class="nt">p</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">section</span> <span class="na">data-grid</span><span class="p">></span>
@@ -2764,7 +2765,7 @@ Parts of this work may be from another specification document.  If so, those par
     border<span class="o">:</span> <span class="m">5px</span> solid white<span class="p">;</span>
   <span class="p">}</span>
   <span class="c">/* Element Query Grid */</span>
-  <span class="k">@element</span> <span class="s1">'[data-grid]'</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="o">[</span><span class="nt">data-grid</span><span class="o">]</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span><span class="o">,</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">*</span> <span class="p">{</span>
       <span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> border<span class="o">-</span><span class="n">box</span><span class="p">;</span>
@@ -2798,7 +2799,7 @@ Parts of this work may be from another specification document.  If so, those par
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">9</span><span class="p">);</span> <span class="p">}</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">10</span><span class="p">);</span> <span class="p">}</span>
   <span class="p">}</span>
-  <span class="k">@element</span> <span class="s1">'[data-grid]'</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">400px</span><span class="o">)</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="o">[</span><span class="nt">data-grid</span><span class="o">]</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">400px</span><span class="o">)</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">10%</span><span class="p">;</span> <span class="p">}</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">20%</span><span class="p">;</span> <span class="p">}</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">30%</span><span class="p">;</span> <span class="p">}</span>
@@ -2821,7 +2822,7 @@ Parts of this work may be from another specification document.  If so, those par
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">10</span><span class="p">);</span> <span class="p">}</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">hide-small</span><span class="o">]</span> <span class="p">{</span> display<span class="o">:</span> none<span class="p">;</span> <span class="p">}</span>
   <span class="p">}</span>
-  <span class="k">@element</span> <span class="s1">'[data-grid]'</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">400px</span><span class="o">)</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">800px</span><span class="o">)</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="o">[</span><span class="nt">data-grid</span><span class="o">]</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">400px</span><span class="o">)</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">800px</span><span class="o">)</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">10%</span><span class="p">;</span> <span class="p">}</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">20%</span><span class="p">;</span> <span class="p">}</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">30%</span><span class="p">;</span> <span class="p">}</span>
@@ -2844,7 +2845,7 @@ Parts of this work may be from another specification document.  If so, those par
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">10</span><span class="p">);</span> <span class="p">}</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">hide-medium</span><span class="o">]</span> <span class="p">{</span> display<span class="o">:</span> none<span class="p">;</span> <span class="p">}</span>
   <span class="p">}</span>
-  <span class="k">@element</span> <span class="s1">'[data-grid]'</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">800px</span><span class="o">)</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="o">[</span><span class="nt">data-grid</span><span class="o">]</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">800px</span><span class="o">)</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">10%</span><span class="p">;</span> <span class="p">}</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">20%</span><span class="p">;</span> <span class="p">}</span>
     <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">30%</span><span class="p">;</span> <span class="p">}</span>
@@ -2872,8 +2873,8 @@ Parts of this work may be from another specification document.  If so, those par
     <p>This example uses <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-22">@element</a> queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-6">$this</a>, we can use these same styles to power many grids in the same layout all using the same styles.</p>
    </div>
    <h3 class="heading settled" data-level="8.7" id="using-variables-as-selectors"><span class="secno">8.7. </span><span class="content">Using Variables as Selectors</span><a class="self-link" href="#using-variables-as-selectors"></a></h3>
-   <div class="example" id="example-7dacbc69">
-    <a class="self-link" href="#example-7dacbc69"></a> 
+   <div class="example" id="example-bd866e9f">
+    <a class="self-link" href="#example-bd866e9f"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">hidden</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">hidden</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">text</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">text</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">search</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">search</span><span class="p">></span>
@@ -2907,7 +2908,7 @@ Parts of this work may be from another specification document.  If so, those par
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
   <span class="c">/* set width for most inputs */</span>
-  <span class="k">@element</span> <span class="s1">':root'</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="nd">:root</span> <span class="p">{</span>
     <span class="c">/* Style all selectors in 'textish' array */</span>
     <span class="nt">eval</span><span class="o">(</span><span class="s1">'textish'</span><span class="o">)</span> <span class="p">{</span>
       display<span class="o">:</span> block<span class="p">;</span>
@@ -2927,8 +2928,8 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this example we use <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-18">eval("")</a> to return either a list of selectors (stored as strings in a JavaScript array) or we use the return from a function that allows us to append strings like ':hover', or ':focus' to each selector as it gives them to use as a selector or selector list in our CSS inside of a scoped style. For manipulating or styling many similar things (like text-style inputs but not other inputs) we can simplify the selectors we need to use throughout our CSS while maintaining full control over what gets styled.</p>
    </div>
    <h3 class="heading settled" data-level="8.8" id="clamped-numbers-in-CSS"><span class="secno">8.8. </span><span class="content">Clamped Numbers in CSS</span><a class="self-link" href="#clamped-numbers-in-CSS"></a></h3>
-   <div class="example" id="example-44b5a47f">
-    <a class="self-link" href="#example-44b5a47f"></a> 
+   <div class="example" id="example-713a962c">
+    <a class="self-link" href="#example-713a962c"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">h1</span><span class="p">></span>Headline<span class="p">&lt;</span><span class="p">/</span><span class="nt">h1</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
   <span class="kd">function</span> clamp<span class="p">(</span>min<span class="p">,</span>mid<span class="p">,</span>max<span class="p">)</span><span class="p">{</span>
@@ -2936,7 +2937,7 @@ Parts of this work may be from another specification document.  If so, those par
   <span class="p">}</span>
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="s1">'h1'</span> <span class="p">{</span>
+  <span class="k">@element</span> <span class="nt">h1</span> <span class="p">{</span>
     <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
       font-size<span class="o">:</span> <span class="n">eval</span><span class="p">(</span><span class="s1">'clamp(50,innerWidth/10,100)'</span><span class="p">)</span>px<span class="p">;</span>
     <span class="p">}</span>
@@ -2945,6 +2946,11 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this example our font size prefers to be equal to <code>window.innerWidth/10</code> pixels wide, but our JavaScript function will clamp that value for us, ensuring that if <code>innerWidth/10</code> is less than 50, our font size will go no lower than <code>50px</code>, and if <code>innerWidth/10</code> is greater than 100, our font size will grow no larger than <code>100px</code>.</p>
    </div>
+   <h2 class="heading settled" data-level="9" id="requirements"><span class="secno">9. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
+   <ul>
+    <li data-md="">
+     <p>The solution must allow authors the ability to target elements on the page based on the existence, and properties of elements on the page.</p>
+   </ul>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
