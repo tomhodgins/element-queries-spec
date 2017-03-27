@@ -1,21 +1,21 @@
 /* Element Queries External Script */
 
 /* Scoped Style */
-@element 'div' {
+@element div {
   html {
     background: lime;
   }
 }
 
 /* Element Query */
-@element 'div' and (min-width: 500px) {
+@element div and (min-width: 500px) {
   $this {
     background: lime;
   }
 }
 
 /* Container Query */
-@element 'div' and (min-width: 500px) {
+@element div and (min-width: 500px) {
   $this {
     background: lime;
   }
@@ -25,14 +25,14 @@
 }
 
 /* Multiple Selectors */
-@element '#example-1, #example-2' {
+@element #example-1, #example-2 {
   $this {
     background: lime;
   }
 }
 
 /* Multiple Conditions */
-@element 'div' and (min-width: 500px) and (min-characters: 5) {
+@element div and (min-width: 500px) and (min-characters: 5) {
   $this {
     background: lime;
   }

@@ -12,21 +12,21 @@ This spec aims to define a syntax for scoped styles and element queries in a con
 
 ```css
 /* Scoped Style */
-@element 'div' {
+@element div {
   $this {
     background: lime;
   }
 }
 
 /* Element Query */
-@element 'div' and (min-width: 500px) {
+@element div and (min-width: 500px) {
   $this {
     background: lime;
   }
 }
 
 /* Container Query */
-@element 'div' and (min-width: 500px) {
+@element div and (min-width: 500px) {
   $this {
     background: lime;
   }
@@ -36,14 +36,14 @@ This spec aims to define a syntax for scoped styles and element queries in a con
 }
 
 /* Multiple Selectors */
-@element '#example-1, #example-2' {
+@element #example-1, #example-2 {
   $this {
     background: lime;
   }
 }
 
 /* Multiple Conditions */
-@element 'div' and (min-width: 500px) and (min-characters: 5) {
+@element div and (min-width: 500px) and (min-characters: 5) {
   $this {
     background: lime;
   }
