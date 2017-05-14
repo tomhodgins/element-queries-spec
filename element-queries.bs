@@ -1411,4 +1411,18 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
 <h2 id=requirements>Requirements</h2>
 
-- The solution must allow authors the ability to target elements on the page based on the existence, and properties of elements on the page.
+Scoped Styles + Element/Container Queries
+
+- The solution must allow authors the ability to add a stylesheet to the page based the existence of at least one element in the document matching a given selector (scoped styles)
+- The solution must allow authors to query various properties of the elements on the page matching a given selector like: width, height, or number of child elements. (element/container queries)
+- The solution must provide a way to use only those elements which match a selector (and optional conditions) as part of a CSS selector for a rule. ($this meta-selector)
+- The solution should provide a way to select the parent element of only those elements which match a selector (and optional conditions). ($parent meta-selector)
+- The solution should provide a way to select the element previous to those elements which match a selector (and optional conditions). ($prev meta-selector)
+- The solution should provide a way to select the element following those elements which match a selector (and optional conditions). ($next meta-selector)
+
+Element-Based Units
+
+- The solution must provide a length unit equal to 1% of the width of elements which match a selector (and optional conditions). (EW unit)
+- The solution must provide a length unit equal to 1% of the height of elements which match a selector (and optional conditions). (EH unit)
+- The solution must provide a length unit equal to 1% of the shortest edge of elements which match a selector (and optional conditions). (EMIN unit)
+- The solution must provide a length unit equal to 1% of the longest edge of elements which match a selector (and optional conditions). (EMAX unit)
