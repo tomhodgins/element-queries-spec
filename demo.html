@@ -465,28 +465,6 @@
 }
 </style>
 
-<h2 id=css-functions>CSS Functions</h2>
-
-<h3 id=eval>eval("")</h3>
-<div class="eval">
-  <p><strong>Current Year:</strong></p>
-  <p><em>Viewport Size:</em></p>
-</div>
-
-<style>/* eval('') */
-
-@element "strong" {
-  $this:after {
-    content: ' eval("new Date().getFullYear()")';
-  }
-}
-@element "em" {
-  $this:after {
-    content: ' eval("window.innerWidth+' x '+window.innerHeight")';
-  }
-}
-</style>
-
 <h2 id=css-units>CSS Units</h2>
 
 <h3 id=ew-units>EW (Element Width)</h3>
