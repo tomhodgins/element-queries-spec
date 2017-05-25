@@ -311,11 +311,10 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <dfn dfn-type=type>&lt;eq-value></dfn> = <<integer>> | <<dimension>> | <<ratio>> | <<ident>>
 
-    <dfn dfn-type=selector>meta-selectors</dfn> = $this | $parent | $prev | $next | $it
+    <dfn dfn-type=selector>meta-selectors</dfn> = $this | $parent | $prev | $next
 
     <dfn dfn-type=dfn>eq-unit</dfn> = ew | eh | emin | emax
 
-    <dfn dfn-type=function>eval("")</dfn> = eval(" ''javascript-code'' ")
   </pre>
 
   <h3 id=evaluating-element-queries>Evaluating Element Queries</h3>
@@ -810,189 +809,6 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         In this case any element with a class of <code>.widget</code> that is wider than it is tall will have a green background.
       </div>
 
-<h2 id=css-functions>CSS Functions</h2>
-
-  <h3 id=eval>eval("")</h3>
-
-    Note, Much of the functionality of this feature is similar to CSS variables, however being able to execute JavaScript from the vantage point of the element in the scope could perhaps be a way that CSS variables could be used a little differently inside scoped styles or element queries.
-
-    The <a>eval("")</a> function can be used anywhere inside a scoped style or element query. It shares a scope with the element in the root of the scoped style.
-
-    <pre class=railroad>
-      T: eval("
-      N: javascript
-      T: ")
-    </pre>
-
-    When using <a>eval("")</a> you can write <code>eval</code>, followed by a pair of brackets (<code>(</code>,<code>)</code>) which contain JavaScript code, wrapped in either single (<code>'</code>) or double (<code>"</code>) quotes.
-
-    This JavaScript can do something simple like reference the value of a variable, perform a simple calculation inline, or it can use the value return by a function.
-
-      Note, Unlike CSS variables, the <a>eval("")</a> function can be used anywhere in CSS: as a value, a property name, a selector, a '@media' query breakpoint - it can be used for anything, as long as it is inside of a scoped style.
-
-    <h4 id=using-js-variables-in-css>Using JavaScript Variables in CSS</h4>
-
-      <div class=example>
-        Accessing a JavaScript variable with <a>eval("")</a></strong>
-        <pre class=language-html>
-          &lt;script>
-            var brandColor = 'lime'
-          &lt;/script>
-
-          &lt;style>
-            @element .widget {
-              $this {
-                background: eval("brandColor");
-              }
-            }
-          &lt;/style>
-        </pre>
-        In this case any element with a class of <code>.widget</code> will have a green background.
-      </div>
-
-      <h4 id=writing-js-in-css>Writing JavaScript in CSS</h4>
-
-      <div class=example>
-        Evaluating JavaScript Inline with <a>eval("")</a>
-        <pre class=language-css>
-          @element .widget {
-            font-size: eval("10 * 2")px;
-          }
-        </pre>
-        In this case our inline JavaScript (<code>10 * 2</code>) evaluates in place, leaving us with a font size of <code>20px</code>.
-      </div>
-
-      <h4 id=using-js-functions-in-css>Using JavaScript Functions in CSS</h4>
-
-      <div class=example>
-        Using Values Returned from Functions with <a>eval("")</a></strong>
-        <pre class=language-html>
-          &lt;script>
-            function addTen(number){
-              var number = parseInt(number) || 0
-              return number + 10
-            }
-          &lt;/script>
-
-          &lt;style>
-            @element .widget {
-              font-size: eval("addTen(15)")px;
-            }
-          &lt;/style>
-        </pre>
-        In this case any element with a class of <code>.widget</code> will have a font size of <code>25px</code>.
-      </div>
-
-    <h4 id=replacing-values-in-css>Replacing Values in CSS</h4>
-
-      <div class=example>
-        Here is <a>eval("")</a> being used as a value:
-        <pre class=language-html>
-          &lt;script>
-            var blue = '#07f'
-          &lt;/script>
-
-          &lt;style>
-            @element div {
-              $this {
-                color: eval("blue");
-              }
-            }
-          &lt;/style>
-        </pre>
-        This example would be equivalent to: <code>div { color: #07f; }</code>
-      </div>
-
-    <h4 id=replacing-properties-in-css>Replacing Properties in CSS</h4>
-
-      <div class=example>
-        Here is <a>eval("")</a> being used as a property:
-        <pre class=language-html>
-          &lt;input>
-          &lt;script>
-            var browser = /Safari/.test(navigator.userAgent) ? '-webkit-':''
-          &lt;/script>
-
-          &lt;style>
-            @element input {
-              $this {
-                eval('browser')appearance: none;
-              }
-            }
-          &lt;/style>
-        </pre>
-        This example would use the property: <code>-webkit-appearance</code> if the browser was Safari, otherwise would use: <code>appearance</code>.
-      </div>
-
-    <h4 id=replacing-selectors-in-css>Replacing Selectors in CSS</h4>
-
-      <div class=example>
-        Here is <a>eval("")</a> replacing a list of selectors:
-        <pre class=language-html>
-          &lt;script>
-            var buttonish = '[type=button], [type=submit], [type=reset], button'
-          &lt;/script>
-
-          &lt;style>
-            @element html {
-              eval('buttonish') {
-                appearance: none;
-                color: black;
-                background: white;
-                border: 1px solid currentColor;
-              }
-            }
-          &lt;/style>
-        </pre>
-        This example would be equivalent the following rule:
-        <pre class=language-css>
-          [type=button], [type=submit], [type=reset], button {
-            appearance: none;
-            color: black;
-            background: white;
-            border: 1px solid currentColor;
-          }
-        </pre>
-        Check the <a href=#using-variables-as-selectors>Using Variables as Selectors</a> example below for a more elaborate demonstration, including pseudo-classes like <code>:hover</code> or <code>:focus</code>
-      </div>
-
-      Note, Because <a>eval("")</a> works everywhere in CSS inside of a scoped style, it's also possible to use inside the 'content' property for pseudo-elements like ''before'' and ''after''.
-
-    <h4 id=it-selector><code>$it</code> selector</h4>
-
-<dl dfn-type=selector dfn-for=meta-selectors>
-
-    <dt><dfn>$it</dfn>
-    <dd>
-      By default the inline evaluation of <a>eval("")</a> shares the same scope in JavaScript as the scoped element. This means for a scoped style like <code>@element .widget {}</code>, things like <code>innerHTML</code> represent the <code>innerHTML</code> of the elements with <code>.widget</code>. This would also apply individually to each element if more than one element on the page matches that selector. In this example we can use <code>parentNode</code> inside of <a>eval("")</a> to check how many child elements the parent element holding any <code>.widget</code> element contains.
-
-      <div class=example>
-        Example of ''eval("")'' with Implicit Context
-        <pre class=language-css>
-          @element .widget {
-            $this:before {
-              content: 'eval("parentNode.children.length")';
-            }
-          }
-        </pre>
-        In this case the pseudo-element <code>:before</code> the content of any element with a class of <code>.widget</code> will contain text of the number of child elements inside the parent element of our <code>.widget</code> element.
-      </div>
-
-      The meta-selector <a selector>$it</a> works inside <a>eval("")</a> as a placeholder for the scoped element. The following example is functionally equivalent to the last example:
-
-      <div class=example>
-        Example of <a>eval("")</a> with the <a selector>$it</a> Selector
-        <pre class=language-css>
-          @element .widget {
-            $this:before {
-              content: 'eval("$it.parentNode.children.length")';
-            }
-          }
-        </pre>
-      </div>
-
-    </dl>
-
 <h2 id=element-percentage-units>Element-percentage Units</h2>
 
   Just as CSS has viewport-percentage units: ''vw'', ''vh'', ''vmin'', and ''vmax'' which represent a distance equal to 1% of the viewport width, height, shortest edge, and longest edge, in a similar way the following element-percentage units ''ew'', ''eh'', ''emin'', and ''emax'' represent a distance equal to 1% of the element's own width, height, shortest edge, and longest edge. When the width of height of the element changes, the value of these units scale accordingly.
@@ -1104,23 +920,6 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
   </div>
 
 
-<h3 id=wrapper-free-responsive-iframe>Wrapper-free responsive iframe resize</h3>
-
-  <div class=example>
-    <pre class=language-html>
-      &lt;iframe width="640" height="360">&lt;/iframe>
-      &lt;style>
-        @element iframe {
-          $this {
-            width: 100%;
-            height: eval('offsetWidth / (width / height)')px;
-          }
-        }
-      &lt;/style>
-    </pre>
-    In this example the <code>iframe</code> element has a <code>width=""</code> and <code>height=""</code> attribute supplied in HTML which is being accessed from CSS using <code>$it.width</code> and <code>$it.height</code> inside our <a>eval("")</a> function. Because we are able to compute the HTML attributes directly, this one rule will make multiple <code>iframe</code> elements with <em>different</em> attribute values on the same page responsive, as it computes each iframe separately as <code>$this</code>.
-  </div>
-
 <h3 id=faking-input-empty>Faking <code>input:empty</code></h3>
 
   <div class=example>
@@ -1144,39 +943,6 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     In this example we are able to apply styles based on whether there are zero or at least one characters inside any <code>input</code> element. CSS has the pseudo-class '':empty'', however it doesn't apply to all elements (like <code>input</code> elements) so by using <code>max-characters</code> and <code>min-characters</code> with element queries we are able to express and style a similar idea.
   </div>
 
-<h3 id=auto-expanding-textarea>Auto-expanding <code>textarea</code></h3>
-
-  <div class=example>
-    <pre class=language-html>
-      &lt;textarea>&lt;/textarea>
-      &lt;style>
-        @element textarea {
-          $this {
-            height: eval("style.height='inherit';style.height=scrollHeight+'px'");
-          }
-        }
-      &lt;/style>
-    </pre>
-    In this example we are using <a>eval("")</a> to reset the height value of our element and immediately set it to the scrollHeight of the element, ensuring that no matter how many lines of text it contains, it will always expand & contract to contain all of them.
-  </div>
-
-<h3 id=display-browser-dimensions>Display Browser Dimensions</h3>
-
-  <div class=example>
-    <pre class=language-html>
-      &lt;style>
-        @element :root {
-          $this:before {
-            content: 'eval("window.innerWidth") × eval("window.innerHeight")';
-            position: fixed;
-            top: .5em;
-            left: .5em;
-          }
-        }
-      &lt;/style>
-    </pre>
-    This example will create a new pseudo-element on our ':root' element (the HTML element) and uses <a>eval("")</a> to display the <code>innerWidth</code> and <code>innerHeight</code> values of our <code>window</code>.
-  </div>
 
 <h3 id=self-responsive-grid>Self-responsive Grid</h3>
 
@@ -1329,84 +1095,6 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       &lt;/style>
     </pre>
     This example uses ''@element'' queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a selector>$this</a>, we can use these same styles to power many grids in the same layout all using the same styles.
-  </div>
-
-<h3 id=using-variables-as-selectors>Using Variables as Selectors</h3>
-
-  <div class=example>
-    <pre class=language-html>
-      &lt;input type=hidden placeholder=hidden>
-      &lt;input type=text placeholder=text>
-      &lt;input type=search placeholder=search>
-      &lt;input type=tel placeholder=tel>
-      &lt;input type=url placeholder=url>
-      &lt;input type=email placeholder=email>
-      &lt;input type=password placeholder=password>
-      &lt;input type=date placeholder=date>
-      &lt;input type=month placeholder=month>
-      &lt;input type=week placeholder=week>
-      &lt;input type=time placeholder=time>
-      &lt;input type=datetime-local placeholder=datetime-local>
-      &lt;input type=number placeholder=number>
-      &lt;input type=color placeholder=color>
-      &lt;textarea>textarea&lt;/textarea>
-      &lt;script>
-        var textish = [
-          '[type=text]', '[type=search]', '[type=tel]', '[type=url]', '[type=email]', '[type=password]', '[type=date]', '[type=month]', '[type=week]', '[type=time]', '[type=datetime-local]', '[type=number]', '[type=color]', 'textarea'
-        ]
-        /* return selectors with :states using action(array,state) */
-        function action(array,state){
-          var selectors = '';
-          for(i=0; i&lt;array.length; i++){
-            selectors += array[i]+':'+state
-            if (i &lt; array.length-1){
-              selectors += ', '
-            }
-          }
-          return selectors
-        }
-      &lt;/script>
-      &lt;style>
-        /* set width for most inputs */
-        @element :root {
-          /* Style all selectors in 'textish' array */
-          eval('textish') {
-            display: block;
-            width: 100%;
-          }
-          /* Add ':hover' to all selectors in 'textish' array */
-          eval('action(textish,"hover")') {
-            background: lime;
-          }
-          /* Add ':focus' to all selectors in 'textish' array */
-          eval('action(textish,"focus")') {
-            background: red;
-          }
-        }
-      &lt;/style>
-    </pre>
-    In this example we use <a>eval("")</a> to return either a list of selectors (stored as strings in a JavaScript array) or we use the return from a function that allows us to append strings like ':hover', or ':focus' to each selector as it gives them to use as a selector or selector list in our CSS inside of a scoped style. For manipulating or styling many similar things (like text-style inputs but not other inputs) we can simplify the selectors we need to use throughout our CSS while maintaining full control over what gets styled.
-  </div>
-
-<h3 id=clamped-numbers-in-CSS>Clamped Numbers in CSS</h3>
-
-  <div class=example>
-    <pre class=language-html>
-      &lt;h1>Headline&lt;/h1>
-      &lt;script>
-        function clamp(min,mid,max){
-          return Math.min(Math.max(min,mid),max)
-        }
-      &lt;/script>
-      &lt;style>
-        @element h1 {
-          $this {
-            font-size: eval('clamp(50,innerWidth/10,100)')px;
-          }
-        }
-      &lt;/style>
-    </pre>
-    In this example our font size prefers to be equal to <code>window.innerWidth/10</code> pixels wide, but our JavaScript function will clamp that value for us, ensuring that if <code>innerWidth/10</code> is less than 50, our font size will go no lower than <code>50px</code>, and if <code>innerWidth/10</code> is greater than 100, our font size will grow no larger than <code>100px</code>.
   </div>
 
 <h2 id=requirements>Requirements</h2>

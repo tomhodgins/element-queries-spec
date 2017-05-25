@@ -1425,7 +1425,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS Element Queries [Level 1]</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-05-14">14 May 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-05-25">25 May 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1439,7 +1439,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 14 May 2017,
+In addition, as of 25 May 2017,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1507,35 +1507,15 @@ Parts of this work may be from another specification document.  If so, those par
         <li><a href="#landscape-orientation"><span class="secno">5.9.3</span> <span class="content">Landscape Orientation</span></a>
        </ol>
      </ol>
+    <li><a href="#element-percentage-units"><span class="secno">6</span> <span class="content">Element-percentage Units</span></a>
     <li>
-     <a href="#css-functions"><span class="secno">6</span> <span class="content">CSS Functions</span></a>
+     <a href="#examples-of-element-queries"><span class="secno">7</span> <span class="content">Examples of Scoped Styles &amp; Element Queries</span></a>
      <ol class="toc">
-      <li>
-       <a href="#eval"><span class="secno">6.1</span> <span class="content">eval("")</span></a>
-       <ol class="toc">
-        <li><a href="#using-js-variables-in-css"><span class="secno">6.1.1</span> <span class="content">Using JavaScript Variables in CSS</span></a>
-        <li><a href="#writing-js-in-css"><span class="secno">6.1.2</span> <span class="content">Writing JavaScript in CSS</span></a>
-        <li><a href="#using-js-functions-in-css"><span class="secno">6.1.3</span> <span class="content">Using JavaScript Functions in CSS</span></a>
-        <li><a href="#replacing-values-in-css"><span class="secno">6.1.4</span> <span class="content">Replacing Values in CSS</span></a>
-        <li><a href="#replacing-properties-in-css"><span class="secno">6.1.5</span> <span class="content">Replacing Properties in CSS</span></a>
-        <li><a href="#replacing-selectors-in-css"><span class="secno">6.1.6</span> <span class="content">Replacing Selectors in CSS</span></a>
-        <li><a href="#it-selector"><span class="secno">6.1.7</span> <span class="content"><code>$it</code> selector</span></a>
-       </ol>
+      <li><a href="#example-scoped-styles"><span class="secno">7.1</span> <span class="content">Examples of valid scoped styles</span></a>
+      <li><a href="#faking-input-empty"><span class="secno">7.2</span> <span class="content">Faking <code>input:empty</code></span></a>
+      <li><a href="#self-responsive-grid"><span class="secno">7.3</span> <span class="content">Self-responsive Grid</span></a>
      </ol>
-    <li><a href="#element-percentage-units"><span class="secno">7</span> <span class="content">Element-percentage Units</span></a>
-    <li>
-     <a href="#examples-of-element-queries"><span class="secno">8</span> <span class="content">Examples of Scoped Styles &amp; Element Queries</span></a>
-     <ol class="toc">
-      <li><a href="#example-scoped-styles"><span class="secno">8.1</span> <span class="content">Examples of valid scoped styles</span></a>
-      <li><a href="#wrapper-free-responsive-iframe"><span class="secno">8.2</span> <span class="content">Wrapper-free responsive iframe resize</span></a>
-      <li><a href="#faking-input-empty"><span class="secno">8.3</span> <span class="content">Faking <code>input:empty</code></span></a>
-      <li><a href="#auto-expanding-textarea"><span class="secno">8.4</span> <span class="content">Auto-expanding <code>textarea</code></span></a>
-      <li><a href="#display-browser-dimensions"><span class="secno">8.5</span> <span class="content">Display Browser Dimensions</span></a>
-      <li><a href="#self-responsive-grid"><span class="secno">8.6</span> <span class="content">Self-responsive Grid</span></a>
-      <li><a href="#using-variables-as-selectors"><span class="secno">8.7</span> <span class="content">Using Variables as Selectors</span></a>
-      <li><a href="#clamped-numbers-in-CSS"><span class="secno">8.8</span> <span class="content">Clamped Numbers in CSS</span></a>
-     </ol>
-    <li><a href="#requirements"><span class="secno">9</span> <span class="content">Requirements</span></a>
+    <li><a href="#requirements"><span class="secno">8</span> <span class="content">Requirements</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
@@ -1547,7 +1527,6 @@ Parts of this work may be from another specification document.  If so, those par
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
       <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
-      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
      </ol>
     <li>
      <a href="#property-index"><span class="secno"></span> <span class="content">Property Index</span></a>
@@ -1860,11 +1839,10 @@ Parts of this work may be from another specification document.  If so, those par
 
 <dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-value">&lt;eq-value></dfn> = <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a>
 
-<dfn class="dfn-paneled" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors">meta-selectors</dfn> = $this | $parent | $prev | $next | $it
+<dfn class="dfn-paneled" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors">meta-selectors</dfn> = $this | $parent | $prev | $next
 
 <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="eq-unit">eq-unit</dfn> = ew | eh | emin | emax
 
-<dfn class="dfn-paneled" data-dfn-type="function" data-export="" data-lt="eval()" id="funcdef-eval">eval("")</dfn> = eval(" <span class="css">javascript-code</span> ")
 </pre>
    <h3 class="heading settled" data-level="3.1" id="evaluating-element-queries"><span class="secno">3.1. </span><span class="content">Evaluating Element Queries</span><a class="self-link" href="#evaluating-element-queries"></a></h3>
    <p>Each <a class="production css" data-link-type="type" href="#typedef-eq-condition" id="ref-for-typedef-eq-condition-2">&lt;eq-condition></a> is associated with a boolean result, the same as the result of evaluating the specified responsive condition.</p>
@@ -2399,180 +2377,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this case any element with a class of <code>.widget</code> that is wider than it is tall will have a green background.</p>
    </div>
-   <h2 class="heading settled" data-level="6" id="css-functions"><span class="secno">6. </span><span class="content">CSS Functions</span><a class="self-link" href="#css-functions"></a></h2>
-   <h3 class="heading settled" data-level="6.1" id="eval"><span class="secno">6.1. </span><span class="content">eval("")</span><a class="self-link" href="#eval"></a></h3>
-   <p class="note" role="note">Note, Much of the functionality of this feature is similar to CSS variables, however being able to execute JavaScript from the vantage point of the element in the scope could perhaps be a way that CSS variables could be used a little differently inside scoped styles or element queries.</p>
-   <p>The <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-1">eval("")</a> function can be used anywhere inside a scoped style or element query. It shares a scope with the element in the root of the scoped style.</p>
-   <div class="railroad">
-    <svg class="railroad-diagram" height="62" viewBox="0 0 345 62" width="345">
-     <g transform="translate(.5 .5)">
-      <path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5" data-type="start" data-updown="10 10"></path>
-      <path d="M40 31h10"></path>
-      <path d="M118 31h10"></path>
-      <g data-type="terminal" data-updown="11 11">
-       <path d="M50 31h0.0"></path>
-       <path d="M118.0 31h0.0"></path>
-       <rect height="22" rx="10" ry="10" width="68" x="50.0" y="20"></rect>
-       <text x="84.0" y="35"> eval("</text>
-      </g>
-      <path d="M128 31h10"></path>
-      <path d="M238 31h10"></path>
-      <g data-type="non-terminal" data-updown="11 11">
-       <path d="M138 31h0.0"></path>
-       <path d="M238.0 31h0.0"></path>
-       <rect height="22" width="100" x="138.0" y="20"></rect>
-       <text x="188.0" y="35"> javascript</text>
-      </g>
-      <path d="M248 31h10"></path>
-      <path d="M294 31h10"></path>
-      <g data-type="terminal" data-updown="11 11">
-       <path d="M258 31h0.0"></path>
-       <path d="M294.0 31h0.0"></path>
-       <rect height="22" rx="10" ry="10" width="36" x="258.0" y="20"></rect>
-       <text x="276.0" y="35"> ")</text>
-      </g>
-      <path d="M 304 31 h 20 m -10 -10 v 20 m 10 -20 v 20" data-type="end" data-updown="10 10"></path>
-     </g>
-    </svg>
-   </div>
-   <p>When using <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-2">eval("")</a> you can write <code>eval</code>, followed by a pair of brackets (<code>(</code>,<code>)</code>) which contain JavaScript code, wrapped in either single (<code>'</code>) or double (<code>"</code>) quotes.</p>
-   <p>This JavaScript can do something simple like reference the value of a variable, perform a simple calculation inline, or it can use the value return by a function.</p>
-   <p class="note" role="note">Note, Unlike CSS variables, the <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-3">eval("")</a> function can be used anywhere in CSS: as a value, a property name, a selector, a '@media' query breakpoint - it can be used for anything, as long as it is inside of a scoped style.</p>
-   <h4 class="heading settled" data-level="6.1.1" id="using-js-variables-in-css"><span class="secno">6.1.1. </span><span class="content">Using JavaScript Variables in CSS</span><a class="self-link" href="#using-js-variables-in-css"></a></h4>
-   <div class="example" id="example-66ea7b86">
-    <a class="self-link" href="#example-66ea7b86"></a> Accessing a JavaScript variable with <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-4">eval("")</a> 
-<pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-  <span class="kd">var</span> brandColor <span class="o">=</span> <span class="s1">'lime'</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
-
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="nc">.widget</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
-      background<span class="o">:</span> <span class="n">eval</span><span class="p">(</span><span class="s2">"brandColor"</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
-</pre>
-    <p>In this case any element with a class of <code>.widget</code> will have a green background.</p>
-   </div>
-   <h4 class="heading settled" data-level="6.1.2" id="writing-js-in-css"><span class="secno">6.1.2. </span><span class="content">Writing JavaScript in CSS</span><a class="self-link" href="#writing-js-in-css"></a></h4>
-   <div class="example" id="example-b9b41852">
-    <a class="self-link" href="#example-b9b41852"></a> Evaluating JavaScript Inline with <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-5">eval("")</a> 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
-  <span class="k">font-size</span><span class="p">:</span> <span class="nf">eval</span><span class="p">(</span><span class="s">"10 * 2"</span><span class="p">)</span>px<span class="p">;</span>
-<span class="p">}</span>
-</pre>
-    <p>In this case our inline JavaScript (<code>10 * 2</code>) evaluates in place, leaving us with a font size of <code>20px</code>.</p>
-   </div>
-   <h4 class="heading settled" data-level="6.1.3" id="using-js-functions-in-css"><span class="secno">6.1.3. </span><span class="content">Using JavaScript Functions in CSS</span><a class="self-link" href="#using-js-functions-in-css"></a></h4>
-   <div class="example" id="example-b8d52fdb">
-    <a class="self-link" href="#example-b8d52fdb"></a> Using Values Returned from Functions with <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-6">eval("")</a> 
-<pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-  <span class="kd">function</span> addTen<span class="p">(</span>number<span class="p">)</span><span class="p">{</span>
-    <span class="kd">var</span> number <span class="o">=</span> parseInt<span class="p">(</span>number<span class="p">)</span> <span class="o">||</span> <span class="mi">0</span>
-    <span class="k">return</span> number <span class="o">+</span> <span class="mi">10</span>
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
-
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="nc">.widget</span> <span class="p">{</span>
-    <span class="nt">font-size</span><span class="o">:</span> <span class="nt">eval</span><span class="o">(</span><span class="s2">"addTen(15)"</span><span class="o">)</span><span class="nt">px</span><span class="o">;</span>
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
-</pre>
-    <p>In this case any element with a class of <code>.widget</code> will have a font size of <code>25px</code>.</p>
-   </div>
-   <h4 class="heading settled" data-level="6.1.4" id="replacing-values-in-css"><span class="secno">6.1.4. </span><span class="content">Replacing Values in CSS</span><a class="self-link" href="#replacing-values-in-css"></a></h4>
-   <div class="example" id="example-320ce79c">
-    <a class="self-link" href="#example-320ce79c"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-7">eval("")</a> being used as a value: 
-<pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-  <span class="kd">var</span> blue <span class="o">=</span> <span class="s1">'#07f'</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
-
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="nt">div</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
-      color<span class="o">:</span> <span class="n">eval</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
-</pre>
-    <p>This example would be equivalent to: <code>div { color: #07f; }</code></p>
-   </div>
-   <h4 class="heading settled" data-level="6.1.5" id="replacing-properties-in-css"><span class="secno">6.1.5. </span><span class="content">Replacing Properties in CSS</span><a class="self-link" href="#replacing-properties-in-css"></a></h4>
-   <div class="example" id="example-f590018b">
-    <a class="self-link" href="#example-f590018b"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-8">eval("")</a> being used as a property: 
-<pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-  <span class="kd">var</span> browser <span class="o">=</span> <span class="sr">/Safari/</span><span class="p">.</span>test<span class="p">(</span>navigator<span class="p">.</span>userAgent<span class="p">)</span> <span class="o">?</span> <span class="s1">'-webkit-'</span><span class="o">:</span><span class="s1">''</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
-
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="nt">input</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
-      <span class="n">eval</span><span class="p">(</span><span class="s1">'browser'</span><span class="p">)</span><span class="n">appearance</span><span class="o">:</span> none<span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
-</pre>
-    <p>This example would use the property: <code>-webkit-appearance</code> if the browser was Safari, otherwise would use: <code>appearance</code>.</p>
-   </div>
-   <h4 class="heading settled" data-level="6.1.6" id="replacing-selectors-in-css"><span class="secno">6.1.6. </span><span class="content">Replacing Selectors in CSS</span><a class="self-link" href="#replacing-selectors-in-css"></a></h4>
-   <div class="example" id="example-61d13c99">
-    <a class="self-link" href="#example-61d13c99"></a> Here is <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-9">eval("")</a> replacing a list of selectors: 
-<pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-  <span class="kd">var</span> buttonish <span class="o">=</span> <span class="s1">'[type=button], [type=submit], [type=reset], button'</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
-
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="nt">html</span> <span class="p">{</span>
-    <span class="nt">eval</span><span class="o">(</span><span class="s1">'buttonish'</span><span class="o">)</span> <span class="p">{</span>
-      <span class="n">appearance</span><span class="o">:</span> none<span class="p">;</span>
-      color<span class="o">:</span> black<span class="p">;</span>
-      background<span class="o">:</span> white<span class="p">;</span>
-      border<span class="o">:</span> <span class="m">1px</span> solid <span class="n">currentColor</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
-</pre>
-    <p>This example would be equivalent the following rule:</p>
-<pre class="language-css highlight"><span class="nt">[type=button], [type=submit], [type=reset], button </span><span class="p">{</span>
-  <span class="k">appearance</span><span class="p">:</span> none<span class="p">;</span>
-  <span class="k">color</span><span class="p">:</span> black<span class="p">;</span>
-  <span class="k">background</span><span class="p">:</span> white<span class="p">;</span>
-  <span class="k">border</span><span class="p">:</span> <span class="m">1</span><span class="l">px</span> solid currentColor<span class="p">;</span>
-<span class="p">}</span>
-</pre>
-    <p>Check the <a href="#using-variables-as-selectors">Using Variables as Selectors</a> example below for a more elaborate demonstration, including pseudo-classes like <code>:hover</code> or <code>:focus</code></p>
-   </div>
-   <p class="note" role="note">Note, Because <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-10">eval("")</a> works everywhere in CSS inside of a scoped style, it’s also possible to use inside the <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-content-3/#propdef-content">content</a> property for pseudo-elements like <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-content-3/#valdef-content-before">before</a> and <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-content-3/#valdef-content-after">after</a>.</p>
-   <h4 class="heading settled" data-level="6.1.7" id="it-selector"><span class="secno">6.1.7. </span><span class="content"><code>$it</code> selector</span><a class="self-link" href="#it-selector"></a></h4>
-   <dl>
-    <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-it">$it</dfn> 
-    <dd>
-      By default the inline evaluation of <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-11">eval("")</a> shares the same scope in JavaScript as the scoped element. This means for a scoped style like <code>@element .widget {}</code>, things like <code>innerHTML</code> represent the <code>innerHTML</code> of the elements with <code>.widget</code>. This would also apply individually to each element if more than one element on the page matches that selector. In this example we can use <code>parentNode</code> inside of <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-12">eval("")</a> to check how many child elements the parent element holding any <code>.widget</code> element contains. 
-     <div class="example" id="example-ad60e265">
-      <a class="self-link" href="#example-ad60e265"></a> Example of <span class="css">eval("")</span> with Implicit Context 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
-  $this:before {
-    content: 'eval("parentNode.children.length")';
-  }
-}
-</pre>
-      <p>In this case the pseudo-element <code>:before</code> the content of any element with a class of <code>.widget</code> will contain text of the number of child elements inside the parent element of our <code>.widget</code> element.</p>
-     </div>
-     <p>The meta-selector <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-it" id="ref-for-selectordef-meta-selectors-it-1">$it</a> works inside <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-13">eval("")</a> as a placeholder for the scoped element. The following example is functionally equivalent to the last example:</p>
-     <div class="example" id="example-b23dd32e">
-      <a class="self-link" href="#example-b23dd32e"></a> Example of <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-14">eval("")</a> with the <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-it" id="ref-for-selectordef-meta-selectors-it-2">$it</a> Selector 
-<pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
-  $this:before {
-    content: 'eval("$it.parentNode.children.length")';
-  }
-}
-</pre>
-     </div>
-   </dl>
-   <h2 class="heading settled" data-level="7" id="element-percentage-units"><span class="secno">7. </span><span class="content">Element-percentage Units</span><a class="self-link" href="#element-percentage-units"></a></h2>
+   <h2 class="heading settled" data-level="6" id="element-percentage-units"><span class="secno">6. </span><span class="content">Element-percentage Units</span><a class="self-link" href="#element-percentage-units"></a></h2>
    <p>Just as CSS has viewport-percentage units: <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vw">vw</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vh">vh</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmin">vmin</a>, and <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmax">vmax</a> which represent a distance equal to 1% of the viewport width, height, shortest edge, and longest edge, in a similar way the following element-percentage units <a class="css" data-link-type="maybe" href="#ew" id="ref-for-ew-1">ew</a>, <a class="css" data-link-type="maybe" href="#eh" id="ref-for-eh-1">eh</a>, <a class="css" data-link-type="maybe" href="#emin" id="ref-for-emin-1">emin</a>, and <a class="css" data-link-type="maybe" href="#emax" id="ref-for-emax-1">emax</a> represent a distance equal to 1% of the element’s own width, height, shortest edge, and longest edge. When the width of height of the element changes, the value of these units scale accordingly.</p>
    <p class="note" role="note">Note, These new <a data-link-type="dfn" href="#eq-unit" id="ref-for-eq-unit-1">eq-unit</a> units always refer to the dimensions of the element in the scope, and can be used inside of a scoped style or element query to style other elements.</p>
    <dl>
@@ -2633,8 +2438,8 @@ Parts of this work may be from another specification document.  If so, those par
      </div>
      <p class="note" role="note">Note, This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmax">vmax</a> viewport unit, but based on the scoped element’s dimensions.</p>
    </dl>
-   <h2 class="heading settled" data-level="8" id="examples-of-element-queries"><span class="secno">8. </span><span class="content">Examples of Scoped Styles &amp; Element Queries</span><a class="self-link" href="#examples-of-element-queries"></a></h2>
-   <h3 class="heading settled" data-level="8.1" id="example-scoped-styles"><span class="secno">8.1. </span><span class="content">Examples of valid scoped styles</span><a class="self-link" href="#example-scoped-styles"></a></h3>
+   <h2 class="heading settled" data-level="7" id="examples-of-element-queries"><span class="secno">7. </span><span class="content">Examples of Scoped Styles &amp; Element Queries</span><a class="self-link" href="#examples-of-element-queries"></a></h2>
+   <h3 class="heading settled" data-level="7.1" id="example-scoped-styles"><span class="secno">7.1. </span><span class="content">Examples of valid scoped styles</span><a class="self-link" href="#example-scoped-styles"></a></h3>
    <div class="example" id="example-8b47030f">
     <a class="self-link" href="#example-8b47030f"></a> 
 <pre class="language-css highlight"><span class="n">@element</span> div <span class="p">{}</span>
@@ -2655,22 +2460,7 @@ Parts of this work may be from another specification document.  If so, those par
 <pre class="language-css highlight"><span class="n">@element</span> div and <span class="p">(</span>min-width<span class="nt">: 500px) and (min-lines: 3) </span><span class="p">{</span><span class="p">}</span>
 </pre>
    </div>
-   <h3 class="heading settled" data-level="8.2" id="wrapper-free-responsive-iframe"><span class="secno">8.2. </span><span class="content">Wrapper-free responsive iframe resize</span><a class="self-link" href="#wrapper-free-responsive-iframe"></a></h3>
-   <div class="example" id="example-b3c79697">
-    <a class="self-link" href="#example-b3c79697"></a> 
-<pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">width</span><span class="o">=</span><span class="s">"640"</span> <span class="na">height</span><span class="o">=</span><span class="s">"360"</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">iframe</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="nt">iframe</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
-      width<span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
-      height<span class="o">:</span> <span class="n">eval</span><span class="p">(</span><span class="s1">'offsetWidth / (width / height)'</span><span class="p">)</span>px<span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
-</pre>
-    <p>In this example the <code>iframe</code> element has a <code>width=""</code> and <code>height=""</code> attribute supplied in HTML which is being accessed from CSS using <code>$it.width</code> and <code>$it.height</code> inside our <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-15">eval("")</a> function. Because we are able to compute the HTML attributes directly, this one rule will make multiple <code>iframe</code> elements with <em>different</em> attribute values on the same page responsive, as it computes each iframe separately as <code>$this</code>.</p>
-   </div>
-   <h3 class="heading settled" data-level="8.3" id="faking-input-empty"><span class="secno">8.3. </span><span class="content">Faking <code>input:empty</code></span><a class="self-link" href="#faking-input-empty"></a></h3>
+   <h3 class="heading settled" data-level="7.2" id="faking-input-empty"><span class="secno">7.2. </span><span class="content">Faking <code>input:empty</code></span><a class="self-link" href="#faking-input-empty"></a></h3>
    <div class="example" id="example-3af08ad2">
     <a class="self-link" href="#example-3af08ad2"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">></span>
@@ -2691,37 +2481,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>In this example we are able to apply styles based on whether there are zero or at least one characters inside any <code>input</code> element. CSS has the pseudo-class <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#empty-pseudo">:empty</a>, however it doesn’t apply to all elements (like <code>input</code> elements) so by using <code>max-characters</code> and <code>min-characters</code> with element queries we are able to express and style a similar idea.</p>
    </div>
-   <h3 class="heading settled" data-level="8.4" id="auto-expanding-textarea"><span class="secno">8.4. </span><span class="content">Auto-expanding <code>textarea</code></span><a class="self-link" href="#auto-expanding-textarea"></a></h3>
-   <div class="example" id="example-f69263b3">
-    <a class="self-link" href="#example-f69263b3"></a> 
-<pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">textarea</span><span class="p">></span><span class="p">&lt;</span><span class="p">/</span><span class="nt">textarea</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="nt">textarea</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
-      height<span class="o">:</span> <span class="n">eval</span><span class="p">(</span><span class="s2">"style.height='inherit';style.height=scrollHeight+'px'"</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
-</pre>
-    <p>In this example we are using <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-16">eval("")</a> to reset the height value of our element and immediately set it to the scrollHeight of the element, ensuring that no matter how many lines of text it contains, it will always expand &amp; contract to contain all of them.</p>
-   </div>
-   <h3 class="heading settled" data-level="8.5" id="display-browser-dimensions"><span class="secno">8.5. </span><span class="content">Display Browser Dimensions</span><a class="self-link" href="#display-browser-dimensions"></a></h3>
-   <div class="example" id="example-1a60d540">
-    <a class="self-link" href="#example-1a60d540"></a> 
-<pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="nd">:root</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span><span class="nd">:before</span> <span class="p">{</span>
-      content<span class="o">:</span> <span class="s1">'eval("window.innerWidth") × eval("window.innerHeight")'</span><span class="p">;</span>
-      position<span class="o">:</span> fixed<span class="p">;</span>
-      top<span class="o">:</span> <span class="m">.5em</span><span class="p">;</span>
-      left<span class="o">:</span> <span class="m">.5em</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
-</pre>
-    <p>This example will create a new pseudo-element on our ':root' element (the HTML element) and uses <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-17">eval("")</a> to display the <code>innerWidth</code> and <code>innerHeight</code> values of our <code>window</code>.</p>
-   </div>
-   <h3 class="heading settled" data-level="8.6" id="self-responsive-grid"><span class="secno">8.6. </span><span class="content">Self-responsive Grid</span><a class="self-link" href="#self-responsive-grid"></a></h3>
+   <h3 class="heading settled" data-level="7.3" id="self-responsive-grid"><span class="secno">7.3. </span><span class="content">Self-responsive Grid</span><a class="self-link" href="#self-responsive-grid"></a></h3>
    <div class="example" id="example-fa975eeb">
     <a class="self-link" href="#example-fa975eeb"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">h2</span><span class="p">></span>Responsive Grid<span class="p">&lt;</span><span class="p">/</span><span class="nt">h2</span><span class="p">></span>
@@ -2872,81 +2632,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
     <p>This example uses <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-22">@element</a> queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-6">$this</a>, we can use these same styles to power many grids in the same layout all using the same styles.</p>
    </div>
-   <h3 class="heading settled" data-level="8.7" id="using-variables-as-selectors"><span class="secno">8.7. </span><span class="content">Using Variables as Selectors</span><a class="self-link" href="#using-variables-as-selectors"></a></h3>
-   <div class="example" id="example-bd866e9f">
-    <a class="self-link" href="#example-bd866e9f"></a> 
-<pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">hidden</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">hidden</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">text</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">text</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">search</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">search</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">tel</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">tel</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">url</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">url</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">email</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">email</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">password</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">password</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">date</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">date</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">month</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">month</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">week</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">week</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">time</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">time</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">datetime-local</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">datetime-local</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">number</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">number</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">color</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">color</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">textarea</span><span class="p">></span>textarea<span class="p">&lt;</span><span class="p">/</span><span class="nt">textarea</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-  <span class="kd">var</span> textish <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">'[type=text]'</span><span class="p">,</span> <span class="s1">'[type=search]'</span><span class="p">,</span> <span class="s1">'[type=tel]'</span><span class="p">,</span> <span class="s1">'[type=url]'</span><span class="p">,</span> <span class="s1">'[type=email]'</span><span class="p">,</span> <span class="s1">'[type=password]'</span><span class="p">,</span> <span class="s1">'[type=date]'</span><span class="p">,</span> <span class="s1">'[type=month]'</span><span class="p">,</span> <span class="s1">'[type=week]'</span><span class="p">,</span> <span class="s1">'[type=time]'</span><span class="p">,</span> <span class="s1">'[type=datetime-local]'</span><span class="p">,</span> <span class="s1">'[type=number]'</span><span class="p">,</span> <span class="s1">'[type=color]'</span><span class="p">,</span> <span class="s1">'textarea'</span>
-  <span class="p">]</span>
-  <span class="cm">/* return selectors with :states using action(array,state) */</span>
-  <span class="kd">function</span> action<span class="p">(</span>array<span class="p">,</span>state<span class="p">)</span><span class="p">{</span>
-    <span class="kd">var</span> selectors <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
-    <span class="k">for</span><span class="p">(</span>i<span class="o">=</span><span class="mi">0</span><span class="p">;</span> i<span class="o">&lt;</span>array<span class="p">.</span>length<span class="p">;</span> i<span class="o">++</span><span class="p">)</span><span class="p">{</span>
-      selectors <span class="o">+=</span> array<span class="p">[</span>i<span class="p">]</span><span class="o">+</span><span class="s1">':'</span><span class="o">+</span>state
-      <span class="k">if</span> <span class="p">(</span>i <span class="o">&lt;</span> array<span class="p">.</span>length<span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="p">{</span>
-        selectors <span class="o">+=</span> <span class="s1">', '</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> selectors
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="c">/* set width for most inputs */</span>
-  <span class="k">@element</span> <span class="nd">:root</span> <span class="p">{</span>
-    <span class="c">/* Style all selectors in 'textish' array */</span>
-    <span class="nt">eval</span><span class="o">(</span><span class="s1">'textish'</span><span class="o">)</span> <span class="p">{</span>
-      display<span class="o">:</span> block<span class="p">;</span>
-      width<span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="c">/* Add ':hover' to all selectors in 'textish' array */</span>
-    <span class="nt">eval</span><span class="o">(</span><span class="s1">'action(textish,"hover")'</span><span class="o">)</span> <span class="p">{</span>
-      background<span class="o">:</span> lime<span class="p">;</span>
-    <span class="p">}</span>
-    <span class="c">/* Add ':focus' to all selectors in 'textish' array */</span>
-    <span class="nt">eval</span><span class="o">(</span><span class="s1">'action(textish,"focus")'</span><span class="o">)</span> <span class="p">{</span>
-      background<span class="o">:</span> red<span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
-</pre>
-    <p>In this example we use <a data-link-type="functionish" href="#funcdef-eval" id="ref-for-funcdef-eval-18">eval("")</a> to return either a list of selectors (stored as strings in a JavaScript array) or we use the return from a function that allows us to append strings like ':hover', or ':focus' to each selector as it gives them to use as a selector or selector list in our CSS inside of a scoped style. For manipulating or styling many similar things (like text-style inputs but not other inputs) we can simplify the selectors we need to use throughout our CSS while maintaining full control over what gets styled.</p>
-   </div>
-   <h3 class="heading settled" data-level="8.8" id="clamped-numbers-in-CSS"><span class="secno">8.8. </span><span class="content">Clamped Numbers in CSS</span><a class="self-link" href="#clamped-numbers-in-CSS"></a></h3>
-   <div class="example" id="example-713a962c">
-    <a class="self-link" href="#example-713a962c"></a> 
-<pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">h1</span><span class="p">></span>Headline<span class="p">&lt;</span><span class="p">/</span><span class="nt">h1</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-  <span class="kd">function</span> clamp<span class="p">(</span>min<span class="p">,</span>mid<span class="p">,</span>max<span class="p">)</span><span class="p">{</span>
-    <span class="k">return</span> Math<span class="p">.</span>min<span class="p">(</span>Math<span class="p">.</span>max<span class="p">(</span>min<span class="p">,</span>mid<span class="p">)</span><span class="p">,</span>max<span class="p">)</span>
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">script</span><span class="p">></span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
-  <span class="k">@element</span> <span class="nt">h1</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
-      font-size<span class="o">:</span> <span class="n">eval</span><span class="p">(</span><span class="s1">'clamp(50,innerWidth/10,100)'</span><span class="p">)</span>px<span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
-</pre>
-    <p>In this example our font size prefers to be equal to <code>window.innerWidth/10</code> pixels wide, but our JavaScript function will clamp that value for us, ensuring that if <code>innerWidth/10</code> is less than 50, our font size will go no lower than <code>50px</code>, and if <code>innerWidth/10</code> is greater than 100, our font size will grow no larger than <code>100px</code>.</p>
-   </div>
-   <h2 class="heading settled" data-level="9" id="requirements"><span class="secno">9. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
+   <h2 class="heading settled" data-level="8" id="requirements"><span class="secno">8. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
    <p>Scoped Styles + Element/Container Queries</p>
    <ul>
     <li data-md="">
@@ -2960,7 +2646,7 @@ Parts of this work may be from another specification document.  If so, those par
     <li data-md="">
      <p>The solution should provide a way to select the element previous to those elements which match a selector (and optional conditions). ($prev meta-selector)</p>
     <li data-md="">
-     <p>The solution should provide a way to select the element following those elements which match a selecter (and optional conditions). ($next meta-selector)</p>
+     <p>The solution should provide a way to select the element following those elements which match a selector (and optional conditions). ($next meta-selector)</p>
    </ul>
    <p>Element-Based Units</p>
    <ul>
@@ -3126,19 +2812,17 @@ Parts of this work may be from another specification document.  If so, those par
    <li><a href="#descdef-element-aspect-ratio">aspect-ratio</a><span>, in §5.8</span>
    <li><a href="#descdef-element-characters">characters</a><span>, in §5.3</span>
    <li><a href="#descdef-element-children">children</a><span>, in §5.5</span>
-   <li><a href="#eh">eh</a><span>, in §7</span>
+   <li><a href="#eh">eh</a><span>, in §6</span>
    <li><a href="#at-ruledef-element">@element</a><span>, in §3</span>
-   <li><a href="#emax">emax</a><span>, in §7</span>
-   <li><a href="#emin">emin</a><span>, in §7</span>
+   <li><a href="#emax">emax</a><span>, in §6</span>
+   <li><a href="#emin">emin</a><span>, in §6</span>
    <li><a href="#typedef-eq-condition">&lt;eq-condition></a><span>, in §3</span>
    <li><a href="#typedef-eq-name">&lt;eq-name></a><span>, in §3</span>
    <li><a href="#typedef-eq-prelude">&lt;eq-prelude></a><span>, in §3</span>
    <li><a href="#eq-unit">eq-unit</a><span>, in §3</span>
    <li><a href="#typedef-eq-value">&lt;eq-value></a><span>, in §3</span>
-   <li><a href="#funcdef-eval">eval()</a><span>, in §3</span>
-   <li><a href="#ew">ew</a><span>, in §7</span>
+   <li><a href="#ew">ew</a><span>, in §6</span>
    <li><a href="#descdef-element-height">height</a><span>, in §5.2</span>
-   <li><a href="#selectordef-meta-selectors-it">$it</a><span>, in §6.1.7</span>
    <li><a href="#valdef-element-orientation-landscape">landscape</a><span>, in §5.9.3</span>
    <li><a href="#descdef-element-lines">lines</a><span>, in §5.4</span>
    <li><a href="#selectordef-meta-selectors">meta-selectors</a><span>, in §3</span>
@@ -3159,13 +2843,6 @@ Parts of this work may be from another specification document.  If so, those par
     <a data-link-type="biblio">[css-conditional-3]</a> defines the following terms:
     <ul>
      <li><a href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[css-content-3]</a> defines the following terms:
-    <ul>
-     <li><a href="https://drafts.csswg.org/css-content-3/#valdef-content-after">after</a>
-     <li><a href="https://drafts.csswg.org/css-content-3/#valdef-content-before">before</a>
-     <li><a href="https://drafts.csswg.org/css-content-3/#propdef-content">content</a>
     </ul>
    <li>
     <a data-link-type="biblio">[CSS3SYN]</a> defines the following terms:
@@ -3217,11 +2894,6 @@ Parts of this work may be from another specification document.  If so, those par
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-selectors-4">[SELECTORS-4]
    <dd>Selectors Level 4 URL: <a href="https://drafts.csswg.org/selectors-4/">https://drafts.csswg.org/selectors-4/</a>
-  </dl>
-  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
-  <dl>
-   <dt id="biblio-css-content-3">[CSS-CONTENT-3]
-   <dd>Elika Etemad; Dave Cramer. <a href="https://drafts.csswg.org/css-content/">CSS Generated Content Module Level 3</a>. URL: <a href="https://drafts.csswg.org/css-content/">https://drafts.csswg.org/css-content/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="property-index"><span class="content">Property Index</span><a class="self-link" href="#property-index"></a></h2>
   <p>No properties defined.</p>
@@ -3301,7 +2973,7 @@ Parts of this work may be from another specification document.  If so, those par
     <li><a href="#ref-for-at-ruledef-element-19">5.7. Scroll-X</a>
     <li><a href="#ref-for-at-ruledef-element-20">5.8. Aspect-Ratio</a>
     <li><a href="#ref-for-at-ruledef-element-21">5.9. Orientation</a>
-    <li><a href="#ref-for-at-ruledef-element-22">8.6. Self-responsive Grid</a>
+    <li><a href="#ref-for-at-ruledef-element-22">7.3. Self-responsive Grid</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="typedef-eq-prelude">
@@ -3340,31 +3012,14 @@ Parts of this work may be from another specification document.  If so, those par
   <aside class="dfn-panel" data-for="eq-unit">
    <b><a href="#eq-unit">#eq-unit</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-eq-unit-1">7. Element-percentage Units</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="funcdef-eval">
-   <b><a href="#funcdef-eval">#funcdef-eval</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-funcdef-eval-1">6.1. eval("")</a> <a href="#ref-for-funcdef-eval-2">(2)</a> <a href="#ref-for-funcdef-eval-3">(3)</a>
-    <li><a href="#ref-for-funcdef-eval-4">6.1.1. Using JavaScript Variables in CSS</a>
-    <li><a href="#ref-for-funcdef-eval-5">6.1.2. Writing JavaScript in CSS</a>
-    <li><a href="#ref-for-funcdef-eval-6">6.1.3. Using JavaScript Functions in CSS</a>
-    <li><a href="#ref-for-funcdef-eval-7">6.1.4. Replacing Values in CSS</a>
-    <li><a href="#ref-for-funcdef-eval-8">6.1.5. Replacing Properties in CSS</a>
-    <li><a href="#ref-for-funcdef-eval-9">6.1.6. Replacing Selectors in CSS</a> <a href="#ref-for-funcdef-eval-10">(2)</a>
-    <li><a href="#ref-for-funcdef-eval-11">6.1.7. $it selector</a> <a href="#ref-for-funcdef-eval-12">(2)</a> <a href="#ref-for-funcdef-eval-13">(3)</a> <a href="#ref-for-funcdef-eval-14">(4)</a>
-    <li><a href="#ref-for-funcdef-eval-15">8.2. Wrapper-free responsive iframe resize</a>
-    <li><a href="#ref-for-funcdef-eval-16">8.4. Auto-expanding textarea</a>
-    <li><a href="#ref-for-funcdef-eval-17">8.5. Display Browser Dimensions</a>
-    <li><a href="#ref-for-funcdef-eval-18">8.7. Using Variables as Selectors</a>
+    <li><a href="#ref-for-eq-unit-1">6. Element-percentage Units</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="selectordef-meta-selectors-this">
    <b><a href="#selectordef-meta-selectors-this">#selectordef-meta-selectors-this</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-selectordef-meta-selectors-this-1">4.1. Diagram of meta-selectors</a> <a href="#ref-for-selectordef-meta-selectors-this-2">(2)</a> <a href="#ref-for-selectordef-meta-selectors-this-3">(3)</a> <a href="#ref-for-selectordef-meta-selectors-this-4">(4)</a> <a href="#ref-for-selectordef-meta-selectors-this-5">(5)</a>
-    <li><a href="#ref-for-selectordef-meta-selectors-this-6">8.6. Self-responsive Grid</a>
+    <li><a href="#ref-for-selectordef-meta-selectors-this-6">7.3. Self-responsive Grid</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="selectordef-meta-selectors-parent">
@@ -3463,34 +3118,28 @@ Parts of this work may be from another specification document.  If so, those par
     <li><a href="#ref-for-valdef-element-orientation-landscape-2">5.9.3. Landscape Orientation</a> <a href="#ref-for-valdef-element-orientation-landscape-3">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="selectordef-meta-selectors-it">
-   <b><a href="#selectordef-meta-selectors-it">#selectordef-meta-selectors-it</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-selectordef-meta-selectors-it-1">6.1.7. $it selector</a> <a href="#ref-for-selectordef-meta-selectors-it-2">(2)</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="ew">
    <b><a href="#ew">#ew</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-ew-1">7. Element-percentage Units</a>
+    <li><a href="#ref-for-ew-1">6. Element-percentage Units</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="eh">
    <b><a href="#eh">#eh</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-eh-1">7. Element-percentage Units</a>
+    <li><a href="#ref-for-eh-1">6. Element-percentage Units</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="emin">
    <b><a href="#emin">#emin</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-emin-1">7. Element-percentage Units</a>
+    <li><a href="#ref-for-emin-1">6. Element-percentage Units</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="emax">
    <b><a href="#emax">#emax</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-emax-1">7. Element-percentage Units</a>
+    <li><a href="#ref-for-emax-1">6. Element-percentage Units</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
