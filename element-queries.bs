@@ -8,7 +8,7 @@ Repository: tomhodgins/element-query-spec
 Editor: Tommy Hodgins, tomhodgins@gmail.com
 Abstract: Element Queries allow authors to test and query values or features of elements in an HTML document. They are used in the CSS @element rule to conditionally apply styles to a document, and in various other contexts and languages, such as HTML and JavaScript.
 Abstract:
-Abstract: CSS Element Queries [Level 1] describes the mechanism and syntax of scoped styles and element queries, the responsive conditions. It also describes the meta-selectors, functions, and units that make element queries powerful.
+Abstract: CSS Element Queries [Level 1] describes the mechanism and syntax of scoped stylesheets and element queries, the responsive conditions. It also describes the meta-selectors, functions, and units that make element queries powerful.
 Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 </pre>
 
@@ -16,7 +16,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   By default all CSS is written from the global scope ('':root'', or the HTML element), and ''@media'' queries apply globally to all elements based on the conditions of the browser and media.
 
-  The idea of a scoped style is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as though it was '':root''.
+  The idea of a scoped stylesheet is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as though it was '':root''.
 
   Just like CSS already has ''@media'' queries which help define styles for different media conditions, this document describes functionality for an ''@element'' query syntax to define styles that target elements more specifically with conditions based on their own properties.
 
@@ -28,14 +28,14 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   The units used in element queries are the same as in other parts of CSS, as defined in [[!CSS3VAL]]. For example, the pixel unit represents CSS pixels and not physical pixels.
 
-  Additionally, new <a href=#element-percentage-units>element-percentage units</a> are defined in this document which relate to an element's own properties after styles have been applied to the document.
+  Additionally, new <a href=#element-percentage-units>element-percentage units</a> are defined in this document which relate to an element's own width and height dimensions.
 
 
 <h2 id=element-queries>Element Queries</h2>
 
-  An <strong>element query</strong> is a method of testing certain aspects of an element and applying styles based on whether that test is true or false.
+  An <strong>element query</strong> is a method of testing certain aspects of an element and applying styles based on whether that test returns true or false.
 
-  The syntax of an element query consists of a <<selector-list>>, plus an optional list of zero or more responsive conditions, followed by one or more CSS rules:
+  The syntax of an element query consists of a <<selector-list>>, plus an optional list of zero or more responsive conditions, followed by a stylesheet containing one or more CSS rules:
 
   <pre class=railroad>
     T: @element
@@ -49,7 +49,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     T: }
   </pre>
 
-  A scoped style will return true as long as at least one element in the document matches a selector in the <<selector-list>>.
+  A scoped stylesheet will return true as long as at least one (1) element in the document matches a selector in the <<selector-list>>.
 
   An element query is a logical expression that is either true or false. An element query is true if:
 
@@ -60,12 +60,14 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   User agents must re-evaluate element queries in response to changes in the user environment that they're aware of, for example resizing the browser, clicking, or scrolling, depending on which responsive conditions are being evaluated, and change the styles applied accordingly.
 
-  <h3 id=scoped-styles>Scoped Styles</h3>
+  Note: This specification does not currently define a list of events which trigger a style recalculation, or a syntax (in CSS, HTML, or JS) through which scoped stylesheets could be limited to specific events.
 
-    To write a scoped style, write ''@element'', followed by any amount of whitespace. Wrap one or more comma-separated CSS <<selector>> (optionally wrapped in single (<code>'</code>) or double (<code>"</code>) quotes), followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).
+  <h3 id=scoped-styles>Scoped Stylesheets</h3>
+
+    To write a scoped stylesheet write ''@element'', followed by any amount of whitespace. Wrap one or more comma-separated CSS <<selector>> (optionally wrapped in single (<code>'</code>) or double (<code>"</code>) quotes), followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).
 
     <div class=example>
-      Example scoped style</strong>
+      Example scoped stylesheet</strong>
       <pre class=language-css>
         @element html { ... }
       </pre>
@@ -73,7 +75,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <h4 id=multiple-selectors>Multiple Selectors</h4>
 
-      You can include multiple CSS selectors in your scoped style by separating them with a comma and any amount of whitespace.
+      You can include multiple CSS selectors in your scoped stylesheet by separating them with a comma and any amount of whitespace.
 
       <div class=example>
         Comma-separated selector list
@@ -151,9 +153,9 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=scoped-styles-with-repsonsive-conditions>Scoped Styles with Responsive Conditions</h3>
 
-    An element query is a scoped style with one or more responsive conditions added.
+    An element query is a scoped stylesheet with one or more responsive conditions added.
 
-    The following global CSS and scoped style are equivalent.
+    The following global CSS and scoped stylesheet are equivalent.
 
     <div class=example>
       Example of global CSS
@@ -165,7 +167,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
     </div>
 
     <div class=example>
-      Example scoped style
+      Example scoped stylesheet
       <pre class=language-css>
         @element html {
           body {
@@ -175,9 +177,9 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       </pre>
     </div>
 
-    In both cases, as long as there is a <code>body</code> element inside of our <code>html</code>, it will have a lime background.
+    In both cases, as long as there is a <code>body</code> element inside of our <code>html</code>, it will have a green background.
 
-    We can also add a responsive conditions to our scoped styles. To do this, write <code>and </code> followed by a responsive condition and value, separated by a colon (<code>:</code>) and wrapped in brackets (<code>(</code>,<code>)</code>).
+    We can also add a responsive conditions to our scoped stylesheets. To do this, write <code>and </code> followed by a responsive condition and value, separated by a colon (<code>:</code>) and wrapped in brackets (<code>(</code>,<code>)</code>).
 
     <div class=example>
       Example Element Query with Responsive Condition
@@ -232,11 +234,11 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         </pre>
       </div>
 
-      In both cases when our <code>html</code> is between the sizes of <code>500px</code> and <code>1000px</code>, our <code>body</code> will have a lime background.
+      In both cases when our <code>html</code> is between the sizes of <code>500px</code> and <code>1000px</code>, our <code>body</code> will have a green background.
 
     <h4 id=combining-element-and-media-queries>Combining ''@element'' and ''@media'' queries</h4>
 
-      It's possible to combine the use of scoped styles or element queries with media queries. Most of the time we combine them we want to include the media query on the inside of the element query. This will mean any time the element query is true, that media query will be visible to the browser and apply.
+      It's possible to combine the use of scoped stylesheets or element queries with media queries. Most of the time we combine them we want to include the media query on the inside of the element query. This will mean any time the element query is true, that media query will be visible to the browser and apply.
 
       <div class=example>
         Nesting a media query inside an element query
@@ -257,7 +259,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
       With element queries comes the new possibility that the rules you are applying when your responsive conditions are met will conflict with the responsive condition in your element query. In this situation we should not attempt to detect or handle these cases by ignoring certain styles, or checking whether any of the rules affect the validity of the responsive condition. It is best to apply the rule naïvely and allow the conflict to occur.
 
-      Note, The responsibility lies with the author to write ''@element'' queries which can be interpreted logically.
+      Note: The responsibility lies with the author to write ''@element'' queries which can be interpreted logically.
 
       <div class=example>
         <pre class=language-css>
@@ -328,7 +330,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
 <h2 id=meta-selectors-in-css>Meta-Selectors</h2>
 
-  With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined. These new selectors only work inside a scoped style or element query and are called ''meta-selectors''.
+  With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined. These new selectors only work inside a scoped stylesheet and are called ''meta-selectors''.
 
   <h3 id=diagram-of-meta-selectors>Diagram of ''meta-selectors''</h4>
 
@@ -344,7 +346,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <dt><dfn>$this</dfn>
     <dd>
-      The <a selector>$this</a> meta-selector refers each element at the root of our scoped style when it matches the responsive condition.
+      The <a selector>$this</a> meta-selector refers each element in the document that matches the root of our scoped stylesheet and any element query conditions it has.
 
       <div class=example>
         Example of <a selector>$this</a> meta-selector
@@ -360,7 +362,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <dt><dfn>$parent</dfn>
     <dd>
-      The <a selector>$parent</a> meta-selector refers to the element containing the element(s) in the scope of our scoped style or element query.
+      The <a selector>$parent</a> meta-selector refers to the element containing the element(s) in the root of our scoped stylesheet.
 
       <div class=example>
         Example of <a selector>$parent</a> meta-selector
@@ -376,7 +378,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <dt><dfn>$prev</dfn>
     <dd>
-      The <a selector>$prev</a> meta-selector refers to the sibling directly above the element at the root of our scoped style or element query.
+      The <a selector>$prev</a> meta-selector refers to the sibling directly preceding the element at the root of our scoped stylesheet in the document.
 
       <div class=example>
         Example of <a selector>$prev</a> meta-selector
@@ -392,7 +394,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <dt><dfn>$next</dfn>
     <dd>
-      The <a selector>$next</a> meta-selector refers to the sibling directly below the element at the root of our scoped style or element query.
+      The <a selector>$next</a> meta-selector refers to the sibling directly following the element at the root of our scoped stylesheet in the document.
 
       <div class=example>
         Example of <a selector>$next</a> meta-selector
@@ -406,7 +408,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         In this case, any sibling coming directly after any element with a class of <code>.widget</code> will have a green background.
       </div>
 
-      Note, the <a selector>$next</a> is similar to the selector: <code>$this + *</code>
+      Note: the <a selector>$next</a> is similar to the selector: <code>$this + *</code>
 
   </dl>
 
@@ -813,7 +815,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   Just as CSS has viewport-percentage units: ''vw'', ''vh'', ''vmin'', and ''vmax'' which represent a distance equal to 1% of the viewport width, height, shortest edge, and longest edge, in a similar way the following element-percentage units ''ew'', ''eh'', ''emin'', and ''emax'' represent a distance equal to 1% of the element's own width, height, shortest edge, and longest edge. When the width of height of the element changes, the value of these units scale accordingly.
 
-  Note, These new <a dfn>eq-unit</a> units always refer to the dimensions of the element in the scope, and can be used inside of a scoped style or element query to style other elements.
+  Note: These new <a dfn>eq-unit</a> units always refer to the dimensions of the element in the scope, and can be used inside of a scoped stylesheet to style other elements.
 
   <dl dfn-type=value dfn-for=eq-unit>
 
@@ -833,7 +835,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element's width.
       </div>
 
-      Note, This unit is similar to the ''vw'' viewport unit, but based on the scoped element's dimensions.
+      Note: This unit is similar to the ''vw'' viewport unit, but based on the scoped element's dimensions.
 
     <dt><dfn id=eh lt=eh>eh unit</dfn>
     <dd>
@@ -851,7 +853,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element's height.
       </div>
 
-      Note, This unit is similar to the ''vh'' viewport unit, but based on the scoped element's dimensions.
+      Note: This unit is similar to the ''vh'' viewport unit, but based on the scoped element's dimensions.
 
     <dt><dfn id=emin lt=emin>emin unit</dfn>
     <dd>
@@ -869,7 +871,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element's shortest edge.
       </div>
 
-      Note, This unit is similar to the ''vmin'' viewport unit, but based on the scoped element's dimensions.
+      Note: This unit is similar to the ''vmin'' viewport unit, but based on the scoped element's dimensions.
 
     <dt><dfn id=emax lt=emax>emax unit</dfn>
     <dd>
@@ -887,13 +889,13 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element's longest edge.
       </div>
 
-      Note, This unit is similar to the ''vmax'' viewport unit, but based on the scoped element's dimensions.
+      Note: This unit is similar to the ''vmax'' viewport unit, but based on the scoped element's dimensions.
 
   </dl>
 
 <h2 id=examples-of-element-queries>Examples of Scoped Styles & Element Queries</h2>
 
-<h3 id=example-scoped-styles>Examples of valid scoped styles</h3>
+<h3 id=example-scoped-styles>Examples of valid scoped stylesheets</h3>
 
   <div class=example>
     <pre class=language-css>
@@ -1101,7 +1103,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
 Scoped Styles + Element/Container Queries
 
-- The solution must allow authors the ability to add a stylesheet to the page based the existence of at least one element in the document matching a given selector (scoped styles)
+- The solution must allow authors the ability to add a stylesheet to the page based the existence of at least one element in the document matching a given selector (scoped stylesheets)
 - The solution must allow authors to query various properties of the elements on the page matching a given selector like: width, height, or number of child elements. (element/container queries)
 - The solution must provide a way to use only those elements which match a selector (and optional conditions) as part of a CSS selector for a rule. ($this meta-selector)
 - The solution should provide a way to select the parent element of only those elements which match a selector (and optional conditions). ($parent meta-selector)

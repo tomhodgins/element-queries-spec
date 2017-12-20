@@ -1176,7 +1176,7 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 1d4d2b1d1fc168e39cb7f99218de7951c5736ec7" name="generator">
+  <meta content="Bikeshed version 645534c1532bca4fdb4f3859efc66268a218d7c8" name="generator">
 <style>/* style-md-lists */
 
             /* This is a weird hack for me not yet following the commonmark spec
@@ -1425,13 +1425,13 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS Element Queries [Level 1]</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-05-25">25 May 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-12-20">20 December 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
      <dd><a class="u-url" href="https://github.com/tomhodgins/element-queries-spec">https://github.com/tomhodgins/element-queries-spec</a>
      <dt>Issue Tracking:
-     <dd><a href="https://github.com/tomhodgins/element-queries-spec/issues">GitHub</a>
+     <dd><a href="https://github.com/tomhodgins/element-query-spec/issues/">GitHub</a>
      <dt class="editor">Editor:
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:tomhodgins@gmail.com">Tommy Hodgins</a>
     </dl>
@@ -1439,7 +1439,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 25 May 2017,
+In addition, as of 20 December 2017,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1448,7 +1448,7 @@ Parts of this work may be from another specification document.  If so, those par
   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
   <div class="p-summary" data-fill-with="abstract">
    <p>Element Queries allow authors to test and query values or features of elements in an HTML document. They are used in the CSS @element rule to conditionally apply styles to a document, and in various other contexts and languages, such as HTML and JavaScript.</p>
-   <p>CSS Element Queries [Level 1] describes the mechanism and syntax of scoped styles and element queries, the responsive conditions. It also describes the meta-selectors, functions, and units that make element queries powerful.</p>
+   <p>CSS Element Queries [Level 1] describes the mechanism and syntax of scoped stylesheets and element queries, the responsive conditions. It also describes the meta-selectors, functions, and units that make element queries powerful.</p>
   </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
@@ -1464,7 +1464,7 @@ Parts of this work may be from another specification document.  If so, those par
      <a href="#element-queries"><span class="secno">2</span> <span class="content">Element Queries</span></a>
      <ol class="toc">
       <li>
-       <a href="#scoped-styles"><span class="secno">2.1</span> <span class="content">Scoped Styles</span></a>
+       <a href="#scoped-styles"><span class="secno">2.1</span> <span class="content">Scoped Stylesheets</span></a>
        <ol class="toc">
         <li><a href="#multiple-selectors"><span class="secno">2.1.1</span> <span class="content">Multiple Selectors</span></a>
         <li><a href="#understanding-the-scope"><span class="secno">2.1.2</span> <span class="content">Understanding the Scope</span></a>
@@ -1511,7 +1511,7 @@ Parts of this work may be from another specification document.  If so, those par
     <li>
      <a href="#examples-of-element-queries"><span class="secno">7</span> <span class="content">Examples of Scoped Styles &amp; Element Queries</span></a>
      <ol class="toc">
-      <li><a href="#example-scoped-styles"><span class="secno">7.1</span> <span class="content">Examples of valid scoped styles</span></a>
+      <li><a href="#example-scoped-styles"><span class="secno">7.1</span> <span class="content">Examples of valid scoped stylesheets</span></a>
       <li><a href="#faking-input-empty"><span class="secno">7.2</span> <span class="content">Faking <code>input:empty</code></span></a>
       <li><a href="#self-responsive-grid"><span class="secno">7.3</span> <span class="content">Self-responsive Grid</span></a>
      </ol>
@@ -1538,16 +1538,16 @@ Parts of this work may be from another specification document.  If so, those par
   <main>
    <h2 class="heading settled" data-level="1" id="introduction"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#introduction"></a></h2>
    <p>By default all CSS is written from the global scope (<a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#root-pseudo">:root</a>, or the HTML element), and <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a> queries apply globally to all elements based on the conditions of the browser and media.</p>
-   <p>The idea of a scoped style is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as though it was <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#root-pseudo">:root</a>.</p>
+   <p>The idea of a scoped stylesheet is to allow CSS to view a rule, or multiple rules from the perspective of any element in the document as though it was <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#root-pseudo">:root</a>.</p>
    <p>Just like CSS already has <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a> queries which help define styles for different media conditions, this document describes functionality for an <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-1">@element</a> query syntax to define styles that target elements more specifically with conditions based on their own properties.</p>
    <h3 class="heading settled" data-level="1.1" id="values"><span class="secno">1.1. </span><span class="content">Values</span><a class="self-link" href="#values"></a></h3>
    <p>Value types not defined in this specification, such as <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a>, <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a>, <a class="production css" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a>, and <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a> are defined in <a data-link-type="biblio" href="#biblio-css3val">[CSS3VAL]</a>, and <a data-link-type="biblio" href="#biblio-mediaqueries-4">[MEDIAQUERIES-4]</a></p>
    <h3 class="heading settled" data-level="1.2" id="units"><span class="secno">1.2. </span><span class="content">Units</span><a class="self-link" href="#units"></a></h3>
    <p>The units used in element queries are the same as in other parts of CSS, as defined in <a data-link-type="biblio" href="#biblio-css3val">[CSS3VAL]</a>. For example, the pixel unit represents CSS pixels and not physical pixels.</p>
-   <p>Additionally, new <a href="#element-percentage-units">element-percentage units</a> are defined in this document which relate to an element’s own properties after styles have been applied to the document.</p>
+   <p>Additionally, new <a href="#element-percentage-units">element-percentage units</a> are defined in this document which relate to an element’s own width and height dimensions.</p>
    <h2 class="heading settled" data-level="2" id="element-queries"><span class="secno">2. </span><span class="content">Element Queries</span><a class="self-link" href="#element-queries"></a></h2>
-   <p>An <strong>element query</strong> is a method of testing certain aspects of an element and applying styles based on whether that test is true or false.</p>
-   <p>The syntax of an element query consists of a <a class="production css" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a>, plus an optional list of zero or more responsive conditions, followed by one or more CSS rules:</p>
+   <p>An <strong>element query</strong> is a method of testing certain aspects of an element and applying styles based on whether that test returns true or false.</p>
+   <p>The syntax of an element query consists of a <a class="production css" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a>, plus an optional list of zero or more responsive conditions, followed by a stylesheet containing one or more CSS rules:</p>
    <div class="railroad">
     <svg class="railroad-diagram" height="81" viewBox="0 0 869 81" width="869">
      <g transform="translate(.5 .5)">
@@ -1638,22 +1638,23 @@ Parts of this work may be from another specification document.  If so, those par
      </g>
     </svg>
    </div>
-   <p>A scoped style will return true as long as at least one element in the document matches a selector in the <a class="production css" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a>.</p>
+   <p>A scoped stylesheet will return true as long as at least one (1) element in the document matches a selector in the <a class="production css" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a>.</p>
    <p>An element query is a logical expression that is either true or false. An element query is true if:</p>
    <ul>
     <li>at least one element in the document matches a selector in the <a class="production css" data-link-type="type" href="https://drafts.csswg.org/selectors-4/#typedef-selector-list">&lt;selector-list></a> 
     <li>all responsive conditions are true 
    </ul>
    <p>User agents must re-evaluate element queries in response to changes in the user environment that they’re aware of, for example resizing the browser, clicking, or scrolling, depending on which responsive conditions are being evaluated, and change the styles applied accordingly.</p>
-   <h3 class="heading settled" data-level="2.1" id="scoped-styles"><span class="secno">2.1. </span><span class="content">Scoped Styles</span><a class="self-link" href="#scoped-styles"></a></h3>
-   <p>To write a scoped style, write <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-2">@element</a>, followed by any amount of whitespace. Wrap one or more comma-separated CSS <a class="production css" data-link-type="type" href="https://www.w3.org/TR/selectors4/#ltselector">&lt;selector></a> (optionally wrapped in single (<code>'</code>) or double (<code>"</code>) quotes), followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).</p>
-   <div class="example" id="example-806edaa1">
-    <a class="self-link" href="#example-806edaa1"></a> Example scoped style 
+   <p class="note" role="note">Note: This specification does not currently define a list of events which trigger a style recalculation, or a syntax (in CSS, HTML, or JS) through which scoped stylesheets could be limited to specific events.</p>
+   <h3 class="heading settled" data-level="2.1" id="scoped-styles"><span class="secno">2.1. </span><span class="content">Scoped Stylesheets</span><a class="self-link" href="#scoped-styles"></a></h3>
+   <p>To write a scoped stylesheet write <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-2">@element</a>, followed by any amount of whitespace. Wrap one or more comma-separated CSS <a class="production css" data-link-type="type" href="https://www.w3.org/TR/selectors4/#ltselector">&lt;selector></a> (optionally wrapped in single (<code>'</code>) or double (<code>"</code>) quotes), followed by any amount of whitespace, and wrap one or more CSS rules in a pair of curly brackets (<code>{</code>,<code>}</code>).</p>
+   <div class="example" id="example-03fd5f71">
+    <a class="self-link" href="#example-03fd5f71"></a> Example scoped stylesheet 
 <pre class="language-css highlight"><span class="n">@element</span> html { ... <span class="p">}</span>
 </pre>
    </div>
    <h4 class="heading settled" data-level="2.1.1" id="multiple-selectors"><span class="secno">2.1.1. </span><span class="content">Multiple Selectors</span><a class="self-link" href="#multiple-selectors"></a></h4>
-   <p>You can include multiple CSS selectors in your scoped style by separating them with a comma and any amount of whitespace.</p>
+   <p>You can include multiple CSS selectors in your scoped stylesheet by separating them with a comma and any amount of whitespace.</p>
    <div class="example" id="example-392319b2">
     <a class="self-link" href="#example-392319b2"></a> Comma-separated selector list 
 <pre class="language-css highlight"><span class="n">@element</span> ul<span class="p">,</span> ol { ... <span class="p">}</span>
@@ -1717,8 +1718,8 @@ Parts of this work may be from another specification document.  If so, those par
    </div>
    <p>It is possible for an element to match more than one <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-3">@element</a> query.</p>
    <h3 class="heading settled" data-level="2.2" id="scoped-styles-with-repsonsive-conditions"><span class="secno">2.2. </span><span class="content">Scoped Styles with Responsive Conditions</span><a class="self-link" href="#scoped-styles-with-repsonsive-conditions"></a></h3>
-   <p>An element query is a scoped style with one or more responsive conditions added.</p>
-   <p>The following global CSS and scoped style are equivalent.</p>
+   <p>An element query is a scoped stylesheet with one or more responsive conditions added.</p>
+   <p>The following global CSS and scoped stylesheet are equivalent.</p>
    <div class="example" id="example-0e633278">
     <a class="self-link" href="#example-0e633278"></a> Example of global CSS 
 <pre class="language-css highlight"><span class="nt">body </span><span class="p">{</span>
@@ -1726,8 +1727,8 @@ Parts of this work may be from another specification document.  If so, those par
 <span class="p">}</span>
 </pre>
    </div>
-   <div class="example" id="example-a0c4dace">
-    <a class="self-link" href="#example-a0c4dace"></a> Example scoped style 
+   <div class="example" id="example-4589ca00">
+    <a class="self-link" href="#example-4589ca00"></a> Example scoped stylesheet 
 <pre class="language-css highlight"><span class="n">@element</span> html <span class="p">{</span>
   <span class="nt">body </span><span class="p">{</span>
     <span class="k">background</span><span class="p">:</span> lime<span class="p">;</span>
@@ -1735,8 +1736,8 @@ Parts of this work may be from another specification document.  If so, those par
 <span class="p">}</span>
 </pre>
    </div>
-   <p>In both cases, as long as there is a <code>body</code> element inside of our <code>html</code>, it will have a lime background.</p>
-   <p>We can also add a responsive conditions to our scoped styles. To do this, write <code>and </code> followed by a responsive condition and value, separated by a colon (<code>:</code>) and wrapped in brackets (<code>(</code>,<code>)</code>).</p>
+   <p>In both cases, as long as there is a <code>body</code> element inside of our <code>html</code>, it will have a green background.</p>
+   <p>We can also add a responsive conditions to our scoped stylesheets. To do this, write <code>and </code> followed by a responsive condition and value, separated by a colon (<code>:</code>) and wrapped in brackets (<code>(</code>,<code>)</code>).</p>
    <div class="example" id="example-9da8a779">
     <a class="self-link" href="#example-9da8a779"></a> Example Element Query with Responsive Condition 
 <pre class="language-css highlight"><span class="n">@element</span> html and <span class="p">(</span>min-width<span class="nt">: 500px) </span><span class="p">{</span>
@@ -1777,9 +1778,9 @@ Parts of this work may be from another specification document.  If so, those par
 }
 </pre>
    </div>
-   <p>In both cases when our <code>html</code> is between the sizes of <code>500px</code> and <code>1000px</code>, our <code>body</code> will have a lime background.</p>
+   <p>In both cases when our <code>html</code> is between the sizes of <code>500px</code> and <code>1000px</code>, our <code>body</code> will have a green background.</p>
    <h4 class="heading settled" data-level="2.2.2" id="combining-element-and-media-queries"><span class="secno">2.2.2. </span><span class="content">Combining <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-4">@element</a> and <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a> queries</span><a class="self-link" href="#combining-element-and-media-queries"></a></h4>
-   <p>It’s possible to combine the use of scoped styles or element queries with media queries. Most of the time we combine them we want to include the media query on the inside of the element query. This will mean any time the element query is true, that media query will be visible to the browser and apply.</p>
+   <p>It’s possible to combine the use of scoped stylesheets or element queries with media queries. Most of the time we combine them we want to include the media query on the inside of the element query. This will mean any time the element query is true, that media query will be visible to the browser and apply.</p>
    <div class="example" id="example-90ab7b4a">
     <a class="self-link" href="#example-90ab7b4a"></a> Nesting a media query inside an element query 
 <pre class="language-css highlight"><span class="n">@element</span> #headline and <span class="p">(</span>min-characters<span class="nt">: 20) </span><span class="p">{</span>
@@ -1794,7 +1795,7 @@ Parts of this work may be from another specification document.  If so, those par
    <p>In this example, if the element with an ID of <code>#headline</code> has over 20 characters, it will display in print media with a thin black border.</p>
    <h4 class="heading settled" data-level="2.2.3" id="self-referential-element-queries"><span class="secno">2.2.3. </span><span class="content">Self-Referential <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-5">@element</a> queries</span><a class="self-link" href="#self-referential-element-queries"></a></h4>
    <p>With element queries comes the new possibility that the rules you are applying when your responsive conditions are met will conflict with the responsive condition in your element query. In this situation we should not attempt to detect or handle these cases by ignoring certain styles, or checking whether any of the rules affect the validity of the responsive condition. It is best to apply the rule naïvely and allow the conflict to occur.</p>
-   <p class="note" role="note">Note, The responsibility lies with the author to write <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-6">@element</a> queries which can be interpreted logically.</p>
+   <p class="note" role="note">Note: The responsibility lies with the author to write <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-6">@element</a> queries which can be interpreted logically.</p>
    <div class="example" id="example-530f03fb">
     <a class="self-link" href="#example-530f03fb"></a> 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min‐width: 300px) </span><span class="p">{</span>
@@ -1849,7 +1850,7 @@ Parts of this work may be from another specification document.  If so, those par
    <p>If the result of any responsive condition is used in any context that expects a two-valued boolean, "unknown" must be converted to "false".</p>
    <p class="note" role="note">Note: This means that, for example, when an element query is used in an @element rule, if it resolves to "unknown" it is treated as "false" and fails to match.</p>
    <h2 class="heading settled" data-level="4" id="meta-selectors-in-css"><span class="secno">4. </span><span class="content">Meta-Selectors</span><a class="self-link" href="#meta-selectors-in-css"></a></h2>
-   <p>With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined. These new selectors only work inside a scoped style or element query and are called <a class="css" data-link-type="maybe" href="#selectordef-meta-selectors" id="ref-for-selectordef-meta-selectors-1">meta-selectors</a>.</p>
+   <p>With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined. These new selectors only work inside a scoped stylesheet and are called <a class="css" data-link-type="maybe" href="#selectordef-meta-selectors" id="ref-for-selectordef-meta-selectors-1">meta-selectors</a>.</p>
    <h3 class="heading settled" data-level="4.1" id="diagram-of-meta-selectors"><span class="secno">4.1. </span><span class="content">Diagram of <a class="css" data-link-type="maybe" href="#selectordef-meta-selectors" id="ref-for-selectordef-meta-selectors-2">meta-selectors</a></span><a class="self-link" href="#diagram-of-meta-selectors"></a></h3>
    <p>Here is a diagram showing the relationship between the meta-selectors. The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-1">$parent</a> is the parent element of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-1">$this</a>, and <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-1">$prev</a> and <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-1">$next</a> represent the adjacent siblings to <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-2">$this</a>.</p>
 <pre style="text-align:center;"><a data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-2">$parent</a>
@@ -1859,7 +1860,7 @@ Parts of this work may be from another specification document.  If so, those par
    <dl>
     <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-this">$this</dfn> 
     <dd>
-      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-4">$this</a> meta-selector refers each element at the root of our scoped style when it matches the responsive condition. 
+      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-4">$this</a> meta-selector refers each element in the document that matches the root of our scoped stylesheet and any element query conditions it has. 
      <div class="example" id="example-07525ff0">
       <a class="self-link" href="#example-07525ff0"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-5">$this</a> meta-selector 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min-width: 200px) </span><span class="p">{</span>
@@ -1872,7 +1873,7 @@ Parts of this work may be from another specification document.  If so, those par
      </div>
     <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-parent">$parent</dfn> 
     <dd>
-      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-3">$parent</a> meta-selector refers to the element containing the element(s) in the scope of our scoped style or element query. 
+      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-3">$parent</a> meta-selector refers to the element containing the element(s) in the root of our scoped stylesheet. 
      <div class="example" id="example-036a9802">
       <a class="self-link" href="#example-036a9802"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-4">$parent</a> meta-selector 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min-width: 200px) </span><span class="p">{</span>
@@ -1885,7 +1886,7 @@ Parts of this work may be from another specification document.  If so, those par
      </div>
     <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-prev">$prev</dfn> 
     <dd>
-      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-3">$prev</a> meta-selector refers to the sibling directly above the element at the root of our scoped style or element query. 
+      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-3">$prev</a> meta-selector refers to the sibling directly preceding the element at the root of our scoped stylesheet in the document. 
      <div class="example" id="example-a1fca326">
       <a class="self-link" href="#example-a1fca326"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-4">$prev</a> meta-selector 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
@@ -1898,7 +1899,7 @@ Parts of this work may be from another specification document.  If so, those par
      </div>
     <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-next">$next</dfn> 
     <dd>
-      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-3">$next</a> meta-selector refers to the sibling directly below the element at the root of our scoped style or element query. 
+      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-3">$next</a> meta-selector refers to the sibling directly following the element at the root of our scoped stylesheet in the document. 
      <div class="example" id="example-9162bfe8">
       <a class="self-link" href="#example-9162bfe8"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-4">$next</a> meta-selector 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
@@ -1909,7 +1910,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
       <p>In this case, any sibling coming directly after any element with a class of <code>.widget</code> will have a green background.</p>
      </div>
-     <p class="note" role="note">Note, the <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-5">$next</a> is similar to the selector: <code>$this + *</code></p>
+     <p class="note" role="note">Note: the <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-5">$next</a> is similar to the selector: <code>$this + *</code></p>
    </dl>
    <h2 class="heading settled" data-level="5" id="responsive-conditions"><span class="secno">5. </span><span class="content">Responsive Conditions</span><a class="self-link" href="#responsive-conditions"></a></h2>
    <p>All responsive conditions for <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-12">@element</a> queries are formatted as a condition name and value, separated by a colon (<code>:</code>) character, surrounded by brackets (<code>()</code>).</p>
@@ -2379,7 +2380,7 @@ Parts of this work may be from another specification document.  If so, those par
    </div>
    <h2 class="heading settled" data-level="6" id="element-percentage-units"><span class="secno">6. </span><span class="content">Element-percentage Units</span><a class="self-link" href="#element-percentage-units"></a></h2>
    <p>Just as CSS has viewport-percentage units: <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vw">vw</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vh">vh</a>, <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmin">vmin</a>, and <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmax">vmax</a> which represent a distance equal to 1% of the viewport width, height, shortest edge, and longest edge, in a similar way the following element-percentage units <a class="css" data-link-type="maybe" href="#ew" id="ref-for-ew-1">ew</a>, <a class="css" data-link-type="maybe" href="#eh" id="ref-for-eh-1">eh</a>, <a class="css" data-link-type="maybe" href="#emin" id="ref-for-emin-1">emin</a>, and <a class="css" data-link-type="maybe" href="#emax" id="ref-for-emax-1">emax</a> represent a distance equal to 1% of the element’s own width, height, shortest edge, and longest edge. When the width of height of the element changes, the value of these units scale accordingly.</p>
-   <p class="note" role="note">Note, These new <a data-link-type="dfn" href="#eq-unit" id="ref-for-eq-unit-1">eq-unit</a> units always refer to the dimensions of the element in the scope, and can be used inside of a scoped style or element query to style other elements.</p>
+   <p class="note" role="note">Note: These new <a data-link-type="dfn" href="#eq-unit" id="ref-for-eq-unit-1">eq-unit</a> units always refer to the dimensions of the element in the scope, and can be used inside of a scoped stylesheet to style other elements.</p>
    <dl>
     <dt><dfn class="dfn-paneled css" data-dfn-for="eq-unit" data-dfn-type="value" data-export="" data-lt="ew" id="ew">ew unit</dfn> 
     <dd>
@@ -2394,7 +2395,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
       <p>In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element’s width.</p>
      </div>
-     <p class="note" role="note">Note, This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vw">vw</a> viewport unit, but based on the scoped element’s dimensions.</p>
+     <p class="note" role="note">Note: This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vw">vw</a> viewport unit, but based on the scoped element’s dimensions.</p>
     <dt><dfn class="dfn-paneled css" data-dfn-for="eq-unit" data-dfn-type="value" data-export="" data-lt="eh" id="eh">eh unit</dfn> 
     <dd>
       Equal to 1% of the height of the scoped element 
@@ -2408,7 +2409,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
       <p>In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element’s height.</p>
      </div>
-     <p class="note" role="note">Note, This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vh">vh</a> viewport unit, but based on the scoped element’s dimensions.</p>
+     <p class="note" role="note">Note: This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vh">vh</a> viewport unit, but based on the scoped element’s dimensions.</p>
     <dt><dfn class="dfn-paneled css" data-dfn-for="eq-unit" data-dfn-type="value" data-export="" data-lt="emin" id="emin">emin unit</dfn> 
     <dd>
       Equal to the smaller of 1ew or 1eh 
@@ -2422,7 +2423,7 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
       <p>In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element’s shortest edge.</p>
      </div>
-     <p class="note" role="note">Note, This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmin">vmin</a> viewport unit, but based on the scoped element’s dimensions.</p>
+     <p class="note" role="note">Note: This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmin">vmin</a> viewport unit, but based on the scoped element’s dimensions.</p>
     <dt><dfn class="dfn-paneled css" data-dfn-for="eq-unit" data-dfn-type="value" data-export="" data-lt="emax" id="emax">emax unit</dfn> 
     <dd>
       Equal to the larger of 1ew or 1eh 
@@ -2436,10 +2437,10 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
       <p>In this case the font size of any element with a class of <code>.widget</code> is equal to 10% of the scoped element’s longest edge.</p>
      </div>
-     <p class="note" role="note">Note, This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmax">vmax</a> viewport unit, but based on the scoped element’s dimensions.</p>
+     <p class="note" role="note">Note: This unit is similar to the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-values-4/#vmax">vmax</a> viewport unit, but based on the scoped element’s dimensions.</p>
    </dl>
    <h2 class="heading settled" data-level="7" id="examples-of-element-queries"><span class="secno">7. </span><span class="content">Examples of Scoped Styles &amp; Element Queries</span><a class="self-link" href="#examples-of-element-queries"></a></h2>
-   <h3 class="heading settled" data-level="7.1" id="example-scoped-styles"><span class="secno">7.1. </span><span class="content">Examples of valid scoped styles</span><a class="self-link" href="#example-scoped-styles"></a></h3>
+   <h3 class="heading settled" data-level="7.1" id="example-scoped-styles"><span class="secno">7.1. </span><span class="content">Examples of valid scoped stylesheets</span><a class="self-link" href="#example-scoped-styles"></a></h3>
    <div class="example" id="example-8b47030f">
     <a class="self-link" href="#example-8b47030f"></a> 
 <pre class="language-css highlight"><span class="n">@element</span> div <span class="p">{}</span>
@@ -2636,7 +2637,7 @@ Parts of this work may be from another specification document.  If so, those par
    <p>Scoped Styles + Element/Container Queries</p>
    <ul>
     <li data-md="">
-     <p>The solution must allow authors the ability to add a stylesheet to the page based the existence of at least one element in the document matching a given selector (scoped styles)</p>
+     <p>The solution must allow authors the ability to add a stylesheet to the page based the existence of at least one element in the document matching a given selector (scoped stylesheets)</p>
     <li data-md="">
      <p>The solution must allow authors to query various properties of the elements on the page matching a given selector like: width, height, or number of child elements. (element/container queries)</p>
     <li data-md="">
@@ -2958,7 +2959,7 @@ Parts of this work may be from another specification document.  If so, those par
    <b><a href="#at-ruledef-element">#at-ruledef-element</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-at-ruledef-element-1">1. Introduction</a>
-    <li><a href="#ref-for-at-ruledef-element-2">2.1. Scoped Styles</a>
+    <li><a href="#ref-for-at-ruledef-element-2">2.1. Scoped Stylesheets</a>
     <li><a href="#ref-for-at-ruledef-element-3">2.1.2. Understanding the Scope</a>
     <li><a href="#ref-for-at-ruledef-element-4">2.2.2. Combining @element and @media queries</a>
     <li><a href="#ref-for-at-ruledef-element-5">2.2.3. Self-Referential @element queries</a> <a href="#ref-for-at-ruledef-element-6">(2)</a> <a href="#ref-for-at-ruledef-element-7">(3)</a>
