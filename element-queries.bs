@@ -264,7 +264,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         <pre class=language-css>
           @element .widget and (min‐width: 300px) {
-            $this {
+            :self {
               width: 200px;
             }
           }
@@ -280,12 +280,12 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       <div class=example>
         <pre class=language-css>
           @element .widget and (min‐width: 400px) {
-            $this {
+            :self {
               width: 200px;
             }
           }
           @element .widget and (max‐width: 300px) {
-            $this {
+            :self {
               width: 500px;
             }
           }
@@ -313,7 +313,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
     <dfn dfn-type=type>&lt;eq-value></dfn> = <<integer>> | <<dimension>> | <<ratio>> | <<ident>>
 
-    <dfn dfn-type=selector>meta-selectors</dfn> = $this | $parent | $prev | $next
+    <dfn dfn-type=selector>meta-selectors</dfn> = :self | :parent | :prev | :next
 
     <dfn dfn-type=dfn>eq-unit</dfn> = ew | eh | emin | emax
 
@@ -334,25 +334,25 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
 
   <h3 id=diagram-of-meta-selectors>Diagram of ''meta-selectors''</h4>
 
-  Here is a diagram showing the relationship between the meta-selectors. The <a selector>$parent</a> is the parent element of <a selector>$this</a>, and <a selector>$prev</a> and <a selector>$next</a> represent the adjacent siblings to <a selector>$this</a>.
+  Here is a diagram showing the relationship between the meta-selectors. The <a selector>:parent</a> is the parent element of <a selector>:self</a>, and <a selector>:prev</a> and <a selector>:next</a> represent the adjacent siblings to <a selector>:self</a>.
 
   <pre style=text-align:center;>
-    <a selector>$parent</a>
+    <a selector>:parent</a>
     ↑
-    <a selector>$prev</a> ← <a selector>$this</a> → <a selector>$next</a>
+    <a selector>:prev</a> ← <a selector>:self</a> → <a selector>:next</a>
   </pre>
 
   <dl dfn-type=selector dfn-for=meta-selectors>
 
-    <dt><dfn>$this</dfn>
+    <dt><dfn>:self</dfn>
     <dd>
-      The <a selector>$this</a> meta-selector refers each element in the document that matches the root of our scoped stylesheet and any element query conditions it has.
+      The <a selector>:self</a> meta-selector refers each element in the document that matches the root of our scoped stylesheet and any element query conditions it has.
 
       <div class=example>
-        Example of <a selector>$this</a> meta-selector
+        Example of <a selector>:self</a> meta-selector
         <pre class=language-css>
           @element .widget and (min-width: 200px) {
-            $this {
+            :self {
               background: lime;
             }
           }
@@ -360,15 +360,15 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         In this case, any element with a class of <code>.widget</code> that is <code>200px</code> or wider will have a green background.
       </div>
 
-    <dt><dfn>$parent</dfn>
+    <dt><dfn>:parent</dfn>
     <dd>
-      The <a selector>$parent</a> meta-selector refers to the element containing the element(s) in the root of our scoped stylesheet.
+      The <a selector>:parent</a> meta-selector refers to the element containing the element(s) in the root of our scoped stylesheet.
 
       <div class=example>
-        Example of <a selector>$parent</a> meta-selector
+        Example of <a selector>:parent</a> meta-selector
         <pre class=language-css>
           @element .widget and (min-width: 200px) {
-            $parent {
+            :parent {
               background: lime;
             }
           }
@@ -376,15 +376,15 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         In this case, any element containing an element with a class of <code>.widget</code> that is equal or wider than <code>200px</code> will have a green background.
       </div>
 
-    <dt><dfn>$prev</dfn>
+    <dt><dfn>:prev</dfn>
     <dd>
-      The <a selector>$prev</a> meta-selector refers to the sibling directly preceding the element at the root of our scoped stylesheet in the document.
+      The <a selector>:prev</a> meta-selector refers to the sibling directly preceding the element at the root of our scoped stylesheet in the document.
 
       <div class=example>
-        Example of <a selector>$prev</a> meta-selector
+        Example of <a selector>:prev</a> meta-selector
         <pre class=language-css>
           @element .widget {
-            $prev {
+            :prev {
               background: lime;
             }
           }
@@ -392,15 +392,15 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         In this case, any sibling coming directly before any element with a class of <code>.widget</code> will have a green background.
       </div>
 
-    <dt><dfn>$next</dfn>
+    <dt><dfn>:next</dfn>
     <dd>
-      The <a selector>$next</a> meta-selector refers to the sibling directly following the element at the root of our scoped stylesheet in the document.
+      The <a selector>:next</a> meta-selector refers to the sibling directly following the element at the root of our scoped stylesheet in the document.
 
       <div class=example>
-        Example of <a selector>$next</a> meta-selector
+        Example of <a selector>:next</a> meta-selector
         <pre class=language-css>
           @element .widget {
-            $next {
+            :next {
               background: lime;
             }
           }
@@ -408,7 +408,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         In this case, any sibling coming directly after any element with a class of <code>.widget</code> will have a green background.
       </div>
 
-      Note: the <a selector>$next</a> is similar to the selector: <code>$this + *</code>
+      Note: the <a selector>:next</a> is similar to the selector: <code>:self + *</code>
 
   </dl>
 
@@ -462,7 +462,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="width" for=@element>min-width</a> element query
       <pre class=language-css>
         @element .widget and (min-width: 200px) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -476,7 +476,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="width" for=@element>max-width</a> element query
       <pre class=language-css>
         @element .widget and (max-width: 200) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -499,7 +499,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="height" for=@element>min-height</a> element query
       <pre class=language-css>
         @element .widget and (min-height: 50px) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -513,7 +513,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="height" for=@element>max-height</a> element query
       <pre class=language-css>
         @element .widget and (max-height: 50px) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -536,7 +536,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="characters" for=@element>min-characters</a> element query
       <pre class=language-css>
         @element input and (min-characters: 5) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -550,7 +550,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="characters" for=@element>max-characters</a> element query
       <pre class=language-css>
         @element input and (max-characters: 5) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -573,7 +573,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="lines" for=@element>min-lines</a> element query
       <pre class=language-css>
         @element textarea and (min-lines: 3) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -587,7 +587,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="lines" for=@element>max-lines</a> element query
       <pre class=language-css>
         @element textarea and (max-lines: 3) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -610,7 +610,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="children" for=@element>min-children</a> element query
       <pre class=language-css>
         @element .social-icons and (min-children: 5) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -624,7 +624,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="children" for=@element>max-children</a> element query
       <pre class=language-css>
         @element .social-icons and (max-children: 5) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -647,7 +647,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="scroll-y" for=@element>min-scroll-y</a> element query
       <pre class=language-css>
         @element .feed and (min-scroll-y: 100px) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -661,7 +661,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="scroll-y" for=@element>max-scroll-y</a> element query
       <pre class=language-css>
         @element .feed and (max-scroll-y: 100px) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -684,7 +684,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="scroll-x" for=@element>min-scroll-x</a> element query
       <pre class=language-css>
         @element .feed and (min-scroll-x: 100px) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -698,7 +698,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="scroll-x" for=@element>max-scroll-x</a> element query
       <pre class=language-css>
         @element .feed and (max-scroll-x: 100px) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -721,7 +721,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="aspect-ratio" for=@element>min-aspect-ratio</a> element query
       <pre class=language-css>
         @element .widget and (min-aspect-ratio: 16/9) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -735,7 +735,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       Example <a class="property" data-link-type="propdesc" data-lt="aspect-ratio" for=@element>max-aspect-ratio</a> element query
       <pre class=language-css>
         @element .widget and (max-aspect-ratio: 16/9) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -765,7 +765,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         Element query for ''portrait'' orientation</strong>
         <pre class=language-css>
           @element .widget and (orientation: portrait) {
-            $this {
+            :self {
               background: lime;
             }
           }
@@ -784,7 +784,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         Element query for <a class="css" data-link-type="maybe" data-lt="square" for=@element/orientation>square</a> orientation</strong>
         <pre class=language-css>
           @element .widget and (orientation: square) {
-            $this {
+            :self {
               background: lime;
             }
           }
@@ -803,7 +803,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         Element query for ''landscape'' orientation</strong>
         <pre class=language-css>
           @element .widget and (orientation: landscape) {
-            $this {
+            :self {
               background: lime;
             }
           }
@@ -827,7 +827,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         Example of ew Units Inside a Scoped Style
         <pre class=language-css>
           @element .widget {
-            $this {
+            :self {
               font-size: 10ew;
             }
           }
@@ -845,7 +845,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         Example of eh Units Inside a Scoped Style
         <pre class=language-css>
           @element .widget {
-            $this {
+            :self {
               font-size: 10eh;
             }
           }
@@ -863,7 +863,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         Example of emin Units Inside a Scoped Style
         <pre class=language-css>
           @element .widget {
-            $this {
+            :self {
               font-size: 10emin;
             }
           }
@@ -881,7 +881,7 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         Example of emax Units Inside a Scoped Style
         <pre class=language-css>
           @element .widget {
-            $this {
+            :self {
               font-size: 10emax;
             }
           }
@@ -930,13 +930,13 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
       &lt;style>
         /* input:empty */
         @element input and (max-characters: 0) {
-          $this {
+          :self {
             background: red;
           }
         }
         /* input:not(:empty) */
         @element input and (min-characters: 1) {
-          $this {
+          :self {
             background: lime;
           }
         }
@@ -992,111 +992,111 @@ Logo: <img src=http://elementqueries.com/eqcss-logo.png style=width:100px;>
         }
         /* Element Query Grid */
         @element [data-grid] {
-          $this,
-          $this * {
+          :self,
+          :self * {
             box-sizing: border-box;
           }
-          $this:after,
-          $this [data-row]:after {
+          :self:after,
+          :self [data-row]:after {
             content: '';
             display: block;
             clear: both;
           }
-          $this [class*=-col-],
-          $this [class*=-split-] { float: left; }
-          $this [class^=col-1] { width: 10%; }
-          $this [class^=col-2] { width: 20%; }
-          $this [class^=col-3] { width: 30%; }
-          $this [class^=col-4] { width: 40%; }
-          $this [class^=col-5] { width: 50%; }
-          $this [class^=col-6] { width: 60%; }
-          $this [class^=col-7] { width: 70%; }
-          $this [class^=col-8] { width: 80%; }
-          $this [class^=col-9] { width: 90%; }
-          $this [class^=col-10] { width: 100%; }
-          $this [class^=split-1] { width: calc(100%/1); }
-          $this [class^=split-2] { width: calc(100%/2); }
-          $this [class^=split-3] { width: calc(100%/3); }
-          $this [class^=split-4] { width: calc(100%/4); }
-          $this [class^=split-5] { width: calc(100%/5); }
-          $this [class^=split-6] { width: calc(100%/6); }
-          $this [class^=split-7] { width: calc(100%/7); }
-          $this [class^=split-8] { width: calc(100%/8); }
-          $this [class^=split-9] { width: calc(100%/9); }
-          $this [class^=split-10] { width: calc(100%/10); }
+          :self [class*=-col-],
+          :self [class*=-split-] { float: left; }
+          :self [class^=col-1] { width: 10%; }
+          :self [class^=col-2] { width: 20%; }
+          :self [class^=col-3] { width: 30%; }
+          :self [class^=col-4] { width: 40%; }
+          :self [class^=col-5] { width: 50%; }
+          :self [class^=col-6] { width: 60%; }
+          :self [class^=col-7] { width: 70%; }
+          :self [class^=col-8] { width: 80%; }
+          :self [class^=col-9] { width: 90%; }
+          :self [class^=col-10] { width: 100%; }
+          :self [class^=split-1] { width: calc(100%/1); }
+          :self [class^=split-2] { width: calc(100%/2); }
+          :self [class^=split-3] { width: calc(100%/3); }
+          :self [class^=split-4] { width: calc(100%/4); }
+          :self [class^=split-5] { width: calc(100%/5); }
+          :self [class^=split-6] { width: calc(100%/6); }
+          :self [class^=split-7] { width: calc(100%/7); }
+          :self [class^=split-8] { width: calc(100%/8); }
+          :self [class^=split-9] { width: calc(100%/9); }
+          :self [class^=split-10] { width: calc(100%/10); }
         }
         @element [data-grid] and (max-width: 400px) {
-          $this [class*=small-col-1] { width: 10%; }
-          $this [class*=small-col-2] { width: 20%; }
-          $this [class*=small-col-3] { width: 30%; }
-          $this [class*=small-col-4] { width: 40%; }
-          $this [class*=small-col-5] { width: 50%; }
-          $this [class*=small-col-6] { width: 60%; }
-          $this [class*=small-col-7] { width: 70%; }
-          $this [class*=small-col-8] { width: 80%; }
-          $this [class*=small-col-9] { width: 90%; }
-          $this [class*=small-col-10] { width: 100%; }
-          $this [class*=small-split-1] { width: calc(100%/1); }
-          $this [class*=small-split-2] { width: calc(100%/2); }
-          $this [class*=small-split-3] { width: calc(100%/3); }
-          $this [class*=small-split-4] { width: calc(100%/4); }
-          $this [class*=small-split-5] { width: calc(100%/5); }
-          $this [class*=small-split-6] { width: calc(100%/6); }
-          $this [class*=small-split-7] { width: calc(100%/7); }
-          $this [class*=small-split-8] { width: calc(100%/8); }
-          $this [class*=small-split-9] { width: calc(100%/9); }
-          $this [class*=small-split-10] { width: calc(100%/10); }
-          $this [class*=hide-small] { display: none; }
+          :self [class*=small-col-1] { width: 10%; }
+          :self [class*=small-col-2] { width: 20%; }
+          :self [class*=small-col-3] { width: 30%; }
+          :self [class*=small-col-4] { width: 40%; }
+          :self [class*=small-col-5] { width: 50%; }
+          :self [class*=small-col-6] { width: 60%; }
+          :self [class*=small-col-7] { width: 70%; }
+          :self [class*=small-col-8] { width: 80%; }
+          :self [class*=small-col-9] { width: 90%; }
+          :self [class*=small-col-10] { width: 100%; }
+          :self [class*=small-split-1] { width: calc(100%/1); }
+          :self [class*=small-split-2] { width: calc(100%/2); }
+          :self [class*=small-split-3] { width: calc(100%/3); }
+          :self [class*=small-split-4] { width: calc(100%/4); }
+          :self [class*=small-split-5] { width: calc(100%/5); }
+          :self [class*=small-split-6] { width: calc(100%/6); }
+          :self [class*=small-split-7] { width: calc(100%/7); }
+          :self [class*=small-split-8] { width: calc(100%/8); }
+          :self [class*=small-split-9] { width: calc(100%/9); }
+          :self [class*=small-split-10] { width: calc(100%/10); }
+          :self [class*=hide-small] { display: none; }
         }
         @element [data-grid] and (min-width: 400px) and (max-width: 800px) {
-          $this [class*=medium-col-1] { width: 10%; }
-          $this [class*=medium-col-2] { width: 20%; }
-          $this [class*=medium-col-3] { width: 30%; }
-          $this [class*=medium-col-4] { width: 40%; }
-          $this [class*=medium-col-5] { width: 50%; }
-          $this [class*=medium-col-6] { width: 60%; }
-          $this [class*=medium-col-7] { width: 70%; }
-          $this [class*=medium-col-8] { width: 80%; }
-          $this [class*=medium-col-9] { width: 90%; }
-          $this [class*=medium-col-10] { width: 100%; }
-          $this [class*=medium-split-1] { width: calc(100%/1); }
-          $this [class*=medium-split-2] { width: calc(100%/2); }
-          $this [class*=medium-split-3] { width: calc(100%/3); }
-          $this [class*=medium-split-4] { width: calc(100%/4); }
-          $this [class*=medium-split-5] { width: calc(100%/5); }
-          $this [class*=medium-split-6] { width: calc(100%/6); }
-          $this [class*=medium-split-7] { width: calc(100%/7); }
-          $this [class*=medium-split-8] { width: calc(100%/8); }
-          $this [class*=medium-split-9] { width: calc(100%/9); }
-          $this [class*=medium-split-10] { width: calc(100%/10); }
-          $this [class*=hide-medium] { display: none; }
+          :self [class*=medium-col-1] { width: 10%; }
+          :self [class*=medium-col-2] { width: 20%; }
+          :self [class*=medium-col-3] { width: 30%; }
+          :self [class*=medium-col-4] { width: 40%; }
+          :self [class*=medium-col-5] { width: 50%; }
+          :self [class*=medium-col-6] { width: 60%; }
+          :self [class*=medium-col-7] { width: 70%; }
+          :self [class*=medium-col-8] { width: 80%; }
+          :self [class*=medium-col-9] { width: 90%; }
+          :self [class*=medium-col-10] { width: 100%; }
+          :self [class*=medium-split-1] { width: calc(100%/1); }
+          :self [class*=medium-split-2] { width: calc(100%/2); }
+          :self [class*=medium-split-3] { width: calc(100%/3); }
+          :self [class*=medium-split-4] { width: calc(100%/4); }
+          :self [class*=medium-split-5] { width: calc(100%/5); }
+          :self [class*=medium-split-6] { width: calc(100%/6); }
+          :self [class*=medium-split-7] { width: calc(100%/7); }
+          :self [class*=medium-split-8] { width: calc(100%/8); }
+          :self [class*=medium-split-9] { width: calc(100%/9); }
+          :self [class*=medium-split-10] { width: calc(100%/10); }
+          :self [class*=hide-medium] { display: none; }
         }
         @element [data-grid] and (min-width: 800px) {
-          $this [class*=large-col-1] { width: 10%; }
-          $this [class*=large-col-2] { width: 20%; }
-          $this [class*=large-col-3] { width: 30%; }
-          $this [class*=large-col-4] { width: 40%; }
-          $this [class*=large-col-5] { width: 50%; }
-          $this [class*=large-col-6] { width: 60%; }
-          $this [class*=large-col-7] { width: 70%; }
-          $this [class*=large-col-8] { width: 80%; }
-          $this [class*=large-col-9] { width: 90%; }
-          $this [class*=large-col-10] { width: 100%; }
-          $this [class*=large-split-1] { width: calc(100%/1); }
-          $this [class*=large-split-2] { width: calc(100%/2); }
-          $this [class*=large-split-3] { width: calc(100%/3); }
-          $this [class*=large-split-4] { width: calc(100%/4); }
-          $this [class*=large-split-5] { width: calc(100%/5); }
-          $this [class*=large-split-6] { width: calc(100%/6); }
-          $this [class*=large-split-7] { width: calc(100%/7); }
-          $this [class*=large-split-8] { width: calc(100%/8); }
-          $this [class*=large-split-9] { width: calc(100%/9); }
-          $this [class*=large-split-10] { width: calc(100%/10); }
-          $this [class*=hide-large] { display: none; }
+          :self [class*=large-col-1] { width: 10%; }
+          :self [class*=large-col-2] { width: 20%; }
+          :self [class*=large-col-3] { width: 30%; }
+          :self [class*=large-col-4] { width: 40%; }
+          :self [class*=large-col-5] { width: 50%; }
+          :self [class*=large-col-6] { width: 60%; }
+          :self [class*=large-col-7] { width: 70%; }
+          :self [class*=large-col-8] { width: 80%; }
+          :self [class*=large-col-9] { width: 90%; }
+          :self [class*=large-col-10] { width: 100%; }
+          :self [class*=large-split-1] { width: calc(100%/1); }
+          :self [class*=large-split-2] { width: calc(100%/2); }
+          :self [class*=large-split-3] { width: calc(100%/3); }
+          :self [class*=large-split-4] { width: calc(100%/4); }
+          :self [class*=large-split-5] { width: calc(100%/5); }
+          :self [class*=large-split-6] { width: calc(100%/6); }
+          :self [class*=large-split-7] { width: calc(100%/7); }
+          :self [class*=large-split-8] { width: calc(100%/8); }
+          :self [class*=large-split-9] { width: calc(100%/9); }
+          :self [class*=large-split-10] { width: calc(100%/10); }
+          :self [class*=hide-large] { display: none; }
         }
       &lt;/style>
     </pre>
-    This example uses ''@element'' queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a selector>$this</a>, we can use these same styles to power many grids in the same layout all using the same styles.
+    This example uses ''@element'' queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a selector>:self</a>, we can use these same styles to power many grids in the same layout all using the same styles.
   </div>
 
 <h2 id=requirements>Requirements</h2>
@@ -1105,10 +1105,10 @@ Scoped Styles + Element/Container Queries
 
 - The solution must allow authors the ability to add a stylesheet to the page based the existence of at least one element in the document matching a given selector (scoped stylesheets)
 - The solution must allow authors to query various properties of the elements on the page matching a given selector like: width, height, or number of child elements. (element/container queries)
-- The solution must provide a way to use only those elements which match a selector (and optional conditions) as part of a CSS selector for a rule. ($this meta-selector)
-- The solution should provide a way to select the parent element of only those elements which match a selector (and optional conditions). ($parent meta-selector)
-- The solution should provide a way to select the element previous to those elements which match a selector (and optional conditions). ($prev meta-selector)
-- The solution should provide a way to select the element following those elements which match a selector (and optional conditions). ($next meta-selector)
+- The solution must provide a way to use only those elements which match a selector (and optional conditions) as part of a CSS selector for a rule. (:self meta-selector)
+- The solution should provide a way to select the parent element of only those elements which match a selector (and optional conditions). (:parent meta-selector)
+- The solution should provide a way to select the element previous to those elements which match a selector (and optional conditions). (:prev meta-selector)
+- The solution should provide a way to select the element following those elements which match a selector (and optional conditions). (:next meta-selector)
 
 Element-Based Units
 

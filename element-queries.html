@@ -1425,7 +1425,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS Element Queries [Level 1]</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-12-20">20 December 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2017-12-28">28 December 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1439,7 +1439,7 @@ svg.railroad-diagram{background-color:hsl(30,20%,95%);}svg.railroad-diagram path
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 20 December 2017,
+In addition, as of 28 December 2017,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1796,10 +1796,10 @@ Parts of this work may be from another specification document.  If so, those par
    <h4 class="heading settled" data-level="2.2.3" id="self-referential-element-queries"><span class="secno">2.2.3. </span><span class="content">Self-Referential <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-5">@element</a> queries</span><a class="self-link" href="#self-referential-element-queries"></a></h4>
    <p>With element queries comes the new possibility that the rules you are applying when your responsive conditions are met will conflict with the responsive condition in your element query. In this situation we should not attempt to detect or handle these cases by ignoring certain styles, or checking whether any of the rules affect the validity of the responsive condition. It is best to apply the rule naïvely and allow the conflict to occur.</p>
    <p class="note" role="note">Note: The responsibility lies with the author to write <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-6">@element</a> queries which can be interpreted logically.</p>
-   <div class="example" id="example-530f03fb">
-    <a class="self-link" href="#example-530f03fb"></a> 
+   <div class="example" id="example-a84262c7">
+    <a class="self-link" href="#example-a84262c7"></a> 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min‐width: 300px) </span><span class="p">{</span>
-  $this {
+  :self {
     width: 200px;
   }
 }
@@ -1808,15 +1808,15 @@ Parts of this work may be from another specification document.  If so, those par
    <p>In this example the query will only apply to elements with a class of <code>.widget</code> that are equal or wider than <code>300px</code>, and the rule sets a width on the same element which would make the rule no longer apply. Rather than trying to detect or intercept this behaviour and prevent it from happening, when the <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-7">@element</a> query applies to the document it will set the width to <code>200px</code>.</p>
    <h4 class="heading settled" data-level="2.2.4" id="circular-referential-element-queries"><span class="secno">2.2.4. </span><span class="content">Circular Referential <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-8">@element</a> queries</span><a class="self-link" href="#circular-referential-element-queries"></a></h4>
    <p>Another new possibility with element queries is having two or more queries that apply styles that match each others responsive condition. Just as with a self-referential <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-9">@element</a> query, we should not try to detect or ignore styles in this situation, and instead should compute the <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-10">@element</a> queries in the order they appear and apply the rules using normal CSS specificity.</p>
-   <div class="example" id="example-422638bf">
-    <a class="self-link" href="#example-422638bf"></a> 
+   <div class="example" id="example-2e9a8b28">
+    <a class="self-link" href="#example-2e9a8b28"></a> 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min‐width: 400px) </span><span class="p">{</span>
-  $this {
+  :self {
     width: 200px;
   }
 }
 @element .widget and (max‐width: 300px) {
-  $this {
+  :self {
     width: 500px;
   }
 }
@@ -1840,7 +1840,7 @@ Parts of this work may be from another specification document.  If so, those par
 
 <dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="typedef-eq-value">&lt;eq-value></dfn> = <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-dimension">&lt;dimension></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/mediaqueries-4/#typedef-ratio">&lt;ratio></a> | <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a>
 
-<dfn class="dfn-paneled" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors">meta-selectors</dfn> = $this | $parent | $prev | $next
+<dfn class="dfn-paneled" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors">meta-selectors</dfn> = :self | :parent | :prev | :next
 
 <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="eq-unit">eq-unit</dfn> = ew | eh | emin | emax
 
@@ -1852,65 +1852,65 @@ Parts of this work may be from another specification document.  If so, those par
    <h2 class="heading settled" data-level="4" id="meta-selectors-in-css"><span class="secno">4. </span><span class="content">Meta-Selectors</span><a class="self-link" href="#meta-selectors-in-css"></a></h2>
    <p>With element queries comes the need to target elements based on the scope we have defined. There are a number of new selectors that help target elements relative to the scope we have defined. These new selectors only work inside a scoped stylesheet and are called <a class="css" data-link-type="maybe" href="#selectordef-meta-selectors" id="ref-for-selectordef-meta-selectors-1">meta-selectors</a>.</p>
    <h3 class="heading settled" data-level="4.1" id="diagram-of-meta-selectors"><span class="secno">4.1. </span><span class="content">Diagram of <a class="css" data-link-type="maybe" href="#selectordef-meta-selectors" id="ref-for-selectordef-meta-selectors-2">meta-selectors</a></span><a class="self-link" href="#diagram-of-meta-selectors"></a></h3>
-   <p>Here is a diagram showing the relationship between the meta-selectors. The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-1">$parent</a> is the parent element of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-1">$this</a>, and <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-1">$prev</a> and <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-1">$next</a> represent the adjacent siblings to <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-2">$this</a>.</p>
-<pre style="text-align:center;"><a data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-2">$parent</a>
+   <p>Here is a diagram showing the relationship between the meta-selectors. The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-1">:parent</a> is the parent element of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-self" id="ref-for-selectordef-meta-selectors-self-1">:self</a>, and <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-1">:prev</a> and <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-1">:next</a> represent the adjacent siblings to <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-self" id="ref-for-selectordef-meta-selectors-self-2">:self</a>.</p>
+<pre style="text-align:center;"><a data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-2">:parent</a>
 ↑
-<a data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-2">$prev</a> ← <a data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-3">$this</a> → <a data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-2">$next</a>
+<a data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-2">:prev</a> ← <a data-link-type="selector" href="#selectordef-meta-selectors-self" id="ref-for-selectordef-meta-selectors-self-3">:self</a> → <a data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-2">:next</a>
 </pre>
    <dl>
-    <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-this">$this</dfn> 
+    <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-self">:self</dfn> 
     <dd>
-      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-4">$this</a> meta-selector refers each element in the document that matches the root of our scoped stylesheet and any element query conditions it has. 
-     <div class="example" id="example-07525ff0">
-      <a class="self-link" href="#example-07525ff0"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-5">$this</a> meta-selector 
+      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-self" id="ref-for-selectordef-meta-selectors-self-4">:self</a> meta-selector refers each element in the document that matches the root of our scoped stylesheet and any element query conditions it has. 
+     <div class="example" id="example-2df70a6b">
+      <a class="self-link" href="#example-2df70a6b"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-self" id="ref-for-selectordef-meta-selectors-self-5">:self</a> meta-selector 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min-width: 200px) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
 </pre>
       <p>In this case, any element with a class of <code>.widget</code> that is <code>200px</code> or wider will have a green background.</p>
      </div>
-    <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-parent">$parent</dfn> 
+    <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-parent">:parent</dfn> 
     <dd>
-      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-3">$parent</a> meta-selector refers to the element containing the element(s) in the root of our scoped stylesheet. 
-     <div class="example" id="example-036a9802">
-      <a class="self-link" href="#example-036a9802"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-4">$parent</a> meta-selector 
+      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-3">:parent</a> meta-selector refers to the element containing the element(s) in the root of our scoped stylesheet. 
+     <div class="example" id="example-14c382f3">
+      <a class="self-link" href="#example-14c382f3"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-parent" id="ref-for-selectordef-meta-selectors-parent-4">:parent</a> meta-selector 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min-width: 200px) </span><span class="p">{</span>
-  $parent {
+  :parent {
     background: lime;
   }
 }
 </pre>
       <p>In this case, any element containing an element with a class of <code>.widget</code> that is equal or wider than <code>200px</code> will have a green background.</p>
      </div>
-    <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-prev">$prev</dfn> 
+    <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-prev">:prev</dfn> 
     <dd>
-      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-3">$prev</a> meta-selector refers to the sibling directly preceding the element at the root of our scoped stylesheet in the document. 
-     <div class="example" id="example-a1fca326">
-      <a class="self-link" href="#example-a1fca326"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-4">$prev</a> meta-selector 
+      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-3">:prev</a> meta-selector refers to the sibling directly preceding the element at the root of our scoped stylesheet in the document. 
+     <div class="example" id="example-03448197">
+      <a class="self-link" href="#example-03448197"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-prev" id="ref-for-selectordef-meta-selectors-prev-4">:prev</a> meta-selector 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
-  $prev {
+  :prev {
     background: lime;
   }
 }
 </pre>
       <p>In this case, any sibling coming directly before any element with a class of <code>.widget</code> will have a green background.</p>
      </div>
-    <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-next">$next</dfn> 
+    <dt><dfn class="dfn-paneled css" data-dfn-for="meta-selectors" data-dfn-type="selector" data-export="" id="selectordef-meta-selectors-next">:next</dfn> 
     <dd>
-      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-3">$next</a> meta-selector refers to the sibling directly following the element at the root of our scoped stylesheet in the document. 
-     <div class="example" id="example-9162bfe8">
-      <a class="self-link" href="#example-9162bfe8"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-4">$next</a> meta-selector 
+      The <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-3">:next</a> meta-selector refers to the sibling directly following the element at the root of our scoped stylesheet in the document. 
+     <div class="example" id="example-9857ed28">
+      <a class="self-link" href="#example-9857ed28"></a> Example of <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-4">:next</a> meta-selector 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
-  $next {
+  :next {
     background: lime;
   }
 }
 </pre>
       <p>In this case, any sibling coming directly after any element with a class of <code>.widget</code> will have a green background.</p>
      </div>
-     <p class="note" role="note">Note: the <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-5">$next</a> is similar to the selector: <code>$this + *</code></p>
+     <p class="note" role="note">Note: the <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-next" id="ref-for-selectordef-meta-selectors-next-5">:next</a> is similar to the selector: <code>:self + *</code></p>
    </dl>
    <h2 class="heading settled" data-level="5" id="responsive-conditions"><span class="secno">5. </span><span class="content">Responsive Conditions</span><a class="self-link" href="#responsive-conditions"></a></h2>
    <p>All responsive conditions for <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-12">@element</a> queries are formatted as a condition name and value, separated by a colon (<code>:</code>) character, surrounded by brackets (<code>()</code>).</p>
@@ -2029,10 +2029,10 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-1">min-width</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) width to the specified value.</p>
-   <div class="example" id="example-b5c32be5">
-    <a class="self-link" href="#example-b5c32be5"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-2">min-width</a> element query 
+   <div class="example" id="example-60906ee7">
+    <a class="self-link" href="#example-60906ee7"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-2">min-width</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min-width: 200px) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2040,10 +2040,10 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element with a class of <code>.widget</code> that is at least <code>200px</code> or wider will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-3">max-width</a> responsive condition applies to any scoped element that has lesser or equal (<code>&lt;=</code>) width to the specified value.</p>
-   <div class="example" id="example-47345878">
-    <a class="self-link" href="#example-47345878"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-4">max-width</a> element query 
+   <div class="example" id="example-5052d57e">
+    <a class="self-link" href="#example-5052d57e"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-width" id="ref-for-descdef-element-width-4">max-width</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (max-width: 200) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2067,10 +2067,10 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-1">min-height</a> responsive condition applies to any scoped element that has greater or equal (<code>>=</code>) height to the specified value.</p>
-   <div class="example" id="example-2eef479e">
-    <a class="self-link" href="#example-2eef479e"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-2">min-height</a> element query 
+   <div class="example" id="example-e6b8d657">
+    <a class="self-link" href="#example-e6b8d657"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-2">min-height</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min-height: 50px) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2078,10 +2078,10 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element with a class of <code>.widget</code> that is at least <code>50px</code> or taller will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-3">max-height</a> responsive condition applies to any scoped element that has lesser or equal (<code>&lt;=</code>) height to the specified value.</p>
-   <div class="example" id="example-dbc313df">
-    <a class="self-link" href="#example-dbc313df"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-4">max-height</a> element query 
+   <div class="example" id="example-cb0148d6">
+    <a class="self-link" href="#example-cb0148d6"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-height" id="ref-for-descdef-element-height-4">max-height</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (max-height: 50px) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2105,10 +2105,10 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-1">min-characters</a> responsive condition applies to any scoped element that contains a greater or equal (<code>>=</code>) number of characters.</p>
-   <div class="example" id="example-88f74a51">
-    <a class="self-link" href="#example-88f74a51"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-2">min-characters</a> element query 
+   <div class="example" id="example-49be9dd1">
+    <a class="self-link" href="#example-49be9dd1"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-2">min-characters</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> input and <span class="p">(</span>min-characters<span class="nt">: 5) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2116,10 +2116,10 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any input with 5 or more characters will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-3">max-characters</a> responsive condition applies to any scoped element that contains lesser or equal (<code>&lt;=</code>) number of characters specified.</p>
-   <div class="example" id="example-bdb00fbf">
-    <a class="self-link" href="#example-bdb00fbf"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-4">max-characters</a> element query 
+   <div class="example" id="example-a796f6b2">
+    <a class="self-link" href="#example-a796f6b2"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-characters" id="ref-for-descdef-element-characters-4">max-characters</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> input and <span class="p">(</span>max-characters<span class="nt">: 5) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2143,10 +2143,10 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-1">min-lines</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of specified lines of text.</p>
-   <div class="example" id="example-6581b47e">
-    <a class="self-link" href="#example-6581b47e"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-2">min-lines</a> element query 
+   <div class="example" id="example-14c74161">
+    <a class="self-link" href="#example-14c74161"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-2">min-lines</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> textarea and <span class="p">(</span>min-lines<span class="nt">: 3) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2154,10 +2154,10 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any textarea with 3 or more lines will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-3">max-lines</a> responsive condition applies to any scoped element that contains lesser or equal (<code>&lt;=</code>) number of specified lines of text.</p>
-   <div class="example" id="example-5416ef22">
-    <a class="self-link" href="#example-5416ef22"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-4">max-lines</a> element query 
+   <div class="example" id="example-0f3c7b95">
+    <a class="self-link" href="#example-0f3c7b95"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-lines" id="ref-for-descdef-element-lines-4">max-lines</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> textarea and <span class="p">(</span>max-lines<span class="nt">: 3) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2181,10 +2181,10 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-1">min-children</a> responsive condition applies to any scoped element that contains greater or equal (<code>>=</code>) number of child elements specified.</p>
-   <div class="example" id="example-2052b6a6">
-    <a class="self-link" href="#example-2052b6a6"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-2">min-children</a> element query 
+   <div class="example" id="example-3077d7ba">
+    <a class="self-link" href="#example-3077d7ba"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-2">min-children</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.social-icons and (min-children: 5) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2192,10 +2192,10 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element with a class of <code>.social-icons</code> that contains more 5 or more direct descendants will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-3">max-children</a> responsive condition applies to any scoped element that contains lesser or equal (<code>&lt;=</code>) number of child elements specified.</p>
-   <div class="example" id="example-022863f4">
-    <a class="self-link" href="#example-022863f4"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-4">max-children</a> element query 
+   <div class="example" id="example-dd6a1d04">
+    <a class="self-link" href="#example-dd6a1d04"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-children" id="ref-for-descdef-element-children-4">max-children</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.social-icons and (max-children: 5) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2219,10 +2219,10 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-1">min-scroll-y</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a vertical direction.</p>
-   <div class="example" id="example-c9782ad2">
-    <a class="self-link" href="#example-c9782ad2"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-2">min-scroll-y</a> element query 
+   <div class="example" id="example-57f0f3ed">
+    <a class="self-link" href="#example-57f0f3ed"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-2">min-scroll-y</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.feed and (min-scroll-y: 100px) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2230,10 +2230,10 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element with a class of <code>.feed</code> that has scrolled <code>100px</code> or more vertical will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-3">max-scroll-y</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code>&lt;=</code>) amount to the value specified in a vertical direction.</p>
-   <div class="example" id="example-af7382fc">
-    <a class="self-link" href="#example-af7382fc"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-4">max-scroll-y</a> element query 
+   <div class="example" id="example-6974a582">
+    <a class="self-link" href="#example-6974a582"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-y" id="ref-for-descdef-element-scroll-y-4">max-scroll-y</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.feed and (max-scroll-y: 100px) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2257,10 +2257,10 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-1">min-scroll-x</a> responsive condition applies to any scoped element that has scrolled a greater or equal (<code>>=</code>) amount to the value specified in a horizontal direction.</p>
-   <div class="example" id="example-c4342bc3">
-    <a class="self-link" href="#example-c4342bc3"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-2">min-scroll-x</a> element query 
+   <div class="example" id="example-5817f215">
+    <a class="self-link" href="#example-5817f215"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-2">min-scroll-x</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.feed and (min-scroll-x: 100px) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2268,10 +2268,10 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element with a class of <code>.feed</code> that has scrolled <code>100px</code> or more horizontally will have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-3">max-scroll-x</a> responsive condition applies to any scoped element that has scrolled a lesser or equal (<code>&lt;=</code>) amount to the value specified in a horizontal direction.</p>
-   <div class="example" id="example-0ebc8650">
-    <a class="self-link" href="#example-0ebc8650"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-4">max-scroll-x</a> element query 
+   <div class="example" id="example-92ca90de">
+    <a class="self-link" href="#example-92ca90de"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-scroll-x" id="ref-for-descdef-element-scroll-x-4">max-scroll-x</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.feed and (max-scroll-x: 100px) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2295,10 +2295,10 @@ Parts of this work may be from another specification document.  If so, those par
       <td>range
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-1">min-aspect-ratio</a> responsive condition applies to any scoped element with a greater or equal (<code>>=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).</p>
-   <div class="example" id="example-f9995647">
-    <a class="self-link" href="#example-f9995647"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-2">min-aspect-ratio</a> element query 
+   <div class="example" id="example-5e93db85">
+    <a class="self-link" href="#example-5e93db85"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-2">min-aspect-ratio</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (min-aspect-ratio: 16/9) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2306,10 +2306,10 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this case any element that had an aspect ratio of <code>16/9</code> or greater would have a green background.</p>
    </div>
    <p>The <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-3">max-aspect-ratio</a> responsive condition applies to any scoped element with a lesser or equal (<code>&lt;=</code>) aspect ratio, specified as a <code>width</code> and <code>height</code> pair, separated by a slash (<code>/</code>).</p>
-   <div class="example" id="example-f61bf24e">
-    <a class="self-link" href="#example-f61bf24e"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-4">max-aspect-ratio</a> element query 
+   <div class="example" id="example-eea42b37">
+    <a class="self-link" href="#example-eea42b37"></a> Example <a class="property" data-link-type="propdesc" href="#descdef-element-aspect-ratio" id="ref-for-descdef-element-aspect-ratio-4">max-aspect-ratio</a> element query 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (max-aspect-ratio: 16/9) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2338,10 +2338,10 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="@element/orientation" data-dfn-type="value" data-export="" id="valdef-element-orientation-portrait">portrait</dfn> 
     <dd>The <a class="property" data-link-type="propdesc" href="#descdef-element-orientation" id="ref-for-descdef-element-orientation-2">orientation</a> is <a class="css" data-link-type="maybe" href="#valdef-element-orientation-portrait" id="ref-for-valdef-element-orientation-portrait-2">portrait</a> if the scoped element has a greater (<code>></code>) height than width 
    </dl>
-   <div class="example" id="example-3bce34e6">
-    <a class="self-link" href="#example-3bce34e6"></a> Element query for <a class="css" data-link-type="maybe" href="#valdef-element-orientation-portrait" id="ref-for-valdef-element-orientation-portrait-3">portrait</a> orientation 
+   <div class="example" id="example-85198570">
+    <a class="self-link" href="#example-85198570"></a> Element query for <a class="css" data-link-type="maybe" href="#valdef-element-orientation-portrait" id="ref-for-valdef-element-orientation-portrait-3">portrait</a> orientation 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (orientation: portrait) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2353,10 +2353,10 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="@element/orientation" data-dfn-type="value" data-export="" id="valdef-element-orientation-square">square</dfn> 
     <dd>The <a class="property" data-link-type="propdesc" href="#descdef-element-orientation" id="ref-for-descdef-element-orientation-3">orientation</a> is <a class="css" data-link-type="maybe" href="#valdef-element-orientation-square" id="ref-for-valdef-element-orientation-square-2">square</a> if the scoped element has an equal (<code>=</code>) height and width 
    </dl>
-   <div class="example" id="example-5dd261ee">
-    <a class="self-link" href="#example-5dd261ee"></a> Element query for <a class="css" data-link-type="maybe" href="#valdef-element-orientation-square" id="ref-for-valdef-element-orientation-square-3">square</a> orientation 
+   <div class="example" id="example-ac02d783">
+    <a class="self-link" href="#example-ac02d783"></a> Element query for <a class="css" data-link-type="maybe" href="#valdef-element-orientation-square" id="ref-for-valdef-element-orientation-square-3">square</a> orientation 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (orientation: square) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2368,10 +2368,10 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="@element/orientation" data-dfn-type="value" data-export="" id="valdef-element-orientation-landscape">landscape</dfn> 
     <dd>The <a class="property" data-link-type="propdesc" href="#descdef-element-orientation" id="ref-for-descdef-element-orientation-4">orientation</a> is <a class="css" data-link-type="maybe" href="#valdef-element-orientation-landscape" id="ref-for-valdef-element-orientation-landscape-2">landscape</a> if the scoped element has a greater (<code>></code>) width than height 
    </dl>
-   <div class="example" id="example-0196f9e6">
-    <a class="self-link" href="#example-0196f9e6"></a> Element query for <a class="css" data-link-type="maybe" href="#valdef-element-orientation-landscape" id="ref-for-valdef-element-orientation-landscape-3">landscape</a> orientation 
+   <div class="example" id="example-f3d8df89">
+    <a class="self-link" href="#example-f3d8df89"></a> Element query for <a class="css" data-link-type="maybe" href="#valdef-element-orientation-landscape" id="ref-for-valdef-element-orientation-landscape-3">landscape</a> orientation 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget and (orientation: landscape) </span><span class="p">{</span>
-  $this {
+  :self {
     background: lime;
   }
 }
@@ -2385,10 +2385,10 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="eq-unit" data-dfn-type="value" data-export="" data-lt="ew" id="ew">ew unit</dfn> 
     <dd>
       Equal to 1% of the width of the scoped element 
-     <div class="example" id="example-9ad46d35">
-      <a class="self-link" href="#example-9ad46d35"></a> Example of ew Units Inside a Scoped Style 
+     <div class="example" id="example-15d34e77">
+      <a class="self-link" href="#example-15d34e77"></a> Example of ew Units Inside a Scoped Style 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
-  $this {
+  :self {
     font-size: 10ew;
   }
 }
@@ -2399,10 +2399,10 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="eq-unit" data-dfn-type="value" data-export="" data-lt="eh" id="eh">eh unit</dfn> 
     <dd>
       Equal to 1% of the height of the scoped element 
-     <div class="example" id="example-47c40838">
-      <a class="self-link" href="#example-47c40838"></a> Example of eh Units Inside a Scoped Style 
+     <div class="example" id="example-8c16fa6a">
+      <a class="self-link" href="#example-8c16fa6a"></a> Example of eh Units Inside a Scoped Style 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
-  $this {
+  :self {
     font-size: 10eh;
   }
 }
@@ -2413,10 +2413,10 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="eq-unit" data-dfn-type="value" data-export="" data-lt="emin" id="emin">emin unit</dfn> 
     <dd>
       Equal to the smaller of 1ew or 1eh 
-     <div class="example" id="example-a386ef2b">
-      <a class="self-link" href="#example-a386ef2b"></a> Example of emin Units Inside a Scoped Style 
+     <div class="example" id="example-81a5fcb7">
+      <a class="self-link" href="#example-81a5fcb7"></a> Example of emin Units Inside a Scoped Style 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
-  $this {
+  :self {
     font-size: 10emin;
   }
 }
@@ -2427,10 +2427,10 @@ Parts of this work may be from another specification document.  If so, those par
     <dt><dfn class="dfn-paneled css" data-dfn-for="eq-unit" data-dfn-type="value" data-export="" data-lt="emax" id="emax">emax unit</dfn> 
     <dd>
       Equal to the larger of 1ew or 1eh 
-     <div class="example" id="example-e1505f84">
-      <a class="self-link" href="#example-e1505f84"></a> Example of emax Units Inside a Scoped Style 
+     <div class="example" id="example-ca7c25a0">
+      <a class="self-link" href="#example-ca7c25a0"></a> Example of emax Units Inside a Scoped Style 
 <pre class="language-css highlight"><span class="n">@element</span> <span class="nt">.widget </span><span class="p">{</span>
-  $this {
+  :self {
     font-size: 10emax;
   }
 }
@@ -2462,19 +2462,19 @@ Parts of this work may be from another specification document.  If so, those par
 </pre>
    </div>
    <h3 class="heading settled" data-level="7.2" id="faking-input-empty"><span class="secno">7.2. </span><span class="content">Faking <code>input:empty</code></span><a class="self-link" href="#faking-input-empty"></a></h3>
-   <div class="example" id="example-3af08ad2">
-    <a class="self-link" href="#example-3af08ad2"></a> 
+   <div class="example" id="example-ced5f4d4">
+    <a class="self-link" href="#example-ced5f4d4"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">></span>
   <span class="c">/* input:empty */</span>
   <span class="k">@element</span> <span class="nt">input</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-characters</span><span class="o">:</span> <span class="nt">0</span><span class="o">)</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
+    <span class="nd">:self</span> <span class="p">{</span>
       background<span class="o">:</span> red<span class="p">;</span>
     <span class="p">}</span>
   <span class="p">}</span>
   <span class="c">/* input:not(:empty) */</span>
   <span class="k">@element</span> <span class="nt">input</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-characters</span><span class="o">:</span> <span class="nt">1</span><span class="o">)</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="p">{</span>
+    <span class="nd">:self</span> <span class="p">{</span>
       background<span class="o">:</span> lime<span class="p">;</span>
     <span class="p">}</span>
   <span class="p">}</span>
@@ -2483,8 +2483,8 @@ Parts of this work may be from another specification document.  If so, those par
     <p>In this example we are able to apply styles based on whether there are zero or at least one characters inside any <code>input</code> element. CSS has the pseudo-class <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#empty-pseudo">:empty</a>, however it doesn’t apply to all elements (like <code>input</code> elements) so by using <code>max-characters</code> and <code>min-characters</code> with element queries we are able to express and style a similar idea.</p>
    </div>
    <h3 class="heading settled" data-level="7.3" id="self-responsive-grid"><span class="secno">7.3. </span><span class="content">Self-responsive Grid</span><a class="self-link" href="#self-responsive-grid"></a></h3>
-   <div class="example" id="example-fa975eeb">
-    <a class="self-link" href="#example-fa975eeb"></a> 
+   <div class="example" id="example-0bdb473f">
+    <a class="self-link" href="#example-0bdb473f"></a> 
 <pre class="language-html highlight"><span class="p">&lt;</span><span class="nt">h2</span><span class="p">></span>Responsive Grid<span class="p">&lt;</span><span class="p">/</span><span class="nt">h2</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">p</span><span class="p">></span>Small = full width, Medium = thirds, Large = sixths.<span class="p">&lt;</span><span class="p">/</span><span class="nt">p</span><span class="p">></span>
 <span class="p">&lt;</span><span class="nt">section</span> <span class="na">data-grid</span><span class="p">></span>
@@ -2527,111 +2527,111 @@ Parts of this work may be from another specification document.  If so, those par
   <span class="p">}</span>
   <span class="c">/* Element Query Grid */</span>
   <span class="k">@element</span> <span class="o">[</span><span class="nt">data-grid</span><span class="o">]</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span><span class="o">,</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">*</span> <span class="p">{</span>
+    <span class="nd">:self</span><span class="o">,</span>
+    <span class="nd">:self</span> <span class="o">*</span> <span class="p">{</span>
       <span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span> border<span class="o">-</span><span class="n">box</span><span class="p">;</span>
     <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span><span class="nd">:after</span><span class="o">,</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">data-row</span><span class="o">]</span><span class="nd">:after</span> <span class="p">{</span>
+    <span class="nd">:self</span><span class="nd">:after</span><span class="o">,</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">data-row</span><span class="o">]</span><span class="nd">:after</span> <span class="p">{</span>
       content<span class="o">:</span> <span class="s1">''</span><span class="p">;</span>
       display<span class="o">:</span> block<span class="p">;</span>
       clear<span class="o">:</span> both<span class="p">;</span>
     <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">-col-</span><span class="o">]</span><span class="o">,</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">-split-</span><span class="o">]</span> <span class="p">{</span> float<span class="o">:</span> left<span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">10%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">20%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">30%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">40%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">50%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">60%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">70%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">80%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">90%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">100%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">1</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">2</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">3</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">4</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">5</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">6</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">7</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">8</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">9</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">10</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">-col-</span><span class="o">]</span><span class="o">,</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">-split-</span><span class="o">]</span> <span class="p">{</span> float<span class="o">:</span> left<span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">10%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">20%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">30%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">40%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">50%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">60%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">70%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">80%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">90%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">col-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">100%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">1</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">2</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">3</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">4</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">5</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">6</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">7</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">8</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">9</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">^</span><span class="o">=</span><span class="nt">split-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">10</span><span class="p">);</span> <span class="p">}</span>
   <span class="p">}</span>
   <span class="k">@element</span> <span class="o">[</span><span class="nt">data-grid</span><span class="o">]</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">400px</span><span class="o">)</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">10%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">20%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">30%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">40%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">50%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">60%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">70%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">80%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">90%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">100%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">1</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">2</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">3</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">4</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">5</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">6</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">7</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">8</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">9</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">10</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">hide-small</span><span class="o">]</span> <span class="p">{</span> display<span class="o">:</span> none<span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">10%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">20%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">30%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">40%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">50%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">60%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">70%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">80%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">90%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-col-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">100%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">1</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">2</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">3</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">4</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">5</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">6</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">7</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">8</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">9</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">small-split-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">10</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">hide-small</span><span class="o">]</span> <span class="p">{</span> display<span class="o">:</span> none<span class="p">;</span> <span class="p">}</span>
   <span class="p">}</span>
   <span class="k">@element</span> <span class="o">[</span><span class="nt">data-grid</span><span class="o">]</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">400px</span><span class="o">)</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">800px</span><span class="o">)</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">10%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">20%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">30%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">40%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">50%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">60%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">70%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">80%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">90%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">100%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">1</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">2</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">3</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">4</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">5</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">6</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">7</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">8</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">9</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">10</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">hide-medium</span><span class="o">]</span> <span class="p">{</span> display<span class="o">:</span> none<span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">10%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">20%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">30%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">40%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">50%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">60%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">70%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">80%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">90%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-col-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">100%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">1</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">2</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">3</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">4</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">5</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">6</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">7</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">8</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">9</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">medium-split-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">10</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">hide-medium</span><span class="o">]</span> <span class="p">{</span> display<span class="o">:</span> none<span class="p">;</span> <span class="p">}</span>
   <span class="p">}</span>
   <span class="k">@element</span> <span class="o">[</span><span class="nt">data-grid</span><span class="o">]</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">800px</span><span class="o">)</span> <span class="p">{</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">10%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">20%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">30%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">40%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">50%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">60%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">70%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">80%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">90%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">100%</span><span class="p">;</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">1</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">2</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">3</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">4</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">5</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">6</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">7</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">8</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">9</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">10</span><span class="p">);</span> <span class="p">}</span>
-    <span class="o">$</span><span class="nt">this</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">hide-large</span><span class="o">]</span> <span class="p">{</span> display<span class="o">:</span> none<span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">10%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">20%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">30%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">40%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">50%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">60%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">70%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">80%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">90%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-col-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="m">100%</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-1</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">1</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-2</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">2</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-3</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">3</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-4</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">4</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-5</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">5</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-6</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">6</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-7</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">7</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-8</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">8</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-9</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">9</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">large-split-10</span><span class="o">]</span> <span class="p">{</span> width<span class="o">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span><span class="o">/</span><span class="m">10</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nd">:self</span> <span class="o">[</span><span class="nt">class</span><span class="o">*</span><span class="o">=</span><span class="nt">hide-large</span><span class="o">]</span> <span class="p">{</span> display<span class="o">:</span> none<span class="p">;</span> <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">&lt;</span><span class="p">/</span><span class="nt">style</span><span class="p">></span>
 </pre>
-    <p>This example uses <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-22">@element</a> queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-this" id="ref-for-selectordef-meta-selectors-this-6">$this</a>, we can use these same styles to power many grids in the same layout all using the same styles.</p>
+    <p>This example uses <a class="css" data-link-type="maybe" href="#at-ruledef-element" id="ref-for-at-ruledef-element-22">@element</a> queries to apply the different responsive styles to our grid when the grid element itself reaches certain breakpoints. Because the styles are scoped to each grid using <a class="css" data-link-type="selector" href="#selectordef-meta-selectors-self" id="ref-for-selectordef-meta-selectors-self-6">:self</a>, we can use these same styles to power many grids in the same layout all using the same styles.</p>
    </div>
    <h2 class="heading settled" data-level="8" id="requirements"><span class="secno">8. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
    <p>Scoped Styles + Element/Container Queries</p>
@@ -2641,13 +2641,13 @@ Parts of this work may be from another specification document.  If so, those par
     <li data-md="">
      <p>The solution must allow authors to query various properties of the elements on the page matching a given selector like: width, height, or number of child elements. (element/container queries)</p>
     <li data-md="">
-     <p>The solution must provide a way to use only those elements which match a selector (and optional conditions) as part of a CSS selector for a rule. ($this meta-selector)</p>
+     <p>The solution must provide a way to use only those elements which match a selector (and optional conditions) as part of a CSS selector for a rule. (:self meta-selector)</p>
     <li data-md="">
-     <p>The solution should provide a way to select the parent element of only those elements which match a selector (and optional conditions). ($parent meta-selector)</p>
+     <p>The solution should provide a way to select the parent element of only those elements which match a selector (and optional conditions). (:parent meta-selector)</p>
     <li data-md="">
-     <p>The solution should provide a way to select the element previous to those elements which match a selector (and optional conditions). ($prev meta-selector)</p>
+     <p>The solution should provide a way to select the element previous to those elements which match a selector (and optional conditions). (:prev meta-selector)</p>
     <li data-md="">
-     <p>The solution should provide a way to select the element following those elements which match a selector (and optional conditions). ($next meta-selector)</p>
+     <p>The solution should provide a way to select the element following those elements which match a selector (and optional conditions). (:next meta-selector)</p>
    </ul>
    <p>Element-Based Units</p>
    <ul>
@@ -2827,15 +2827,15 @@ Parts of this work may be from another specification document.  If so, those par
    <li><a href="#valdef-element-orientation-landscape">landscape</a><span>, in §5.9.3</span>
    <li><a href="#descdef-element-lines">lines</a><span>, in §5.4</span>
    <li><a href="#selectordef-meta-selectors">meta-selectors</a><span>, in §3</span>
-   <li><a href="#selectordef-meta-selectors-next">$next</a><span>, in §4.1</span>
+   <li><a href="#selectordef-meta-selectors-next">:next</a><span>, in §4.1</span>
    <li><a href="#descdef-element-orientation">orientation</a><span>, in §5.9</span>
-   <li><a href="#selectordef-meta-selectors-parent">$parent</a><span>, in §4.1</span>
+   <li><a href="#selectordef-meta-selectors-parent">:parent</a><span>, in §4.1</span>
    <li><a href="#valdef-element-orientation-portrait">portrait</a><span>, in §5.9.1</span>
-   <li><a href="#selectordef-meta-selectors-prev">$prev</a><span>, in §4.1</span>
+   <li><a href="#selectordef-meta-selectors-prev">:prev</a><span>, in §4.1</span>
    <li><a href="#descdef-element-scroll-x">scroll-x</a><span>, in §5.7</span>
    <li><a href="#descdef-element-scroll-y">scroll-y</a><span>, in §5.6</span>
+   <li><a href="#selectordef-meta-selectors-self">:self</a><span>, in §4.1</span>
    <li><a href="#valdef-element-orientation-square">square</a><span>, in §5.9.2</span>
-   <li><a href="#selectordef-meta-selectors-this">$this</a><span>, in §4.1</span>
    <li><a href="#descdef-element-width">width</a><span>, in §5.1</span>
   </ul>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -3016,11 +3016,11 @@ Parts of this work may be from another specification document.  If so, those par
     <li><a href="#ref-for-eq-unit-1">6. Element-percentage Units</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="selectordef-meta-selectors-this">
-   <b><a href="#selectordef-meta-selectors-this">#selectordef-meta-selectors-this</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="selectordef-meta-selectors-self">
+   <b><a href="#selectordef-meta-selectors-self">#selectordef-meta-selectors-self</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-selectordef-meta-selectors-this-1">4.1. Diagram of meta-selectors</a> <a href="#ref-for-selectordef-meta-selectors-this-2">(2)</a> <a href="#ref-for-selectordef-meta-selectors-this-3">(3)</a> <a href="#ref-for-selectordef-meta-selectors-this-4">(4)</a> <a href="#ref-for-selectordef-meta-selectors-this-5">(5)</a>
-    <li><a href="#ref-for-selectordef-meta-selectors-this-6">7.3. Self-responsive Grid</a>
+    <li><a href="#ref-for-selectordef-meta-selectors-self-1">4.1. Diagram of meta-selectors</a> <a href="#ref-for-selectordef-meta-selectors-self-2">(2)</a> <a href="#ref-for-selectordef-meta-selectors-self-3">(3)</a> <a href="#ref-for-selectordef-meta-selectors-self-4">(4)</a> <a href="#ref-for-selectordef-meta-selectors-self-5">(5)</a>
+    <li><a href="#ref-for-selectordef-meta-selectors-self-6">7.3. Self-responsive Grid</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="selectordef-meta-selectors-parent">
